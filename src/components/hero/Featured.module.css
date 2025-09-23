@@ -1,0 +1,57 @@
+/* .embla {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+} */
+.outerWrapper {
+  position: relative;
+  width: 106px;
+  height: 106px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 106px;
+  height: 106px;
+  border-radius: 50%;
+  background-image: url("/images/svg/circleborder.svg");
+  background-size: cover;
+  background-position: center;
+  animation: spin 55s linear infinite; /* only border rotates */
+  z-index: 1;
+}
+
+.inner {
+  width: 96px; /* adjust so it fits inside border */
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 2;
+}
+ 
+.ftr_card_title {
+  font-size: 22px;
+  font-weight: 700;
+}
+.ftr_card_dep{
+    font-size: 16px;
+    font-weight: 500;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

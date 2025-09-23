@@ -1,0 +1,71 @@
+.testi_main_container{
+    background-image: url('/images/svg/wavebackround-lines.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 450px ;
+}
+.tst_content {
+  font-size: 20px;
+  font-weight: 400;
+  color: #545454;
+  margin-bottom:  20px;
+}
+.tst_figure_container{
+    position: relative; 
+    display:flex;
+    justify-content: center; 
+}
+
+.tst_figure_back{
+    background-color: #ECF5F4;
+    height: 500px;
+    width: 480px;
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    border-radius: 25px;
+}
+
+.tst_customer_name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f1f1f;
+  margin-bottom: 10px;
+}
+.tst_customer_designation {
+  font-size: 16px;
+  font-weight: 400;
+  color: #545454;
+}
+.pre_button {
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+.tst_conatiner{
+    margin-top: 50px;
+}
+
+.pre_button:hover {
+  border: 1px solid #137C7A;   /* ✅ fixed */
+   
+  transform: translateY(-1px);
+}
+
+.pre_button:active {
+  transform: translateY(0);
+  
+}
+
+.pre_button:focus-visible {
+  outline: 2px solid #137C7A;
+  outline-offset: 2px;
+}

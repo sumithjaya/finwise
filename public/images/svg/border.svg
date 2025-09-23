@@ -1,0 +1,13 @@
+<svg width="110" height="110" viewBox="0 0 110 110">
+  <!-- Circle Border with Gaps -->
+  <circle
+    cx="55"
+    cy="55"
+    r="50"
+    stroke="#15bd47ff"
+    strokeWidth="5"
+    fill="none"
+    strokeDasharray="78.5 39.25" 
+    transform="rotate(-90 55 55)"
+  />
+</svg>

@@ -1,0 +1,29 @@
+.slider-container {
+  background-color: #137c7a;
+  padding: 20px 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.slider-track {
+  display: flex;
+  width: calc(250px * 6); /* Adjust based on number of slides */
+  animation: scroll-left 100s linear infinite;
+}
+
+.slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  padding: 0 20px;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

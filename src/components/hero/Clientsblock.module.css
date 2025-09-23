@@ -1,0 +1,68 @@
+.container {
+  background-color: #137c7a;
+  width: 100%;
+  padding: 20px 0;
+  max-height: 100px;
+  padding: '20px 10px';
+}
+
+.viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.track {
+  display: inline-flex;
+  gap: 48px;               /* spacing between logos */
+  align-items: center;
+  /* Make the total width expand to fit all slides exactly */
+  width: max-content;
+  /* Smooth, constant left scroll - SLOWED DOWN */
+  animation: marquee var(--marquee-duration, 145s) linear infinite;
+  /* Prevent subpixel jitter on some browsers */
+  will-change: transform;
+}
+
+.slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;        /* controls slide width; tweak as needed */
+  user-select: none;
+  pointer-events: none;    /* logos are decorative; remove if clickable */
+}
+
+/* The secret sauce:
+   We scroll the track left by *half* of its total width,
+   because the second half is a clone of the first. */
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Optional: slower on small screens; faster on big screens */
+@media (max-width: 768px) {
+  .track {
+    --marquee-duration: 160s;  /* Much slower on mobile */
+    gap: 32px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .track {
+    --marquee-duration: 95s;  /* Still slower than before */
+    gap: 64px;
+  }
+}
+
+/* Accessibility: honor reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+    transform: none;
+  }
+}
