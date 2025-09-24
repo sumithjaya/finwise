@@ -6,8 +6,11 @@
     "tina:gen": "tinacms dev -c \"cmd /c echo gen\"",
     "tina:build": "tinacms build",
     "dev": "cross-env TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"next dev --turbopack\"",
-    "build": "tinacms build && next build",
+    "build": "cross-env TINA_PUBLIC_IS_LOCAL=true tinacms build --local && next build",
     "start": "next start"
+    // "dev": "cross-env TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"next dev --turbopack\"",
+    // "build": "tinacms build && next build",
+    // "start": "next start"
   },
   "dependencies": {
     "@sanity/icons": "^3.7.4",
