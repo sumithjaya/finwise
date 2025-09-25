@@ -5,18 +5,19 @@
   "scripts": {
     "tina:gen": "tinacms dev -c \"cmd /c echo gen\"",
     "tina:build": "tinacms build",
-    "dev": "cross-env TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"next dev --turbopack\"",
+    "dev": "cross-env TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"next dev --turbo\"",
+    "build:tina:local": "cross-env TINA_PUBLIC_IS_LOCAL=true tinacms build --local --skip-cloud-checks --datalayer-port 9010",
     "build": "cross-env TINA_PUBLIC_IS_LOCAL=true tinacms build --local && next build",
-    "start": "next start"
-    // "dev": "cross-env TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"next dev --turbopack\"",
-    // "build": "tinacms build && next build",
-    // "start": "next start"
+    "start": "next start",
+    "build:tina:cloud": "tinacms build"
   },
   "dependencies": {
     "@sanity/icons": "^3.7.4",
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^4.10.0",
+    "@tinacms/datalayer": "^1.4.1",
     "@typeform/embed-react": "^4.6.0",
+    "@upstash/redis": "^1.35.4",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.19",
@@ -26,7 +27,9 @@
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0",
     "sanity": "^4.10.0",
-    "styled-components": "^6.1.19"
+    "styled-components": "^6.1.19",
+    "tinacms-authjs": "^11.0.3",
+    "upstash-redis-level": "^1.1.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -38,6 +41,7 @@
     "cross-env": "^10.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
+    "fs-extra": "^11.3.2",
     "tailwindcss": "^4",
     "tinacms": "^2.8.3",
     "typescript": "^5"
