@@ -1,17 +1,34 @@
+ 
 .footer_conatiner {
-  background-image: url("/images/svg/footer-back.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  width: 100%;
-  height: 800;
-  justify-content: center;
-  flex-direction: column;
+  position: relative;          /* establish stacking context */
+  background: #137C7A;         /* your footer bg color */
+  overflow: hidden;     
+  padding: 100px;       /* hide the curve edges that overflow */
+}
+
+/* the red curve background */
+.footer_bgCurve {
+  position: absolute;
+  left: 50%;
+  top: -320px;                 /* pull it up so we only see the curved bottom */
+  transform: translateX(-50%);
+  width: 100vw;                /* wider than the viewport to get a smooth arc */
+  height: 700px;               /* controls how deep the curve is */
+  background: #FFF;         /* your red color */
+  border-bottom-left-radius: 150% 90%;
+  border-bottom-right-radius: 150% 90%;
+  z-index: 0;                  /* behind the content */
+}
+
+/* everything inside sits above the curve */
+.footer_layer {
+  position: relative;
+  z-index: 1;
 }
 
 .footer_content {
   display: flex;
-  flex-direction: column;
+  flex-direction: row ;
   flex: 5;
   background-image: url("/images/svg/joinin-back-waves.svg");
   background-repeat: no-repeat;
@@ -46,6 +63,9 @@
   font-style: normal;
   padding-bottom: 35px;
   cursor: pointer;
+}
+.footer_menu_content_contact{
+  color: #fff;
 }
 .footer_menu_content ul li:hover { 
     color: #0b4443;

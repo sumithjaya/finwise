@@ -1,8 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Header from "@/components/hero/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/hero/Header"; 
+import Footer from "./Footer";
 
 export default function HeaderFooterWrapper({
   children,
@@ -13,10 +13,10 @@ export default function HeaderFooterWrapper({
   const hideHeaderFooter = pathname === "/join-in";
 
   return (
-    <>
+    <div className="flex flex-col">
       {!hideHeaderFooter && <Header />}
-      {children}
-      {/* {!hideHeaderFooter && <Footer />} */}
-    </>
+      <main className="  ">{children}</main>
+      {!hideHeaderFooter && <Footer />}
+    </div>
   );
 }

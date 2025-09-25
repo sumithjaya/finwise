@@ -1,0 +1,11 @@
+.howitworks_bullet_text{
+    font-size: 16px;
+    font-weight: 500;
+    font-family: "Creato Display";
+    font-style: normal;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-top: 20px;
+}

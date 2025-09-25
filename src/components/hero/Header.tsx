@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import styles from "./Header.module.css";
 
 type NavItem =
   | { label: string; href: string }
@@ -31,7 +32,7 @@ export default function Header() {
   const isActive = (href: string) =>
     href === "/"
       ? pathname === "/"
-      : pathname === href || pathname.startsWith(href + "/");
+      : pathname === href || pathname?.startsWith(href + "/");
 
   // Close on ESC
   useEffect(() => {
@@ -44,8 +45,8 @@ export default function Header() {
   useEffect(() => setOpen(false), [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 w-full  border-b border-black/10    p-4" style={{backgroundColor:'transparent'}}>
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6  bg-white " style={{borderRadius:'20px'}}>
+    <header className="sticky top-0 z-50 w-full  border-b border-black/10     " style={{backgroundColor:'#137c7a13',padding:'50px 100px'}}>
+      <div className="mx-auto flex h-16  items-center justify-between gap-3  bg-white " style={{borderRadius:'20px',padding:'20px 30px'}}>
         {/* Brand */}
         <Link
           href="/"
@@ -54,7 +55,7 @@ export default function Header() {
         >
           <div className="relative h-15 w-[130px] p-2">
             <div
-              style={{ color: "#137C7A", fontWeight: 800, fontSize: "28px" }}
+              style={{ color: "#137C7A", fontWeight: 800, fontSize: "28px",fontStyle:'normal',fontFamily:"Creato Display" }}
             >
               FinWise
             </div>
@@ -71,12 +72,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={classNames(
-                  "rounded-xl px-3 py-2 text-base   transition",
-                  isActive(item.href)
-                    ? "text-brand text-base text-bold"
-                    : "text-foreground/80  "
-                )}
+                 className={styles.navLink}
               >
                 {item.label}
               </Link>
@@ -99,7 +95,7 @@ export default function Header() {
                     <Link
                       key={it.href}
                       href={it.href}
-                      className="block rounded-xl px-3 py-2 transition hover:bg-brand-blue01"
+                      
                     >
                       <div className="text-sm font-medium text-foreground">
                         {it.label}

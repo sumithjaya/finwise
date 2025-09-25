@@ -3,11 +3,13 @@ import Hero from "@/components/hero/Hero";
 import ReadyToFind from "@/components/home/ReadyToFind";
 import Testimonials from "@/components/home/Testimonials";
 import Whyfinwise from "@/components/home/Whyfinwise";
+import HowItWorks from "@/components/HowItWorks";
 
 export default function Home() {
   return (
-    <div className="font-sans grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+    <div className="font-sans items-center justify-items-center  " style={{marginBottom:0,paddingBottom:0}}>
       <Hero />
+      <HowItWorks/>
       <Featured />
       <Whyfinwise />
       <Testimonials />

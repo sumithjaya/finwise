@@ -1,8 +1,8 @@
 .testi_main_container{
     background-image: url('/images/svg/wavebackround-lines.svg');
     background-repeat: no-repeat;
-    background-size: cover;
-    margin-bottom: 450px ;
+    background-size: cover; 
+    /* background-color: aqua; */
 }
 .tst_content {
   font-size: 20px;
@@ -68,4 +68,32 @@
 .pre_button:focus-visible {
   outline: 2px solid #137C7A;
   outline-offset: 2px;
+}
+
+/* Ensures the animated area has room and prevents layout shift */
+.tst_anim_wrap {
+  position: relative;
+  min-height: 220px; /* adjust to fit your quote + name + role block */
+  overflow: hidden;  /* hide the sliding overflow during transitions */
+}
+
+/* Optional: make the buttons feel clickable */
+.pre_button {
+  cursor: pointer;
+  transition: transform 160ms ease;
+}
+.pre_button:active {
+  transform: scale(0.96);
+}
+
+
+.testi_main_container{
+  display: flex;
+  flex: 2;
+  width: 100%;
+}
+
+.tst_figure_container{
+  flex: 1;
+  width: 100%;  
 }

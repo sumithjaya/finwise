@@ -1,8 +1,6 @@
-import { AbstractAuthProvider, defineConfig  } from "tinacms";
+import { defineConfig, LocalAuthProvider } from "tinacms";
 
 const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true";
-
- 
 
 const branch =
   process.env.NEXT_PUBLIC_TINA_BRANCH ||
@@ -21,71 +19,23 @@ const searchIndexerToken =
   process.env.NEXT_PUBLIC_TINA_SEARCH_TOKEN ||
   "";
 
-  
-class LocalAuthProvider extends AbstractAuthProvider {
-  private STORAGE_KEY = "tina-local-user";
-
-  private saveUser(u: any) {
-    try { window.sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(u)); } catch {}
-  }
-  private readUser(): any | null {
-    try {
-      const raw = window.sessionStorage.getItem(this.STORAGE_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
-  }
-  private clearUser() {
-    try { window.sessionStorage.removeItem(this.STORAGE_KEY); } catch {}
-  }
-
-  // REQUIRED by Tina
-  async authenticate(props?: { username: string; password: string }) {
-    const { username, password } = props ?? ({} as any);
-    const valid = [
-      { username: "admin", password: "admin123" },
-      { username: "editor", password: "editor123" },
-    ];
-    const hit = valid.find(v => v.username === username && v.password === password);
-    if (!hit) throw new Error("Invalid credentials");
-
-    const user = { id: hit.username, name: hit.username, email: `${hit.username}@local.dev` };
-    this.saveUser(user);
-    return user;
-  }
-
-  async getUser() {
-    return this.readUser();
-  }
-
-  async getToken() {
-    // Return something the backend will accept in dev; not validated in pure local mode.
-    return { id_token: "local-dev-token" };
-  }
-
-  async logout() {
-    this.clearUser();
-    return true;
-  }
-
-  // OPTIONAL in docs, but some versions/types expect these:
-  async authorize() { return true; }
-  async isAuthenticated() { return !!this.readUser(); }
-  async isAuthorized() { return true; }
-
-  // Some Tina builds/types also expect this helper. Safe to provide.
-  async fetchWithToken(input: RequestInfo | URL, init?: RequestInit) {
-    const { id_token } = await this.getToken();
-    const headers = new Headers(init?.headers || {});
-    headers.set("Authorization", `Bearer ${id_token}`);
-    return fetch(input, { ...init, headers });
-  }
+// Lazy import authjs provider only in Cloud mode
+let authProvider: any;
+if (isLocal) {
+  authProvider = new LocalAuthProvider();
+} else {
+  // require dynamically so it doesn't get bundled in local mode
+  const {
+    UsernamePasswordAuthJSProvider,
+  } = require("tinacms-authjs/dist/tinacms");
+  authProvider = new UsernamePasswordAuthJSProvider();
 }
+
 export default defineConfig({
   branch,
   ...(isLocal ? {} : clientId && token ? { clientId, token } : {}),
-  
-  // NOTE: no AuthProvider import. Narrow cast to hush version skew.
-  ...(isLocal ? { authProvider: new LocalAuthProvider() as unknown as { } } : {}),
+
+  authProvider,
 
   build: {
     publicFolder: "public",
@@ -140,7 +90,6 @@ export default defineConfig({
               return `${y}-${m}-${day}-${slug}`;
             },
           },
-          // Remove itemProps to avoid TypeScript error
         },
         fields: [
           { type: "string", name: "title", label: "Title", required: true },
@@ -190,6 +139,7 @@ export default defineConfig({
           published: true,
           rating: 5,
           date: new Date().toISOString(),
+          name: "Anonymous", // for testimonials
         }),
         ui: {
           filename: {
@@ -205,7 +155,6 @@ export default defineConfig({
               return company ? `${name}-${company}` : name;
             },
           },
-          // Remove itemProps to avoid TypeScript error
         },
         fields: [
           { type: "string", name: "name", label: "Name", required: true },
@@ -229,4 +178,6 @@ export default defineConfig({
       },
     ],
   },
+  
 });
+

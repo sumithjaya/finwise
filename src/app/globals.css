@@ -23,8 +23,8 @@
 /* Bold */
 @font-face {
   font-family: "Creato Display";
-  src: url("/fonts/creato-display/CreatoDisplay-Bold.woff2") format("woff2"),
-    url("/fonts/creato-display/CreatoDisplay-Bold.woff") format("woff");
+  src: url("/fonts/creato-display/creatodisplay-bold-webfont.woff2") format("woff2"),
+    url("/fonts/creato-display/creatodisplay-bold-webfont.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -43,9 +43,9 @@
 /* Extra Bold */
 @font-face {
   font-family: "Creato Display";
-  src: url("/fonts/creato-display/CreatoDisplay-ExtraBold.woff2")
+  src: url("/fonts/creato-display/creatodisplay-extrabold-webfont.woff2")
       format("woff2"),
-    url("/fonts/creato-display/CreatoDisplay-ExtraBold.woff") format("woff");
+    url("/fonts/creato-display/creatodisplay-extrabold-webfont.woff") format("woff");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -53,9 +53,9 @@
 
 @font-face {
   font-family: "Creato Display";
-  src: url("/fonts/creato-display/CreatoDisplay-ExtraBoldItalic.woff2")
+  src: url("/fonts/creato-display/creatodisplay-extrabolditalic-webfont.woff2")
       format("woff2"),
-    url("/fonts/creato-display/CreatoDisplay-ExtraBoldItalic.woff")
+    url("/fonts/creato-display/creatodisplay-extrabolditalic-webfont.woff")
       format("woff");
   font-weight: 800;
   font-style: italic;
@@ -94,9 +94,9 @@
 
 @font-face {
   font-family: "Creato Display";
-  src: url("/fonts/creato-display/CreatoDisplay-MediumItalic.woff2")
+  src: url("/fonts/creato-display/creatodisplay-mediumitalic-webfont.woff2")
       format("woff2"),
-    url("/fonts/creato-display/CreatoDisplay-MediumItalic.woff") format("woff");
+    url("/fonts/creato-display/creatodisplay-mediumitalic-webfont.woff") format("woff");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -122,11 +122,17 @@
 }
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 :root {
   --background: #ffffff;
   --foreground: #171717;
   --font-creato: "Creato Display", system-ui, sans-serif;
+}
+body{
+    margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 .logo-white {

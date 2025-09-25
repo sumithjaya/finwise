@@ -1,33 +1,79 @@
-// src/app/api/tina/[...routes]/route.ts
-import { TinaNodeBackend } from "@tinacms/datalayer";
-import databaseClient from "../../../../../tina/__generated__/databaseClient";
+import { TinaNodeBackend, LocalBackendAuthProvider } from "@tinacms/datalayer";
+import client from "../../../../../tina/__generated__/client";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { Readable } from "stream";
 
-
-// App Router: force Node.js runtime (Tina can't run on Edge)
 export const runtime = "nodejs";
-// ensure no caching for the API
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
-const backend = new TinaNodeBackend({
-  databaseClient,
-  // If you’re adding auth later, pass an authProvider here
-  // authProvider: new LocalBackendAuthProvider(), // example
+// Create the backend (Node-style handler)
+const backend = TinaNodeBackend({
+  databaseClient: client,
+  authProvider: LocalBackendAuthProvider(),
 });
 
-// Next.js App Router expects HTTP method exports:
-export async function GET(req: Request, { params }: { params: { routes: string[] } }) {
-  return backend.request(req);
+// Small adapter: turn Fetch Request → Node req/res
+async function runBackend(req: NextRequest) {
+  return new Promise<Response>((resolve) => {
+    const headers: Record<string, string> = {};
+    req.headers.forEach((v, k) => (headers[k] = v));
+
+    const body = req.body ? Readable.from(req.body as any) : undefined;
+
+    const resChunks: Uint8Array[] = [];
+    const res = {
+      write: (chunk: any) =>
+        resChunks.push(
+          typeof chunk === "string" ? Buffer.from(chunk) : chunk
+        ),
+      end: (chunk?: any) => {
+        if (chunk) {
+          resChunks.push(
+            typeof chunk === "string" ? Buffer.from(chunk) : chunk
+          );
+        }
+        const text = Buffer.concat(resChunks).toString("utf-8");
+        resolve(
+          new NextResponse(text, {
+            status: 200,
+            headers: { "content-type": "application/json" },
+          })
+        );
+      },
+      setHeader: () => {},
+      getHeader: () => undefined,
+      removeHeader: () => {},
+      statusCode: 200,
+    } as any;
+
+    const nodeReq = {
+      method: req.method,
+      url: req.url,
+      headers,
+      socket: {},
+    } as any;
+
+    if (body) (nodeReq as any).body = body;
+
+    backend(nodeReq, res);
+  });
 }
-export async function POST(req: Request, { params }: { params: { routes: string[] } }) {
-  return backend.request(req);
+
+// Export Next.js handlers
+export async function GET(req: NextRequest) {
+  return runBackend(req);
 }
-export async function PUT(req: Request, { params }: { params: { routes: string[] } }) {
-  return backend.request(req);
+export async function POST(req: NextRequest) {
+  return runBackend(req);
 }
-export async function DELETE(req: Request, { params }: { params: { routes: string[] } }) {
-  return backend.request(req);
+export async function PUT(req: NextRequest) {
+  return runBackend(req);
 }
-export async function PATCH(req: Request, { params }: { params: { routes: string[] } }) {
-  return backend.request(req);
+export async function DELETE(req: NextRequest) {
+  return runBackend(req);
+}
+export async function PATCH(req: NextRequest) {
+  return runBackend(req);
 }

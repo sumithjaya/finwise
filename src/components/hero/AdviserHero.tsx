@@ -44,7 +44,7 @@ export default function AdviserHero() {
         </div>
       </div>
     </div>
-    <Clientsblock/>
+    {/* <Clientsblock/> */}
     </div>
   );
 }
