@@ -2,6 +2,7 @@ import Link from "next/link";
 import styles from "./BlogPage.module.css";
 import Image from "next/image";
 import { HiOutlineShare } from "react-icons/hi2";
+import { backIn } from "framer-motion";
 
 export default function BlogPostThumbCard({
   image,
@@ -39,11 +40,11 @@ export default function BlogPostThumbCard({
             See More
           </Link>
         </div>
-        <div style={{width:'100%'}}>
+        <div style={{width:'100%'  }}>
           <div className={styles.blog_thum_footer}>
             <div className={styles.blog_thubmb_auther}>
               <Image
-                src={"./images/svg/user-round-line.svg"}
+                src={"/images/svg/user-round-line.svg"}
                 alt={"usericon"}
                 width={24}
                 height={0}

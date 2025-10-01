@@ -2,8 +2,7 @@
 .footer_conatiner {
   position: relative;          /* establish stacking context */
   background: #137C7A;         /* your footer bg color */
-  overflow: hidden;     
-  padding: 100px;       /* hide the curve edges that overflow */
+  overflow: hidden;      
 }
 
 /* the red curve background */
@@ -37,12 +36,18 @@
 }
 
 .footer_branding_content {
-  flex: 3;
-  padding: 0 150px;
+  flex: 2;
+  padding: 0 150px; 
+  position: relative;
 }
 .footer_menu_content {
-  flex: 2;
+  flex: 1;
   padding: 50px;
+   padding-left: 0; 
+}
+.footer_menu_content_contact{
+  padding: 50px;
+  padding-left: 0;
 }
 .footer_menu_content ul {
   list-style: none;
@@ -56,19 +61,35 @@
   font-weight: 700;
   font-size: 22px;
 }
+.footer_menu_content_contact ul li:first-child {
+  color: #fff;
+  font-weight: 700;
+  font-size: 22px;
+}
 .footer_menu_content ul li {
   color: #fff;
   font-size: 18px;
   font-weight: 400;
   font-style: normal;
-  padding-bottom: 35px;
+  padding-bottom: 25px;
   cursor: pointer;
 }
 .footer_menu_content_contact{
+  flex: 1;
   color: #fff;
 }
+
+.footer_menu_content_contact ul li {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: normal;
+  padding-bottom: 25px;
+  cursor: pointer;
+
+}
 .footer_menu_content ul li:hover { 
-    color: #0b4443;
+    color: #9ef0ef;
 }
 .footer_menu_content ul li:first-child:hover {
   color: #fff;
@@ -76,14 +97,14 @@
 
 .footer_bottomline{
     font-family: "Creato Display",Verdana, Geneva, Tahoma, sans-serif;
-    color: #FFFFFF;
-    background-color: #0b4443;
-    padding: 10px 150px;
+    color: #FFFFFF; 
+    padding: 25px 100px;
     display: flex;
     justify-content: space-between;
     font-size: 18px;
     font-weight: 400;
     font-style: normal;
+    border-top: #ffffff3a solid 1px;
     
 }
 .copyright_box{
@@ -93,4 +114,16 @@
 }
 .footer_social_conatainer{
     display: flex;
+}
+.footer_social_icon{
+  font-size: 25px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: #FFFFFF solid 1px;
+  margin-right: 12px;
 }

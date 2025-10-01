@@ -1,5 +1,4 @@
-import React from "react";
-import { useScreenPlugin } from "tinacms";
+import React from "react"; 
 
 const CustomWelcomeScreen: React.FC = () => {
   return (

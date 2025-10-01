@@ -1,0 +1,102 @@
+.specialty_container {
+  padding: 50px 100px;
+}
+
+.specialty_title_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.specialty_title {
+  font-size: 40px;
+  font-weight: 700;
+  color: #1f1f1f;
+  text-align: left;
+  margin: 0px;
+  font-family: "Creato Display";
+  text-align: left;
+}
+
+.specialty_view_all {
+  background-color: #137c7a;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 15px 30px;
+}
+
+
+.specialty_card_container{
+    display: flex; 
+    gap: 50px;
+    justify-content: space-between;
+}
+.specialty_card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 25px; 
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+
+}
+
+.specialty_card_icon {
+  background-color: #ecf5f4;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.specialty_card_title {
+  font-family: "Creato Display";
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 20px;
+  line-height: 32px;
+  text-align: left;
+  width: 100%;
+  letter-spacing: 4%;
+  color: #1F1F1F;
+}
+
+.specialty_card_description {
+  font-family: "Creato Display";
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+  line-height: 28px;
+  text-align: left;
+  letter-spacing: 0%;
+  margin-bottom: 25px;
+  color: #545454;
+}
+
+.specialty_read_more {
+  font-family: "Creato Display";
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-transform: capitalize;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: 0%;
+  color: #137c7a;
+  text-align: left;
+}
+
+.specialty_read_more:hover {
+    
+  color: #1f1f1f;
+}

@@ -1,13 +1,41 @@
-.testi_main_container{
-    background-image: url('/images/svg/wavebackround-lines.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
+ 
+.ready_to_find_container
+{
+    background-color: #137C7A;
+    padding: 0 100px ;
+    position: relative; 
+    overflow: hidden;
+    width: 100%;
+    min-width: 100vw;
+    margin-top: 100px;
 }
+
+/* the red curve background */
+.footer_bgCurve {
+  position: absolute;
+  left: 50%;
+  top: -320px;                 /* pull it up so we only see the curved bottom */
+  transform: translateX(-50%);
+  width: 100vw;                /* wider than the viewport to get a smooth arc */
+  height: 100%; 
+  background: #FFF;         /* your red color */
+  border-bottom-left-radius: 150% 90%;
+  border-bottom-right-radius: 150% 90%;
+  z-index: 0;                  /* behind the content */
+}
+
+/* everything inside sits above the curve */
+.footer_layer {
+  position: relative;
+  z-index: 1;
+}
+
 .tst_content {
   font-size: 20px;
   font-weight: 400;
   color: #545454;
   margin-bottom:  20px;
+  
 }
 .tst_figure_container{
     position: relative; 

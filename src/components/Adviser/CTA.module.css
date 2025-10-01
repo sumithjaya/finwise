@@ -1,0 +1,48 @@
+.cta_container{
+    background-color: #137C7A;
+    border-radius: 30px;
+    padding: 50px 100px;
+    display: flex;
+    flex-direction: column;
+    color: #FFF;
+    justify-content: space-between;
+    align-items: center;
+    background-image: url("/images/svg/joinin-back-waves.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 50px;
+}
+
+.cta_section{
+    padding: 50px 100px;
+}
+
+.cta_title{
+    font-size: 30px;
+    font-weight: 500;
+    font-family: "Creato Display";
+    text-align: center;
+
+}
+
+.cta_description{
+    font-size: 30px;
+    font-weight: 500;
+    font-family: "Creato Display";
+    text-align: center;
+    margin-bottom: 20px;
+}
+.cta_description_span{
+    font-weight: 800;
+}
+
+.cta_button{
+    background-color: #FFF;
+    color: #137C7A;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 12px;
+    padding: 15px 30px;
+    border: none;
+}

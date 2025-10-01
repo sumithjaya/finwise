@@ -50,7 +50,7 @@ export default function Featured() {
   }, [emblaApi, onSelect]);
 
   return (
-    <div style={{ padding: "20px 100px", width: "100%" }}>
+    <div style={{ padding: "20px 100px", width: "100%"  ,maxWidth:"100vw"}}>
       <div style={{ backgroundColor: "#e8f8f6ff", borderRadius: "30px", width: "100%" }}>
         <div className="text-center p-10 pb-0 mb-1">
           <h2 style={{ fontSize: "40px", fontWeight: 500 }}>

@@ -1,10 +1,10 @@
 "use client";
-import Image from "next/image";
-import Reveal from "@/components/ui/Reveal"; // if @ alias points to project root
-import styles from "./HowItWorks.module.css";
+import Image from "next/image";  // if @ alias points to project root
+import styles from "./HowItWorks.module.css"; 
+import RevealStagger from "./ui/RevealStagger";
 export default function HowItWorks() {
   return (
-    <Reveal>
+    <RevealStagger stagger={200}>
       <div
         style={{
           boxSizing: "border-box",
@@ -54,14 +54,15 @@ export default function HowItWorks() {
               </p>
             </div>
 
-            <div style={{ padding: "25px 50px 0 50px",}}>
+            <div style={{ padding: "10px 50px 0 50px",}}>
               <div
                 className="flex"
                 style={{
                   backgroundImage: 'url("./images/svg/curvedline.svg")',
                   backgroundRepeat: "no-repeat",
                   justifyContent: "space-between",
-                  backgroundSize: "contain",
+                  backgroundSize: "87%",
+                  backgroundPosition: "center",
                   width: "100%",
                   position: "relative",
                 }}
@@ -73,6 +74,7 @@ export default function HowItWorks() {
                     alignItems: "center",
                     justifyContent: "center",
                     maxWidth: "225px",
+                    marginTop:"85px"
                   }}
                 >
                   <div
@@ -141,6 +143,7 @@ export default function HowItWorks() {
                     alignItems: "center",
                     justifyContent: "center",
                   maxWidth: "225px",
+                    marginTop:"155px"
                   }}
                 >
                   <div
@@ -173,7 +176,7 @@ export default function HowItWorks() {
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                    maxWidth: "225px",
+                    maxWidth: "225px",  marginTop:"105px"
                   }}
                 >
                   <div
@@ -206,6 +209,6 @@ export default function HowItWorks() {
           </div>
         </section>
       </div>
-    </Reveal>
+    </RevealStagger>
   );
 }

@@ -1,8 +1,9 @@
 .testi_main_container{
     background-image: url('/images/svg/wavebackround-lines.svg');
     background-repeat: no-repeat;
-    background-size: cover; 
-    /* background-color: aqua; */
+    background-size: cover;  
+    background-position: bottom;
+    padding-bottom: 50px;
 }
 .tst_content {
   font-size: 20px;
@@ -17,7 +18,7 @@
 }
 
 .tst_figure_back{
-    background-color: #ECF5F4;
+    background-color: #ddebe9;
     height: 500px;
     width: 480px;
     position: absolute;
@@ -51,7 +52,8 @@
   transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
 }
 .tst_conatiner{
-    margin-top: 50px;
+    margin-top: 50px; 
+    background-color: #ffffff36;
 }
 
 .pre_button:hover {

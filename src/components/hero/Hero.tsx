@@ -3,9 +3,24 @@ import Image from "next/image";
 import { PopupButton } from "@typeform/embed-react";
 import Reveal from "@/components/ui/Reveal"; // if @ alias points to project root
 import styles from "./Hero.module.css";
+import { text } from "stream/consumers";
+import { useEffect, useState } from "react"; 
+import RevealStagger from "../ui/RevealStagger";
 export default function Hero() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+   useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      // Calculate mouse position relative to viewport center
+      const x = (e.clientX - window.innerWidth / 2) / window.innerWidth;
+      const y = (e.clientY - window.innerHeight / 2) / window.innerHeight;
+      setMousePos({ x, y });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
   return (
-    <Reveal>
+    <RevealStagger stagger={200}>
       <div
         style={{
           boxSizing: "border-box",
@@ -87,7 +102,15 @@ export default function Hero() {
               </div>
               <div className={styles.hero_content_left_button}>
                 <div
-                  
+                  style={{
+                    textAlign: "jsustify",
+                    fontSize: "16px",
+                    fontWeight: 500,
+                    fontFamily: "Creato Display",
+                    color: "#545454", 
+                    borderRight:"1px dashed #8a9191ff",
+                    marginRight:'10px'
+                  }}
                 >
                   Spend 5 mins and answer some simple questions and receive your
                   Free Wealth Journal & Financial Plan
@@ -327,6 +350,6 @@ export default function Hero() {
           </div>
         </section>
       </div>
-    </Reveal>
+    </RevealStagger>
   );
 }

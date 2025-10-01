@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
 import styles from "./Whyfinwise.module.css";
+import { RxFontFamily } from "react-icons/rx";
 export default function Whyfinwise() {
   return (
-    <div style={{ display: "flex", gap: 20, padding: "120px" }}>
+    <div style={{ display: "flex", gap: 20, padding: "0 100px",marginTop:'100px' }}>
       <div style={{ flex: 1 }}>
         <div>
-          <div style={{ fontSize: "40px", fontWeight: 500 }}>
+          <div style={{ fontSize: "40px", fontWeight: 500 ,fontFamily:"Creato Display"}}>
             Why{" "}
             <span
               style={{ fontWeight: 800, fontStyle: "italic", color: "#137C7A" }}
@@ -14,71 +15,84 @@ export default function Whyfinwise() {
               FinWise?
             </span>
           </div>
-          <div>
-            <Image
-              src="/images/svg/understrike.svg"
-              alt="Scale hand illustration"
-              width={227}
-              height={8}
-              priority
-            />
+          <div
+            style={{ 
+              display: "felx",
+              flexDirection: "raw",
+              jsuifyContent: "flex-end",
+              paddingLeft: "100px",
+            }}
+          >
+            <div style={{   width: "227px", height: "8px" }}> 
+              <Image
+                src="/images/svg/understrike.svg"
+                alt="Scale hand illustration"
+                width={227}
+                height={8}
+                priority
+              />
+            </div>
           </div>
         </div>
-        <div style={{ fontSize: "16px", fontWeight: 400, color: "#545454" }}>
+        <div style={{ fontSize: "16px", marginTop:"30px",fontWeight: 400, color: "#545454",fontFamily:"Creato Display" }}>
           There is now an abundance of readable dummy texts. These are usually
           used when a text is required
         </div>
       </div>
       <div style={{ display: "flex", flex: 3, justifyContent: "space-around" }}>
-        <div style={{position:'relative'}}> <div
+        <div style={{ position: "relative" }}>
+          {" "}
+          <div
             style={{
-              backgroundColor: "#F1F9F8",
+              backgroundColor: "#d5f0edff",
               width: "57px",
               height: "57px",
               borderRadius: "6px",
               position: "absolute",
               left: -30,
-              bottom:80,
+              bottom: 80,
               zIndex: -1,
             }}
           />
-            <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            backgroundColor: "#ffffffff",
-            borderRadius: "20px",
-            boxShadow: "5px 5px 25px 10px #699E9D26",
-            justifyContent: "center",
-            width: "260px",
-            height: "300px",
-          }}
-        >
           <div
             style={{
               display: "flex",
-              backgroundColor: "#ECF5F4",
-              width: "100px",
-              height: "100px",
-              borderRadius: "50%",
+              flexDirection: "column",
               alignItems: "center",
+              backgroundColor: "#ffffffff",
+              borderRadius: "20px",
+              boxShadow: "5px 5px 25px 16px #699e9d3d",
               justifyContent: "center",
+              width: "260px",
+              height: "300px",
             }}
           >
-            <Image
-              src="/images/svg/scalehand.svg"
-              alt="Scale hand illustration"
-              width={52}
-              height={52}
-              priority
-            />
+            <div
+              style={{
+                display: "flex",
+                backgroundColor: "#ECF5F4",
+                width: "100px",
+                height: "100px",
+                borderRadius: "50%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Image
+                src="/images/svg/scalehand.svg"
+                alt="Scale hand illustration"
+                width={52}
+                height={52}
+                priority
+              />
+            </div>
+            <div className={styles.wfw_card_title}>
+              Clear, Transparent Advice
+            </div>
+            <div className={styles.wfw_card_content}>
+              There is now an abundance of readable dummy texts.
+            </div>
           </div>
-          <div className={styles.wfw_card_title}>Clear, Transparent Advice</div>
-          <div className={styles.wfw_card_content}>
-            There is now an abundance of readable dummy texts.
-          </div>
-        </div>
         </div>
         <div
           style={{
@@ -106,7 +120,7 @@ export default function Whyfinwise() {
               borderRadius: "20px",
               width: "260px",
               height: "300px",
-              boxShadow: "0px 7px 54px 0px #699E9D26",
+              boxShadow: "0px 7px 54px 30px #699e9d2f",
             }}
           >
             <div
@@ -136,7 +150,7 @@ export default function Whyfinwise() {
             </div>
           </div>
         </div>
-        <div style={{position:'relative'}}>
+        <div style={{ position: "relative" }}>
           {" "}
           <div
             style={{
@@ -157,7 +171,7 @@ export default function Whyfinwise() {
               alignItems: "center",
               backgroundColor: "#ffffff",
               borderRadius: "20px",
-              boxShadow: "5px 5px 35px 10px #699E9D26",
+              boxShadow: "5px 5px 35px 10px #699e9d50",
               justifyContent: "center",
               width: "260px",
               height: "300px",

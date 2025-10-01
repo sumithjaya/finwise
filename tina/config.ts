@@ -106,6 +106,16 @@ export default defineConfig({
             label: "Subtitle / Summary",
             ui: { component: "textarea" },
           },
+          {
+            type: "string",
+            name: "frontmatter_tags",
+            label: "Tags",
+            description: "Tags for this post",
+            list: true,
+            ui: {
+              component: "tags",
+            },
+          },
           { type: "image", name: "image", label: "Card Image" },
           { type: "string", name: "author", label: "Author" },
           { type: "rich-text", name: "body", label: "Body" },
@@ -178,6 +188,4 @@ export default defineConfig({
       },
     ],
   },
-  
 });
-

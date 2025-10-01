@@ -87,7 +87,7 @@ export default function Testimonials() {
       {/* Left illustration / figure */}
       <div style={{ flex: 1 }} className={styles.tst_figure_container}>
         <div className={styles.tst_figure_back} />
-        <div style={{ position: "absolute", bottom: 430, left: 150 }}>
+        <div style={{ position: "absolute", top: 140, left: 130 }}>
           <Image
             src="/images/quaters-green.png"
             alt=""
@@ -96,7 +96,7 @@ export default function Testimonials() {
             priority
           />
         </div>
-        <div style={{ position: "absolute", bottom: -30, right: 165, zIndex: -2 }}>
+        <div style={{ position: "absolute", bottom: -50, right: 50, zIndex: -2 }}>
           <Image
             src="/images/svg/dot-grid.svg"
             alt=""
@@ -117,7 +117,7 @@ export default function Testimonials() {
       </div>
 
       {/* Right content */}
-      <div style={{ flex: 1 ,height:'100%',padding:'120px',display:'flex',flexDirection:'column',justifyContent:'space-between' }}>
+      <div style={{ flex: 1 ,height:'100%',padding:'120px',display:'flex',flexDirection:'column', justifyContent:'space-between' }}>
         <div style={{ fontWeight: 700, fontSize: "25px", color: "#137C7A" }}>
           — Testimonial
         </div>
@@ -138,6 +138,7 @@ export default function Testimonials() {
           role="group"
           aria-live="polite"
           aria-atomic="true"
+
         >
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div

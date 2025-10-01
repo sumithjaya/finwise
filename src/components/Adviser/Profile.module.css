@@ -1,0 +1,89 @@
+.adviser_profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px 100px;
+}
+.adviser_profile_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 50px 0px;
+  background-color: #f1f9f8;
+  border-radius: 30px;
+  padding: 50px;
+}
+.adviser_profile_image_container {
+  display: flex;
+  justify-content: center;
+}
+.adviser_profile_content {
+  padding: 50px;
+  margin: 20px;
+}
+.adviser_profile_image_wrapper {
+  width: 400px;
+}
+.adviser_profile_image {
+  width: 400px;
+  height: 440px;
+  border-radius: 30px;
+}
+
+.adviser_profile_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0px;
+}
+
+.adviser_profile_name {
+  font-size: 40px;
+  font-weight: 700;
+  font-family: "Creato Display";
+  color: #137c7a;
+  margin: 10px 0px;
+}
+
+.adviser_profile_title {
+  font-size: 40px;
+  font-weight: 500;
+  margin: 10px 0px;
+  color: #137c7a;
+  font-size: 25px;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Creato Display";
+  display: flex;
+  align-items: center;
+}
+
+.adviser_profile_sub_title {
+  font-size: 40px;
+  font-weight: 500;
+  font-family: "Creato Display";
+  margin: 10px 0px;
+  color: #1f1f1f;
+}
+
+
+.adviser_profile_description{
+    font-size: 20px;
+    font-weight: 400;
+    font-family: "Creato Display";
+    margin: 10px 0px;
+    text-align: justify;
+    color: #545454;
+    margin-bottom: 20px;
+}
+.adviser_profile_bio {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 10px 0px;
+}
+
+.adviser_profile_link {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 10px 0px;
+}

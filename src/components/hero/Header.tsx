@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import styles from "./Header.module.css";
+import { MdHeight } from "react-icons/md";
 
 type NavItem =
   | { label: string; href: string }
@@ -28,7 +29,8 @@ export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
-
+  
+ const [scrolled, setScrolled] = useState(false); // <-- new
   const isActive = (href: string) =>
     href === "/"
       ? pathname === "/"
@@ -42,38 +44,76 @@ export default function Header() {
   }, []);
 
   // Close drawer when the route changes
-  useEffect(() => setOpen(false), [pathname]);
+  // Lock body scroll while drawer is open
+  useEffect(() => {
+    if (open) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+  }, [open]);
 
+  // Close drawer on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) setScrolled(true);
+      else setScrolled(false);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
-    <header className="sticky top-0 z-50 w-full  border-b border-black/10     " style={{backgroundColor:'#137c7a13',padding:'50px 100px'}}>
-      <div className="mx-auto flex h-16  items-center justify-between gap-3  bg-white " style={{borderRadius:'20px',padding:'20px 30px'}}>
-        {/* Brand */}
-        <Link
-          href="/"
-          className="flex items-center gap-2  "
-          aria-label="Go to homepage"
-        >
-          <div className="relative h-15 w-[130px] p-2">
-            <div
-              style={{ color: "#137C7A", fontWeight: 800, fontSize: "28px",fontStyle:'normal',fontFamily:"Creato Display" }}
-            >
-              FinWise
-            </div>
-          </div>
-        </Link>
+    <header
+     className={classNames(
+        "sticky top-0 z-50 w-full transition-all duration-300",
+        scrolled ? "bg-red-500 shadow-md py-3" : "bg-transparent py-6"
+      )}
+       
+      style={{
+        backgroundColor: "rgba(19, 124, 122, 0.06)",
+        padding: "30px 100px",
+      }}
+    >
+      <div
+        className="mx-auto flex h-16  items-center justify-between gap-3  bg-white "
+        style={{
+          borderRadius: "20px",
+          padding: "5px 30px",
+          boxShadow: "0px 7px 54px 0px #699E9D26",
+        }} 
 
+      >
+        {
+          <Link
+            href="/"
+            className="flex items-center gap-2  "
+            aria-label="Go to homepage"
+          >
+            <div className="relative h-15 w-[130px] p-2">
+              <div
+                style={{
+                  color: "#137C7A",
+                  fontWeight: 800,
+                  fontSize: "28px",
+                  fontStyle: "normal",
+                  fontFamily: "Creato Display",
+                }}
+              >
+                FinWise
+              </div>
+            </div>
+          </Link>
+        }
         {/* Desktop Nav */}
-        <nav
-          aria-label="Main"
-          className=" hidden items-center gap-1 md:flex"
-        >
+        <nav aria-label="Main" className=" hidden items-center gap-1 md:flex">
           {NAV.map((item) =>
             "href" in item ? (
-              <Link
-                key={item.href}
-                href={item.href}
-                 className={styles.navLink}
-              >
+              <Link key={item.href} href={item.href} className={styles.navLink}>
                 {item.label}
               </Link>
             ) : (
@@ -92,11 +132,7 @@ export default function Header() {
                 </summary>
                 <div className="absolute left-0 mt-2 w-[320px] rounded-2xl border border-black/10 bg-background p-2 shadow-xl ring-1 ring-black/5">
                   {item.items.map((it) => (
-                    <Link
-                      key={it.href}
-                      href={it.href}
-                      
-                    >
+                    <Link key={it.href} href={it.href}>
                       <div className="text-sm font-medium text-foreground">
                         {it.label}
                       </div>
@@ -112,23 +148,24 @@ export default function Header() {
             )
           )}
           {/* CTA then divider */}
-          
+
           <div className="mx-1 h-5 w-px bg-foreground/10" />
         </nav>
-<div className="  flex flex-row items-center gap-1 text-foreground/70">
-            <Link
-              href="/get-started"
-              className="ml-1 rounded-xl border border-brand px-3 py-2 text-brand font-semibold text-background shadow-sm transition hover:opacity-90"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/join-in"
-              className="ml-1 rounded-xl bg-brand px-3 py-2 text-base font-semibold text-background shadow-sm transition hover:opacity-90"
-            >
-              Join In
-            </Link>
-          </div>
+        <div className="  flex flex-row items-center gap-1 text-foreground/70">
+          <Link
+            href="/get-started"
+            className={`${styles.navLink1}  `}
+ 
+          >
+            Sign in
+          </Link>
+          <Link
+            href="/join-in"
+            className={styles.navLink2}
+          >
+            Join In
+          </Link>
+        </div>
         {/* Mobile toggle */}
         <button
           className="ml-auto inline-flex items-center justify-center rounded-xl p-2 ring-1 ring-black/10 transition hover:bg-black/5 md:hidden"
