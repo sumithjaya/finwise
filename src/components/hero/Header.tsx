@@ -2,8 +2,8 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation"; 
-import styles from "./Header.module.css"; 
+import { usePathname } from "next/navigation";
+import styles from "./Header.module.css";
 
 type NavItem =
   | { label: string; href: string }
@@ -13,149 +13,65 @@ type NavItem =
     };
 
 const NAV: NavItem[] = [
-  // { label: "How It Works", href: "/howitworks" },
   { label: "For Advisers", href: "/adviser-profile" },
   { label: "Resources", href: "/posts" },
 ];
-
-function classNames(...xs: (string | false | undefined)[]) {
-  return xs.filter(Boolean).join(" ");
-}
 
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
-
   const [scrolled, setScrolled] = useState(false);
-  const isActive = (href: string) =>
-    href === "/"
-      ? pathname === "/"
-      : pathname === href || pathname?.startsWith(href + "/");
 
-  // Close on ESC
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname?.startsWith(href + "/");
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Lock body scroll while drawer is open
   useEffect(() => {
-    if (open) {
-      const original = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = original;
-      };
-    }
+     if (open) {
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = original; // now returns void
+    };
+  }
   }, [open]);
 
-  // Close drawer on route change
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  useEffect(() => setOpen(false), [pathname]);
 
-  // scroll watcher
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) setScrolled(true);
-      else setScrolled(false);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <header
-      className={classNames(
-        "sticky top-0 z-50 w-full transition-all duration-300",
-        scrolled ? "shadow-md" : "",
-        // responsive padding: smaller on mobile, larger on md+
-        "bg-transparent"
-      )}
-      style={{
-        // keep subtle background but allow Tailwind for spacing
-        backgroundColor: "rgba(19, 124, 122, 0.06)",
-      }}
+      className={`${styles.header} ${scrolled ? styles.headerScrolled : ""}`}
     >
-      <div
-        className={classNames(
-          // responsive container spacing
-          "mx-auto flex items-center justify-between gap-3 bg-white",
-          "px-4 py-3 md:px-24 md:py-4",
-          // rounded + shadow (kept from your inline styles)
-          "rounded-[20px]"
-        )}
-        style={{
-          boxShadow: "0px 7px 54px 0px #699E9D26",
-        }}
-      >
-        <Link
-          href="/"
-          className="flex items-center gap-2"
-          aria-label="Go to homepage"
-        >
-          <div className="relative h-10 w-[120px] md:h-15 md:w-[130px] p-1">
-            <div
-              style={{
-                color: "#137C7A",
-                fontWeight: 800,
-                fontSize: "20px",
-                fontStyle: "normal",
-                fontFamily: "Creato Display",
-              }}
-              className="md:text-[28px]"
-            >
-              FinWise
-            </div>
-          </div>
+      <div className={styles.headerContainer}>
+        <Link href="/" className={styles.logo}>
+          FinWise
         </Link>
 
-        {/* Desktop Nav */}
-        <nav aria-label="Main" className="hidden md:flex items-center gap-4">
+        <nav className="hidden md:flex items-center gap-4">
           {NAV.map((item) =>
             "href" in item ? (
               <Link key={item.href} href={item.href} className={styles.navLink}>
                 {item.label}
               </Link>
-            ) : (
-              <details key={item.label} className="group relative">
-                <summary className="list-none cursor-pointer rounded-xl px-3 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground">
-                  <span className="inline-flex items-center gap-1">
-                    {item.label}
-                    <svg
-                      className="h-4 w-4 transition group-open:rotate-180"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" />
-                    </svg>
-                  </span>
-                </summary>
-                <div className="absolute left-0 mt-2 w-[320px] rounded-2xl border border-black/10 bg-background p-2 shadow-xl ring-1 ring-black/5">
-                  {item.items.map((it) => (
-                    <Link key={it.href} href={it.href}>
-                      <div className="text-sm font-medium text-foreground">
-                        {it.label}
-                      </div>
-                      {it.description && (
-                        <div className="text-xs text-foreground/70">
-                          {it.description}
-                        </div>
-                      )}
-                    </Link>
-                  ))}
-                </div>
-              </details>
-            )
+            ) : null
           )}
-
-          <div className="mx-1 h-5 w-px bg-foreground/10" />
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link href="/get-started" className={`${styles.navLink1} hidden md:inline`}>
+          <Link href="/get-started" className={styles.navLink1}>
             Sign in
           </Link>
           <Link href="/join-in" className={styles.navLink2}>
@@ -163,11 +79,9 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Mobile toggle */}
         <button
-          className="ml-2 inline-flex items-center justify-center rounded-xl p-2 ring-1 ring-black/10 transition hover:bg-black/5 md:hidden"
+          className={styles.mobileToggle}
           aria-label="Open menu"
-          aria-expanded={open}
           onClick={() => setOpen(true)}
         >
           <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
@@ -175,32 +89,22 @@ export default function Header() {
           </svg>
         </button>
 
-        {/* Mobile Drawer */}
         {open && (
           <div
-            className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm md:hidden"
+            className={styles.drawerOverlay}
             onClick={() => setOpen(false)}
-            aria-hidden
           >
             <div
               ref={drawerRef}
+              className={styles.drawer}
               onClick={(e) => e.stopPropagation()}
-              className="ml-auto h-full w-80 max-w-[85%] overflow-y-auto border-l border-black/10 bg-background p-4 shadow-2xl flex flex-col"
             >
-              <div className="flex items-center justify-between mb-4">
-                <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-2">
-                  <div className="relative h-10 w-32">
-                    FINWISE
-                  </div>
+              <div className={styles.drawerHeader}>
+                <Link href="/" onClick={() => setOpen(false)}>
+                  FINWISE
                 </Link>
-                <button
-                  aria-label="Close menu"
-                  className="rounded-xl p-2 ring-1 ring-black/10 transition hover:bg-black/5"
-                  onClick={() => setOpen(false)}
-                >
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                    <path d="M6.4 4.98L4.98 6.4 10.59 12l-5.6 5.6 1.41 1.41L12 13.41l5.6 5.6 1.41-1.41L13.41 12l5.6-5.6-1.41-1.41L12 10.59z" />
-                  </svg>
+                <button onClick={() => setOpen(false)} aria-label="Close menu">
+                  ✕
                 </button>
               </div>
 
@@ -211,54 +115,21 @@ export default function Header() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className={classNames(
-                        "block rounded-xl px-3 py-3 text-sm font-medium",
-                        isActive(item.href)
-                          ? "bg-foreground/10 text-foreground"
-                          : "text-foreground/80 hover:bg-foreground/10 hover:text-foreground"
-                      )}
+                      className={styles.drawerLink}
                     >
                       {item.label}
                     </Link>
-                  ) : (
-                    <details
-                      key={item.label}
-                      className="rounded-xl border border-foreground/10 p-2 open:bg-foreground/5"
-                    >
-                      <summary className="cursor-pointer px-1 py-1 text-sm font-semibold text-foreground/80">
-                        {item.label}
-                      </summary>
-                      <div className="mt-1 space-y-1">
-                        {item.items.map((it) => (
-                          <Link
-                            key={it.href}
-                            href={it.href}
-                            onClick={() => setOpen(false)}
-                            className="block rounded-lg px-3 py-2 text-sm text-foreground/80 hover:bg-foreground/10 hover:text-foreground"
-                          >
-                            <div className="font-medium">{it.label}</div>
-                            {it.description && (
-                              <div className="text-xs text-foreground/70">
-                                {it.description}
-                              </div>
-                            )}
-                          </Link>
-                        ))}
-                      </div>
-                    </details>
-                  )
+                  ) : null
                 )}
               </div>
 
-              <div className="mt-3">
-                <Link
-                  href="/get-started"
-                  onClick={() => setOpen(false)}
-                  className="inline-flex w-full items-center justify-center rounded-xl bg-foreground px-3 py-2 text-sm font-semibold text-background shadow-sm transition hover:opacity-90"
-                >
-                  Get Started
-                </Link>
-              </div>
+              <Link
+                href="/get-started"
+                className={styles.drawerButton}
+                onClick={() => setOpen(false)}
+              >
+                Get Started
+              </Link>
             </div>
           </div>
         )}

@@ -1,8 +1,7 @@
 // src/app/posts/[id]/page.tsx
-import { getPostById } from "@/libs/posts";
 import Image from "next/legacy/image";
 import Link from "next/link";
-import React from "react";
+import { getPostById } from "@/libs/posts";
 
 type Tag = {
   id?: number;
@@ -10,9 +9,7 @@ type Tag = {
   slug?: string;
 };
 
-type MediaFormat = {
-  url?: string;
-};
+type MediaFormat = { url?: string };
 
 type Media = {
   url?: string;
@@ -33,44 +30,17 @@ type PostItem = {
   tags?: Tag[];
 };
 
-const STRAPI = process.env.STRAPI_API_URL || "http://localhost:1337";
+export const revalidate = 60; // ISR: revalidate every 60 seconds
 
 /**
- * Utility: fetch with timeout (abort).
- */ 
-
-/** 
-/**
- * Optional: tell Next to revalidate this page every 60 seconds (ISR).
- * You can change this number or remove it if you want full dynamic rendering.
+ * Pre-generate static params for known posts at build time
  */
-export const revalidate = 60;
-
-/**
- * Optionally generate static params so Next pre-renders pages it knows about at build time.
- * This is safe — it will return [] if Strapi is unreachable, avoiding build failure.
- */
-
-
-async function safeFetch(input: RequestInfo, init?: RequestInit, timeoutMs = 5000) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const res = await fetch(input, { ...(init || {}), signal: controller.signal });
-    clearTimeout(timeout);
-    return res;
-  } catch (err) {
-    clearTimeout(timeout);
-    throw err;
-  }
-}
 export async function generateStaticParams() {
+  const STRAPI = process.env.STRAPI_API_URL || "http://localhost:1337";
+
   try {
-    const res = await safeFetch(`${STRAPI}/api/posts?pagination[pageSize]=100`, {}, 7000);
-    if (!res.ok) {
-      console.warn("generateStaticParams: failed to fetch list:", res.status);
-      return [];
-    }
+    const res = await fetch(`${STRAPI}/api/posts?pagination[pageSize]=100`);
+    if (!res.ok) return [];
     const json = await res.json();
     const data = Array.isArray(json.data) ? json.data : [];
     return data.map((p: any) => ({ id: String(p.id ?? p?.attributes?.id ?? p) }));
@@ -81,11 +51,10 @@ export async function generateStaticParams() {
 }
 
 /**
- * Page component for /posts/[id]
+ * The page component for /posts/[id]
  */
 export default async function PostPage({ params }: { params: { id: string } }) {
-  const { id } = params;
-  const post = await getPostById(id);
+  const post: PostItem | null = await getPostById(params.id);
 
   if (!post) {
     return (
@@ -105,9 +74,13 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     post.Image?.url ||
     null;
 
-  // If Content is rich blocks (array), flatten to text. If string, use it.
+  // Flatten rich text blocks into string
   const contentText = Array.isArray(post.Content)
-    ? post.Content.map((block) => (Array.isArray(block.children) ? block.children.map((c: any) => c.text ?? "").join("") : "")).join("\n")
+    ? post.Content
+        .map((block) =>
+          Array.isArray(block.children) ? block.children.map((c) => c.text ?? "").join("") : ""
+        )
+        .join("\n")
     : String(post.Content ?? "");
 
   return (
@@ -118,7 +91,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
         {imgUrl && (
           <div className="mb-6 rounded overflow-hidden">
             <Image
-              src={`${STRAPI}${imgUrl}`}
+              src={`${process.env.STRAPI_API_URL || "http://localhost:1337"}${imgUrl}`}
               alt={post.Image?.alternativeText ?? post.Title}
               width={1200}
               height={700}
