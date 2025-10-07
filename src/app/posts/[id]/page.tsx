@@ -1,4 +1,5 @@
 // src/app/posts/[id]/page.tsx
+import { getPostById } from "@/libs/posts";
 import Image from "next/legacy/image";
 import Link from "next/link";
 import React from "react";
@@ -36,7 +37,21 @@ const STRAPI = process.env.STRAPI_API_URL || "http://localhost:1337";
 
 /**
  * Utility: fetch with timeout (abort).
+ */ 
+
+/** 
+/**
+ * Optional: tell Next to revalidate this page every 60 seconds (ISR).
+ * You can change this number or remove it if you want full dynamic rendering.
  */
+export const revalidate = 60;
+
+/**
+ * Optionally generate static params so Next pre-renders pages it knows about at build time.
+ * This is safe — it will return [] if Strapi is unreachable, avoiding build failure.
+ */
+
+
 async function safeFetch(input: RequestInfo, init?: RequestInit, timeoutMs = 5000) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
@@ -49,88 +64,6 @@ async function safeFetch(input: RequestInfo, init?: RequestInit, timeoutMs = 500
     throw err;
   }
 }
-
-/**
- * Fetch a single post by id (robust to Strapi v4 shape).
- */
-export async function getPostById(id: string | number): Promise<PostItem | null> {
-  try {
-    const res = await safeFetch(`${STRAPI}/api/posts/${id}?populate=deep,3`, {
-      next: { revalidate: 60 },
-    }, 7000);
-
-    if (!res.ok) {
-      console.warn("Strapi get post failed:", res.status, await res.text());
-      return null;
-    }
-
-    const json = await res.json();
-    const raw = json.data ?? json; // handle either shape
-
-    if (!raw) return null;
-
-    // Normalize attributes
-    const attrs = raw.attributes ?? raw;
-
-    // Title
-    const Title = attrs.Title ?? attrs.title ?? attrs.name ?? "Untitled";
-
-    // Content
-    const Content = attrs.Content ?? attrs.content ?? null;
-
-    // Tags (handle v4 tags.data)
-    let tags: Tag[] = [];
-    if (attrs.tags) {
-      if (Array.isArray(attrs.tags)) {
-        tags = attrs.tags.map((t: any) => (t?.attributes ? { id: t.id, Name: t.attributes.Name ?? t.attributes.name } : { id: t.id ?? undefined, Name: t.Name ?? t.name }));
-      } else if (attrs.tags.data) {
-        tags = attrs.tags.data.map((t: any) => {
-          const tAttrs = t.attributes ?? {};
-          return { id: t.id, Name: tAttrs.Name ?? tAttrs.name ?? "" };
-        });
-      }
-    }
-
-    // Image mapping
-    let Image: Media | null = null;
-    if (attrs.Image) {
-      const imageData = attrs.Image?.data?.attributes ?? attrs.Image?.attributes ?? attrs.Image;
-      if (imageData) {
-        Image = {
-          url: imageData.url,
-          alternativeText: imageData.alternativeText ?? imageData.alternative_text ?? imageData.alt,
-          formats: imageData.formats ?? undefined,
-        };
-      }
-    }
-
-    return {
-      id: raw.id ?? id,
-      Title,
-      Content,
-      Image,
-      tags,
-    };
-  } catch (err: any) {
-    if (err?.name === "AbortError") {
-      console.warn("getPostById aborted (timeout).");
-    } else {
-      console.warn("getPostById error:", err?.message ?? err);
-    }
-    return null;
-  }
-}
-
-/**
- * Optional: tell Next to revalidate this page every 60 seconds (ISR).
- * You can change this number or remove it if you want full dynamic rendering.
- */
-export const revalidate = 60;
-
-/**
- * Optionally generate static params so Next pre-renders pages it knows about at build time.
- * This is safe — it will return [] if Strapi is unreachable, avoiding build failure.
- */
 export async function generateStaticParams() {
   try {
     const res = await safeFetch(`${STRAPI}/api/posts?pagination[pageSize]=100`, {}, 7000);
