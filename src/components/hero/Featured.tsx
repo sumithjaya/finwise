@@ -1,7 +1,9 @@
 "use client";
+
+import React, { useEffect, useState, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { GrLocation } from "react-icons/gr";
-import { useEffect, useState, useCallback } from "react";
+
 import styles from "./Featured.module.css";
 
 type Adviser = {
@@ -27,7 +29,7 @@ const ADVISERS: Adviser[] = [
   { name: "Ethan Harris", dept: "Estate Planning", city: "Wollongong", state: "NSW", img: "/images/adviser04.jpg" },
 ];
 
-export default function Featured() {
+export default function Featured()  {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     slidesToScroll: 1,
@@ -47,25 +49,25 @@ export default function Featured() {
     setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on("select", onSelect);
     onSelect();
+    return () => {
+      emblaApi.off?.("select", onSelect);
+    };
   }, [emblaApi, onSelect]);
 
   return (
-    <div style={{ padding: "20px 100px", width: "100%"  ,maxWidth:"100vw"}}>
-      <div style={{ backgroundColor: "#e8f8f6ff", borderRadius: "30px", width: "100%" }}>
-        <div className="text-center p-10 pb-0 mb-1">
-          <h2 style={{ fontSize: "40px", fontWeight: 500 }}>
-            Featured{" "}
-            <span style={{ color: "#137C7A", fontWeight: 800, fontStyle: "italic" }}>
-              Advisers
-            </span>
+    <div className={styles.wrapper}>
+      <div className={styles.panel}>
+        <div className={`${styles.header} text-center`}>
+          <h2 className={styles.h2}>
+            Featured <span className={styles.accent}>Advisers</span>
           </h2>
-          <p style={{ fontSize: "16px", fontWeight: 400, color: "#545454" }}>
+          <p className={styles.lead}>
             One disadvantage of Lorum Ipsum is that in Latin certain letters
             appear more frequently than others — which creates a distinct visual impression.
           </p>
         </div>
 
-        <div style={{   padding: "50px", borderRadius: "0 0 30px 30px" }}>
+        <div className={styles.content}>
           <div className={styles.embla} ref={emblaRef}>
             <div className={styles.embla__container}>
               {ADVISERS.map((a, idx) => (
@@ -73,26 +75,23 @@ export default function Featured() {
                   <div className={styles.card}>
                     <div className={styles.outerWrapper}>
                       <div className={styles.border} />
-                      <div className={styles.inner}>
-                        <div
-                          style={{
-                            backgroundImage: `url("${a.img}")`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: "50%",
-                          }}
-                        />
-                      </div>
+                      <div
+                        className={styles.avatar}
+                        // dynamic background image stays inline because it's per-item
+                        style={{ backgroundImage: `url("${a.img}")` }}
+                        role="img"
+                        aria-label={`${a.name} avatar`}
+                      />
                     </div>
 
                     <h4 className={styles.ftr_card_title}>{a.name}</h4>
                     <div className={styles.ftr_card_dep}>{a.dept}</div>
+
                     <div className={styles.locationRow}>
-                      <GrLocation />
-                      <div>{a.city} {a.state}</div>
+                      <GrLocation className={styles.locationIcon} />
+                      <div className={styles.locationText}>{a.city} {a.state}</div>
                     </div>
+
                     <button className={styles.viewBtn}>View Profile</button>
                   </div>
                 </div>
@@ -100,15 +99,16 @@ export default function Featured() {
             </div>
           </div>
 
-          {/* Dots below */}
+          {/* Dots */}
           <div className={styles.dots}>
             {scrollSnaps.map((_, i) => (
               <button
                 key={i}
                 className={`${styles.dot} ${i === selectedIndex ? styles.dotActive : ""}`}
                 onClick={() => emblaApi?.scrollTo(i)}
+                aria-label={`Go to slide ${i + 1}`}
               >
-                <div className={styles.dotFill}></div>
+                <div className={styles.dotFill} />
               </button>
             ))}
           </div>

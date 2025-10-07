@@ -1,8 +1,7 @@
 import Link from "next/link";
 import styles from "./BlogPage.module.css";
 import Image from "next/image";
-import { HiOutlineShare } from "react-icons/hi2";
-import { backIn } from "framer-motion";
+import { HiOutlineShare } from "react-icons/hi2"; 
 
 export default function BlogPostThumbCard({
   image,
@@ -12,7 +11,15 @@ export default function BlogPostThumbCard({
   subtitle,
   auther,
   url
-}: any) {
+} : {
+  image: string;
+  date: string;
+  month: string;
+  title: string;
+  subtitle: string;
+  auther: string;
+  url: string;
+}) {
   return (
     <div>
       <div className={styles.blog_thubmb_card}>
@@ -20,7 +27,7 @@ export default function BlogPostThumbCard({
           <div
             className={styles.blog_thumb_image_cont}
             style={{
-              backgroundImage: `url(/images/${image})`, // ✅ dynamic file name
+              backgroundImage: `url(/images/${image})`,  
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -39,6 +46,7 @@ export default function BlogPostThumbCard({
           <Link className={styles.blog_thumb_seemore} href={url}>
             See More
           </Link>
+           
         </div>
         <div style={{width:'100%'  }}>
           <div className={styles.blog_thum_footer}>

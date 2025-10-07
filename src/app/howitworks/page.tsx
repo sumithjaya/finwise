@@ -1,12 +1,6 @@
-import Image from "next/image";
-import { BsDisplay } from "react-icons/bs";
-import { MdOutlineConstruction } from "react-icons/md";
+import Image from "next/image"; 
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout( ) {
   return (
     <div>
       <div>

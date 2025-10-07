@@ -1,8 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: 'export',
    trailingSlash: true,
+    images: {
+    domains: ["localhost"], // allow images from your Strapi server
+  },
    async redirects() {
     return [
       {

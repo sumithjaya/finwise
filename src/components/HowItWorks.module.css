@@ -1,11 +1,174 @@
-.howitworks_bullet_text{
-    font-size: 16px;
-    font-weight: 500;
-    font-family: "Creato Display";
-    font-style: normal;
-    text-align: center;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    margin-top: 20px;
+/* HowItWorks.module.css
+   Styles for the HowItWorks component.
+   Uses class names referenced by your component:
+   - how_it_works_container
+   - howitworks_bullet_text
+   - howitworks_bullet_icon
+*/
+ 
+
+/* container (keeps inline styles as fallback but tidy CSS defaults) */
+.how_it_works_container {
+  box-sizing: border-box;
+  width: 100%;
+  color: #222;
+  background: #fff;
+  /* a little spacing fallback if inline styles removed later */
+  padding: 20px 40px;
+}
+
+/* section interior */
+.how_it_works_container section {
+  width: 100%;
+}
+
+/* text for bullets */
+.howitworks_bullet_text {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--muted);
+  max-width: var(--bullet-max-width);
+  word-break: break-word;
+  font-family: Inter, "Creato Display", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+ 
+
+/* style the immediate div that contains the Image component */
+.how_it_works_container .howitworks_bullet_icon,
+.how_it_works_container div[style*="border: 2px solid #dddddd"] {
+  background-color: #fff;
+  border: 2px solid var(--card-border);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  min-width: var(--circle-size);
+  min-height: var(--circle-size);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+/* subtle lift on hover (desktop) */
+@media (hover: hover) and (pointer: fine) {
+  .how_it_works_container .howitworks_bullet_icon:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(11, 22, 22, 0.08);
+    border-color: rgba(19,124,122,0.9);
+  }
+}
+
+/* row containing the bullets: your component uses className="flex" inline.
+   we target .flex inside this module to keep layout consistent. */
+.how_it_works_container .flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  width: 100%;
+  position: relative;
+  /* background image is set inline in your JSX; this keeps fallback properties */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 87%;
+  padding: 28px 0;
+}
+
+/* make each bullet column responsive and centered */
+.how_it_works_container .flex > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1 1 var(--bullet-max-width);
+  max-width: var(--bullet-max-width);
+  padding: 0 8px;
+}
+
+/* small visual heading tweaks that pair with your inline <h2> */
+.how_it_works_container .text-center h2 {
+  margin: 0;
+  line-height: 1.05;
+}
+
+/* utility: center lines for very narrow content */
+.how_it_works_container .text-center {
+  display: block;
+  width: 100%;
+}
+
+/* responsiveness */
+/* Tablet: stack into two rows when space is limited */
+@media (max-width: 992px) {
+  .how_it_works_container {
+    padding: 28px 30px;
+  }
+
+  .how_it_works_container .flex {
+    flex-wrap: wrap;
+    gap: 26px;
+    background-size: 140%;
+    background-position: 50% 10%;
+  }
+
+  .how_it_works_container .flex > div {
+    flex: 1 1 42%;
+    max-width: 42%;
+  }
+
+  /* adjust vertical offsets you were using with inline margins */
+  .how_it_works_container .flex > div:nth-child(1) { margin-top: 36px; }
+  .how_it_works_container .flex > div:nth-child(2) { margin-top: 8px; }
+  .how_it_works_container .flex > div:nth-child(3) { margin-top: 48px; }
+  .how_it_works_container .flex > div:nth-child(4) { margin-top: 24px; }
+}
+
+/* Mobile: stack vertically and scale everything down */
+@media (max-width: 640px) {
+   
+  .how_it_works_container {
+    padding: 20px 18px;
+  }
+
+  .how_it_works_container .flex {
+    flex-direction: column;
+    align-items: center;
+    background-size: 220%;
+    background-position: 50% 0%;
+  }
+
+  .how_it_works_container .flex > div {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .how_it_works_container .howitworks_bullet_text {
+    font-size: 14px;
+    padding: 0 8px;
+  }
+
+  /* remove staggered vertical offsets on narrow screens */
+  .how_it_works_container .flex > div:nth-child(1),
+  .how_it_works_container .flex > div:nth-child(2),
+  .how_it_works_container .flex > div:nth-child(3),
+  .how_it_works_container .flex > div:nth-child(4) {
+    margin-top: 12px;
+  }
+}
+
+/* accessibility: focus styles for keyboard users if the icon wrapper becomes interactive */
+.how_it_works_container .howitworks_bullet_icon:focus {
+  outline: 3px solid rgba(19,124,122,0.12);
+  outline-offset: 4px;
+}
+
+/* small visual accent for the "Works" word if you ever move inline styles into CSS */
+.how_it_works_container .accent {
+  color: var(--accent);
+  font-weight: 800;
+  font-style: italic;
 }

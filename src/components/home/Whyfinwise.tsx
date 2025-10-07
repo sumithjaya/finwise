@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
-import styles from "./Whyfinwise.module.css";
-import { RxFontFamily } from "react-icons/rx";
+import styles from "./Whyfinwise.module.css"; 
 export default function Whyfinwise() {
   return (
     <div style={{ display: "flex", gap: 20, padding: "0 100px",marginTop:'100px' }}>
@@ -18,8 +17,8 @@ export default function Whyfinwise() {
           <div
             style={{ 
               display: "felx",
-              flexDirection: "raw",
-              jsuifyContent: "flex-end",
+              flexDirection: "row",
+              justifyContent: "flex-end",
               paddingLeft: "100px",
             }}
           >

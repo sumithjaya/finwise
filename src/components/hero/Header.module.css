@@ -49,3 +49,21 @@
   border-radius: 16px;
   border-style: solid;
 }
+
+@media (max-width: 640px) {
+
+  .header-main{
+    display: none;
+  }
+  .navLink {
+    padding: 0 10px;
+    font-weight: 400;
+    font-size: 12px;
+    font-style: normal;
+    font-family: "Creato Display";
+    text-decoration: none;
+    color: #545454; /* base color */
+  
+  }
+  
+}

@@ -2,10 +2,8 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import Image from "next/image";
-import styles from "./Header.module.css";
-import { MdHeight } from "react-icons/md";
+import { usePathname } from "next/navigation"; 
+import styles from "./Header.module.css"; 
 
 type NavItem =
   | { label: string; href: string }
@@ -15,10 +13,9 @@ type NavItem =
     };
 
 const NAV: NavItem[] = [
-  //   { label: "Home", href: "/" },
-  { label: "How It Works", href: "/howitworks" },
+  // { label: "How It Works", href: "/howitworks" },
   { label: "For Advisers", href: "/adviser-profile" },
-  { label: "Resources", href: "/blog" },
+  { label: "Resources", href: "/posts" },
 ];
 
 function classNames(...xs: (string | false | undefined)[]) {
@@ -29,8 +26,8 @@ export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
-  
- const [scrolled, setScrolled] = useState(false); // <-- new
+
+  const [scrolled, setScrolled] = useState(false);
   const isActive = (href: string) =>
     href === "/"
       ? pathname === "/"
@@ -43,7 +40,6 @@ export default function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Close drawer when the route changes
   // Lock body scroll while drawer is open
   useEffect(() => {
     if (open) {
@@ -59,6 +55,8 @@ export default function Header() {
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  // scroll watcher
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) setScrolled(true);
@@ -67,50 +65,55 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <header
-     className={classNames(
+      className={classNames(
         "sticky top-0 z-50 w-full transition-all duration-300",
-        scrolled ? "bg-red-500 shadow-md py-3" : "bg-transparent py-6"
+        scrolled ? "shadow-md" : "",
+        // responsive padding: smaller on mobile, larger on md+
+        "bg-transparent"
       )}
-       
       style={{
+        // keep subtle background but allow Tailwind for spacing
         backgroundColor: "rgba(19, 124, 122, 0.06)",
-        padding: "30px 100px",
       }}
     >
       <div
-        className="mx-auto flex h-16  items-center justify-between gap-3  bg-white "
+        className={classNames(
+          // responsive container spacing
+          "mx-auto flex items-center justify-between gap-3 bg-white",
+          "px-4 py-3 md:px-24 md:py-4",
+          // rounded + shadow (kept from your inline styles)
+          "rounded-[20px]"
+        )}
         style={{
-          borderRadius: "20px",
-          padding: "5px 30px",
           boxShadow: "0px 7px 54px 0px #699E9D26",
-        }} 
-
+        }}
       >
-        {
-          <Link
-            href="/"
-            className="flex items-center gap-2  "
-            aria-label="Go to homepage"
-          >
-            <div className="relative h-15 w-[130px] p-2">
-              <div
-                style={{
-                  color: "#137C7A",
-                  fontWeight: 800,
-                  fontSize: "28px",
-                  fontStyle: "normal",
-                  fontFamily: "Creato Display",
-                }}
-              >
-                FinWise
-              </div>
+        <Link
+          href="/"
+          className="flex items-center gap-2"
+          aria-label="Go to homepage"
+        >
+          <div className="relative h-10 w-[120px] md:h-15 md:w-[130px] p-1">
+            <div
+              style={{
+                color: "#137C7A",
+                fontWeight: 800,
+                fontSize: "20px",
+                fontStyle: "normal",
+                fontFamily: "Creato Display",
+              }}
+              className="md:text-[28px]"
+            >
+              FinWise
             </div>
-          </Link>
-        }
+          </div>
+        </Link>
+
         {/* Desktop Nav */}
-        <nav aria-label="Main" className=" hidden items-center gap-1 md:flex">
+        <nav aria-label="Main" className="hidden md:flex items-center gap-4">
           {NAV.map((item) =>
             "href" in item ? (
               <Link key={item.href} href={item.href} className={styles.navLink}>
@@ -147,28 +150,22 @@ export default function Header() {
               </details>
             )
           )}
-          {/* CTA then divider */}
 
           <div className="mx-1 h-5 w-px bg-foreground/10" />
         </nav>
-        <div className="  flex flex-row items-center gap-1 text-foreground/70">
-          <Link
-            href="/get-started"
-            className={`${styles.navLink1}  `}
- 
-          >
+
+        <div className="flex items-center gap-2">
+          <Link href="/get-started" className={`${styles.navLink1} hidden md:inline`}>
             Sign in
           </Link>
-          <Link
-            href="/join-in"
-            className={styles.navLink2}
-          >
+          <Link href="/join-in" className={styles.navLink2}>
             Join In
           </Link>
         </div>
+
         {/* Mobile toggle */}
         <button
-          className="ml-auto inline-flex items-center justify-center rounded-xl p-2 ring-1 ring-black/10 transition hover:bg-black/5 md:hidden"
+          className="ml-2 inline-flex items-center justify-center rounded-xl p-2 ring-1 ring-black/10 transition hover:bg-black/5 md:hidden"
           aria-label="Open menu"
           aria-expanded={open}
           onClick={() => setOpen(true)}
@@ -188,22 +185,12 @@ export default function Header() {
             <div
               ref={drawerRef}
               onClick={(e) => e.stopPropagation()}
-              className="ml-auto h-full w-80 max-w-[85%] overflow-y-auto border-l border-black/10 bg-background p-4 shadow-2xl flex items-center"
+              className="ml-auto h-full w-80 max-w-[85%] overflow-y-auto border-l border-black/10 bg-background p-4 shadow-2xl flex flex-col"
             >
-              <div className="  flex items-center justify-between">
-                <Link
-                  href="/"
-                  onClick={() => setOpen(false)}
-                  className="flex items-center gap-2"
-                >
-                  <div className="relative ">
-                    <Image
-                      src="/images/logo.png"
-                      alt="Thero"
-                      fill
-                      className="object-contain"
-                      width={500}
-                    />
+              <div className="flex items-center justify-between mb-4">
+                <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-2">
+                  <div className="relative h-10 w-32">
+                    FINWISE
                   </div>
                 </Link>
                 <button
@@ -211,17 +198,13 @@ export default function Header() {
                   className="rounded-xl p-2 ring-1 ring-black/10 transition hover:bg-black/5"
                   onClick={() => setOpen(false)}
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5"
-                    fill="currentColor"
-                  >
+                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
                     <path d="M6.4 4.98L4.98 6.4 10.59 12l-5.6 5.6 1.41 1.41L12 13.41l5.6 5.6 1.41-1.41L13.41 12l5.6-5.6-1.41-1.41L12 10.59z" />
                   </svg>
                 </button>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1 flex-1">
                 {NAV.map((item) =>
                   "href" in item ? (
                     <Link

@@ -1,97 +1,42 @@
 "use client";
-import Image from "next/image";  // if @ alias points to project root
-import styles from "./HowItWorks.module.css"; 
+
+import React from "react";
+import Image from "next/image";
+import styles from "./HowItWorks.module.css";
 import RevealStagger from "./ui/RevealStagger";
+
 export default function HowItWorks() {
   return (
     <RevealStagger stagger={200}>
-      <div
-        style={{
-          boxSizing: "border-box",
-          justifyContent: "space-between",
-          padding: "100px 100px",
-          paddingTop: "20px",
-          width: "100vw",
-          borderTop: "1px dashed #137c7a46",
-        }}
-      >
-        <section style={{ backgroundColor: "#fff" }}>
+      <div className={styles.how_it_works_container}>
+        <section className={styles.how_it_works_section}>
           <div>
-            <div className="text-center p-10">
-              <h2
-                style={{
-                  fontSize: "40px",
-                  fontWeight: 500,
-                  fontFamily: "Creato Display",
-                  fontStyle: "normal",
-                }}
-              >
+            <div className={`${styles.text_center} text-center p-10`}>
+              <h2 className={styles.heading}>
                 How It{" "}
-                <span
-                  style={{
-                    color: "#137C7A",
-                    fontWeight: 800,
-                    fontStyle: "italic",
-                    fontFamily: "Creato Display",
-                    fontSize: "40px",
-                  }}
-                >
+                <span className={styles.accent}>
                   Works
                 </span>
               </h2>
-              <p
-                style={{
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  fontFamily: "Creato Display",
-                  fontStyle: "normal",
-                  color: "#545454",
-                  paddingTop: "20px",
-                }}
-              >
+
+              <p className={styles.lead}>
                 There is now an abundance of readable dummy texts. These are
                 usually used when a text is required
               </p>
             </div>
 
-            <div style={{ padding: "10px 50px 0 50px",}}>
+            <div className={styles.inner_padding}>
               <div
-                className="flex"
+                className={`${styles.bullets_row} flex`}
                 style={{
-                  backgroundImage: 'url("./images/svg/curvedline.svg")',
-                  backgroundRepeat: "no-repeat",
-                  justifyContent: "space-between",
-                  backgroundSize: "87%",
-                  backgroundPosition: "center",
-                  width: "100%",
-                  position: "relative",
+                  backgroundImage: 'url("/images/svg/curvedline.svg")',
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    maxWidth: "225px",
-                    marginTop:"85px"
-                  }}
-                >
-                  <div
-                    style={{
-                      backgroundColor: "#fff",
-                      border: "2px solid #dddddd",
-                      width: "110px",
-                      height: "110px",
-                      borderRadius: "50%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
+                <div className={styles.bullet_column}>
+                  <div className={styles.circle_wrapper}>
                     <Image
-                      src={"./images/svg/doc-search.svg"}
-                      alt="book icon"
+                      src={"/images/svg/doc-search.svg"}
+                      alt="doc search icon"
                       width={49}
                       height={49}
                       draggable={false}
@@ -102,65 +47,29 @@ export default function HowItWorks() {
                     are looking for
                   </div>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                 maxWidth: "225px",
-                  }}
-                >
+
+                <div className={styles.bullet_column}>
                   <div
-                    style={{
-                      backgroundColor: "#FFFFFF",
-                      border: "2px solid #dddddd",
-                      width: "110px",
-                      height: "110px",
-                      borderRadius: "50%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    className={styles.howitworks_bullet_icon}
+                    className={`${styles.circle_wrapper} ${styles.howitworks_bullet_icon}`}
                   >
                     <Image
-                      src={"./images/svg/bookjournal.svg"}
-                      alt="book icon"
+                      src={"/images/svg/bookjournal.svg"}
+                      alt="book journal icon"
                       width={49}
                       height={49}
                       draggable={false}
                     />
                   </div>
                   <div className={styles.howitworks_bullet_text}>
-                    Receive your Free Wealth Journal/Financial Plan 
+                    Receive your Free Wealth Journal/Financial Plan
                   </div>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  maxWidth: "225px",
-                    marginTop:"155px"
-                  }}
-                >
-                  <div
-                    style={{
-                      backgroundColor: "#FFFFFF",
-                      border: "2px solid #dddddd",
-                      width: "110px",
-                      height: "110px",
-                      borderRadius: "50%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
+
+                <div className={styles.bullet_column}>
+                  <div className={styles.circle_wrapper}>
                     <Image
-                      src={"./images/svg/user-tick.svg"}
-                      alt="book icon"
+                      src={"/images/svg/user-tick.svg"}
+                      alt="user tick icon"
                       width={49}
                       height={49}
                       draggable={false}
@@ -170,29 +79,11 @@ export default function HowItWorks() {
                     Get matched with a Qualified Financial Expert
                   </div>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    maxWidth: "225px",  marginTop:"105px"
-                  }}
-                >
-                  <div
-                    style={{
-                      backgroundColor: "#FFFFFF",
-                      border: "2px solid #dddddd",
-                      width: "110px",
-                      height: "110px",
-                      borderRadius: "50%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
+
+                <div className={styles.bullet_column}>
+                  <div className={styles.circle_wrapper}>
                     <Image
-                      src={"./images/svg/book.svg"}
+                      src={"/images/svg/book.svg"}
                       alt="book icon"
                       width={49}
                       height={49}

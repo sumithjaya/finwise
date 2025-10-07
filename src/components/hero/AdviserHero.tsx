@@ -1,6 +1,4 @@
-import Image from "next/image";
-import styles from "./AdviserHero.module.css";
-import Clientsblock from "./Clientsblock";
+import Image from "next/image"; 
 export default function AdviserHero() {
   return (
     <div

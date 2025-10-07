@@ -1,37 +1,13 @@
 "use client";
 import Image from "next/image";
-import { PopupButton } from "@typeform/embed-react";
-import Reveal from "@/components/ui/Reveal"; // if @ alias points to project root
-import styles from "./Hero.module.css";
-import { text } from "stream/consumers";
-import { useEffect, useState } from "react"; 
+import { PopupButton } from "@typeform/embed-react"; 
+import styles from "./Hero.module.css";  
 import RevealStagger from "../ui/RevealStagger";
 export default function Hero() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      // Calculate mouse position relative to viewport center
-      const x = (e.clientX - window.innerWidth / 2) / window.innerWidth;
-      const y = (e.clientY - window.innerHeight / 2) / window.innerHeight;
-      setMousePos({ x, y });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+   
   return (
     <RevealStagger stagger={200}>
-      <div
-        style={{
-          boxSizing: "border-box",
-          justifyContent: "space-between",
-          padding: "50px 100px",
-          width: "100vw",
-          height: "85vh",
-          background:
-            "linear-gradient(0deg,rgba(255, 255, 255, 0) 0%, rgba(19, 124, 122, 0.10) 100%)",
-        }}
-      >
+      <div style={{}} className={styles.hero}>
         <section
           className="relative   text-center  flex flex-row"
           aria-labelledby="hero-heading"
@@ -49,90 +25,152 @@ export default function Hero() {
                   marginBottom: "50px",
                 }}
               >
-                <h2
-                  style={{
-                    fontWeight: 500,
-                    fontSize: "60px", lineHeight: "80px",
-                    textAlign: "left",fontFamily: "Creato Display",
-                    padding: 0,margin: 0,  
-                  }}
-                >
+                <h2 className={styles.hero_content_left_title}>
                   Find the Right
                 </h2>
-                <h2
-                  style={{
-                    fontWeight: 800,
-                    fontSize: "60px",
-                    lineHeight: "80px",
-                    fontStyle: "italic",
-                    fontFamily: "Creato Display",
-                    textAlign: "left",
-                    padding: 0,
-                    margin: 0,  
-                  }}
-                  className="text-brand"
-                >
+                <h2 className={styles.hero_content_left_title_grn}>
                   Financial Expert
                 </h2>
-                <h2
-                  style={{
-                    fontWeight: 500,
-                    fontSize: "60px", lineHeight: "80px",
-                    textAlign: "left",fontFamily: "Creato Display",
-                    padding: 0,
-                  }}
-                >
+                <h2 className={styles.hero_content_left_title}>
                   for Your Future.
                 </h2>
               </div>
-
-              <div
+ <div className={styles.hero_content_mobile_image}>
+             <div
                 style={{
-                  borderLeft: "5px solid #137C7A",
-                  textAlign: "left",
-                  fontSize: "20px",
-                  fontWeight: 500,
-                  fontFamily: "Creato Display",
-                  color: "#545454",
-                  paddingLeft: "10px",
-                  margin: "50px 0px",
+                  height: "200px",
+                  width: "300px",
+                  borderRadius: "200px",
+                  backgroundImage: 'url("/images/heromain.jpg")',
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  zIndex: 2, // above red box
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "20px",
                 }}
+              >
+                {/* Avatar Card */}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "10px", 
+                    backgroundColor: "#FFFFFF",
+                    padding: "10px",
+                    borderRadius: "10px",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "#000000",
+                    position: "absolute",
+                    left: -20,
+                    top: 30,
+                    boxShadow: "0px 4px 14px 10px rgba(0, 0, 0, 0.25)",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Image
+                      src="/images/heroavatar.jpg"
+                      alt="Avatar"
+                      width={54}
+                      height={54}
+                      style={{ objectFit: "cover" }}
+                      priority
+                    />
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <p style={{ fontSize: "10px", fontWeight: 700 }}>
+                      John Doe
+                    </p>
+                    <div
+                      style={{
+                        height: "5px",
+                        width: "90px",
+                        borderRadius: "10px",
+                        backgroundColor: "#D2E9E6",
+                        marginTop: "10px",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Stats Card */}
+                <div
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    padding: "10px",
+                    borderRadius: "10px",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "#000000",
+                    boxShadow: "0px 4px 14px 10px rgba(0, 0, 0, 0.25)",
+                    position: "absolute",
+                    right: -10,
+                    bottom:30,
+                  }}
+                >
+                  <h5
+                    style={{
+                      fontWeight: 700,
+                      fontSize: "15px",
+                      color: "#1F1F1F",
+                    }}
+                  >
+                    1500+
+                  </h5>
+                  <p
+                    style={{
+                      fontWeight: 400,
+                      fontSize: "10px",
+                      color: "#545454",
+                    }}
+                  >
+                    Financial Adviser
+                  </p>
+                </div>
+              </div>
+            </div>
+              <div
+               
+                className={styles.hero_content_left_subtitle}  
               >
                 Compare, connect, and build your financial plan with confidence
               </div>
               <div className={styles.hero_content_left_button}>
                 <div
-                  style={{
-                    textAlign: "jsustify",
-                    fontSize: "16px",
-                    fontWeight: 500,
-                    fontFamily: "Creato Display",
-                    color: "#545454", 
-                    borderRight:"1px dashed #8a9191ff",
-                    marginRight:'10px'
-                  }}
+                  className={styles.hero_content_left_button_text}
                 >
                   Spend 5 mins and answer some simple questions and receive your
                   Free Wealth Journal & Financial Plan
                 </div>
                 <PopupButton
                   id={process.env.NEXT_PUBLIC_TYPEFORM_ID!}
-                  style={{
-                    backgroundColor: "#137C7A",
-                    color: "#FFFFFF",
-                    borderRadius: "10px",
-                    padding: "10px 20px",
-                    fontWeight: 700,
-                    fontSize: "16px",
-                    border: "none",
-                    cursor: "pointer",
-                    whiteSpace: "nowrap",
-                  }}
+                  
+                  className={styles.hero_content_left_button_cta}
                 >
                   Get Started
                 </PopupButton>
               </div>
             </div>
+           
             <div className={styles.hero_content_center}>
               <div>
                 <svg
@@ -160,8 +198,8 @@ export default function Hero() {
                   >
                     <g opacity="0.2">
                       <path
-                        fillRule ="evenodd"
-                        clipRule ="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M55.0792 49.875L44.8271 53.549C48.4586 52.9246 51.8698 51.6667 55.0792 49.875ZM78.8689 48.1035C74.7969 49.0555 70.7965 50.1376 66.6685 50.6287C70.9946 50.9841 74.9783 49.6657 78.8689 48.1035ZM68.7693 35.5406C68.7909 33.9309 67.7519 34.1327 66.7987 34.2703C63.5751 34.7336 61.9179 37.2181 60.3564 39.6088C59.2181 41.3511 58.2544 43.3057 58.2279 45.5064C58.2174 46.3454 58.4407 47.0124 59.5266 46.4133C62.4911 44.7771 65.1563 42.7886 67.0794 39.95C67.9956 38.5976 68.6317 37.1145 68.7693 35.5406ZM66.6854 48.724C69.3074 48.8542 71.8234 48.1318 74.3351 47.4938C85.1874 44.7366 94.3289 38.9613 102.615 31.5923C108.149 26.6695 113.16 21.2674 117.991 15.6778C118.432 15.1682 118.857 14.6351 119.521 14.4019C120.267 14.1403 120.794 14.2002 120.443 15.1941C120.357 15.439 120.017 15.6679 120.482 15.8104C122.084 16.3028 121.65 17.4701 121.365 18.5318C120.832 20.5246 119.498 22.0954 118.357 23.7303C115.16 28.3113 111.786 32.7756 107.856 36.7587C104.208 40.4561 100.064 43.5835 95.8355 46.5931C93.1437 48.5087 90.3791 50.4201 87.2104 51.2857C85.1053 51.8607 83.405 53.1464 81.3511 53.7313C77.4137 54.8523 73.4799 55.927 69.3654 56.1553C65.9789 56.3429 62.78 55.6716 59.834 53.9867C58.8629 53.4308 57.9498 53.392 56.9639 53.7979C54.3067 54.8912 51.6062 55.9024 48.9144 56.8691C44.5352 58.443 39.9265 59.3148 35.3142 60.0033C27.9575 61.1015 20.5904 61.4476 13.2319 59.9885C8.90701 59.1309 4.69872 58.0044 1.45104 54.7258C0.595934 53.8627 -0.0383017 52.9101 0.00180075 51.6274C0.0184587 51.0747 0.193059 50.6564 0.734133 50.425C1.37392 50.1523 1.43006 50.6058 1.72497 51.0204C3.74675 53.8645 6.96914 54.2372 10.0311 54.8677C18.4693 56.6057 26.8649 55.8098 35.2401 54.3452C41.6491 53.2241 47.8872 51.4886 53.9149 49.0251C54.3937 48.8295 55.0538 48.8462 54.6552 47.9423C53.2665 44.7934 53.4904 41.5735 54.6207 38.4399C56.3648 33.6029 59.2066 29.6815 64.4285 28.1836C67.2345 27.3784 69.1057 28.2903 70.7517 30.681C74.9465 36.771 72.6446 43.3287 67.8619 47.2544C67.4331 47.6055 67.0049 47.9565 66.5774 48.307C66.6132 48.4464 66.6496 48.5852 66.6854 48.724Z"
                         fill="#137C7A"
                       />

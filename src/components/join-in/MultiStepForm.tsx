@@ -33,11 +33,7 @@ export default function MultiStepForm() {
   const [step, setStep] = useState(1);
   const [data, setData] = useState<FormData>(initialData);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
-
-  const progress = useMemo(
-    () => Math.round((step / TOTAL_STEPS) * 100),
-    [step]
-  );
+ 
 
   function update<K extends keyof FormData>(key: K, value: FormData[K]) {
     setData((d) => ({ ...d, [key]: value }));

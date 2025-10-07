@@ -1,14 +1,5 @@
 import React from "react";
-import styles from "./QuestionsForm.module.css";
-import {
-  MdEmail,
-  MdMessage,
-  MdOutlineMail,
-  MdOutlinePhone,
-  MdOutlineWhatsapp,
-} from "react-icons/md";
-import { FaUser } from "react-icons/fa";
-import VsxIcon from "vue-iconsax";
+import styles from "./QuestionsForm.module.css"; 
 import Image from "next/image";
 
 export default function QuestionsForm() {
