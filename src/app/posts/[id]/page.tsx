@@ -59,12 +59,15 @@ export async function generateStaticParams() {
  * The page component for /posts/[id]
  */
 type Props = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
+
 export default async function PostPage({ params }: Props) {
-  const post: PostItem | null = await getPostById(params.id);
+  // Await the params Promise
+  const { id } = await params;
+  const post: PostItem | null = await getPostById(id);
 
   if (!post) {
     return (
