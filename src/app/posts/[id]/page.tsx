@@ -25,7 +25,10 @@ type Media = {
 type PostItem = {
   id: number | string;
   Title: string;
-  Content?: { type?: string; children?: { type?: string; text?: string }[] }[] | string | null;
+  Content?:
+    | { type?: string; children?: { type?: string; text?: string }[] }[]
+    | string
+    | null;
   Image?: Media | null;
   tags?: Tag[];
 };
@@ -43,7 +46,9 @@ export async function generateStaticParams() {
     if (!res.ok) return [];
     const json = await res.json();
     const data = Array.isArray(json.data) ? json.data : [];
-    return data.map((p: any) => ({ id: String(p.id ?? p?.attributes?.id ?? p) }));
+    return data.map((p: any) => ({
+      id: String(p.id ?? p?.attributes?.id ?? p),
+    }));
   } catch (err) {
     console.warn("generateStaticParams failed:", (err as any)?.message ?? err);
     return [];
@@ -53,7 +58,12 @@ export async function generateStaticParams() {
 /**
  * The page component for /posts/[id]
  */
-export default async function PostPage({ params }: { params: { id: string } }) {
+type Props = {
+  params: {
+    id: string;
+  };
+};
+export default async function PostPage({ params }: Props) {
   const post: PostItem | null = await getPostById(params.id);
 
   if (!post) {
@@ -76,11 +86,11 @@ export default async function PostPage({ params }: { params: { id: string } }) {
 
   // Flatten rich text blocks into string
   const contentText = Array.isArray(post.Content)
-    ? post.Content
-        .map((block) =>
-          Array.isArray(block.children) ? block.children.map((c) => c.text ?? "").join("") : ""
-        )
-        .join("\n")
+    ? post.Content.map((block) =>
+        Array.isArray(block.children)
+          ? block.children.map((c) => c.text ?? "").join("")
+          : ""
+      ).join("\n")
     : String(post.Content ?? "");
 
   return (
@@ -100,11 +110,17 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           </div>
         )}
 
-        <div className="mb-6 whitespace-pre-wrap">{contentText || "No content."}</div>
+        <div className="mb-6 whitespace-pre-wrap">
+          {contentText || "No content."}
+        </div>
 
         {post.tags && post.tags.length > 0 && (
           <div className="text-sm text-gray-600">
-            Tags: {post.tags.map((t) => t.Name).filter(Boolean).join(", ")}
+            Tags:{" "}
+            {post.tags
+              .map((t) => t.Name)
+              .filter(Boolean)
+              .join(", ")}
           </div>
         )}
 

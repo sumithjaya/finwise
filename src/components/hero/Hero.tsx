@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
-import { PopupButton } from "@typeform/embed-react"; 
-import styles from "./Hero.module.css";  
+import { PopupButton } from "@typeform/embed-react";
+import styles from "./Hero.module.css";
 import RevealStagger from "../ui/RevealStagger";
 export default function Hero() {
-   
   return (
     <RevealStagger stagger={200}>
       <div style={{}} className={styles.hero}>
@@ -35,142 +34,144 @@ export default function Hero() {
                   for Your Future.
                 </h2>
               </div>
- <div className={styles.hero_content_mobile_image}>
-             <div
-                style={{
-                  height: "200px",
-                  width: "300px",
-                  borderRadius: "200px",
-                  backgroundImage: 'url("/images/heromain.jpg")',
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  zIndex: 2, // above red box
-                  position: "relative",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  gap: "20px",
-                }}
-              >
-                {/* Avatar Card */}
+              <div className={styles.hero_content_mobile_image}>
                 <div
                   style={{
+                    height: "200px",
+                    width: "300px",
+                    borderRadius: "200px",
+                    backgroundImage: 'url("/images/heromain.jpg")',
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    zIndex: 2, // above red box
+                    position: "relative",
                     display: "flex",
-                    gap: "10px", 
-                    backgroundColor: "#FFFFFF",
-                    padding: "10px",
-                    borderRadius: "10px",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
                     alignItems: "center",
-                    justifyContent: "center",
-                    color: "#000000",
-                    position: "absolute",
-                    left: -20,
-                    top: 30,
-                    boxShadow: "0px 4px 14px 10px rgba(0, 0, 0, 0.25)",
+                    gap: "20px",
                   }}
                 >
-                  <div
-                    style={{
-                      width: "24px",
-                      height: "24px",
-                      borderRadius: "50%",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <Image
-                      src="/images/heroavatar.jpg"
-                      alt="Avatar"
-                      width={54}
-                      height={54}
-                      style={{ objectFit: "cover" }}
-                      priority
-                    />
-                  </div>
+                  {/* Avatar Card */}
                   <div
                     style={{
                       display: "flex",
-                      flexDirection: "column",
+                      gap: "10px",
+                      backgroundColor: "#FFFFFF",
+                      padding: "10px",
+                      borderRadius: "10px",
                       alignItems: "center",
                       justifyContent: "center",
-                      marginTop: "10px",
+                      color: "#000000",
+                      position: "absolute",
+                      left: -20,
+                      top: 30,
+                      boxShadow: "0px 4px 14px 10px rgba(0, 0, 0, 0.25)",
                     }}
                   >
-                    <p style={{ fontSize: "10px", fontWeight: 700 }}>
-                      John Doe
-                    </p>
                     <div
                       style={{
-                        height: "5px",
-                        width: "90px",
-                        borderRadius: "10px",
-                        backgroundColor: "#D2E9E6",
+                        width: "24px",
+                        height: "24px",
+                        borderRadius: "50%",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <Image
+                        src="/images/heroavatar.jpg"
+                        alt="Avatar"
+                        width={54}
+                        height={54}
+                        style={{ objectFit: "cover" }}
+                        priority
+                      />
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
                         marginTop: "10px",
                       }}
-                    />
+                    >
+                      <p style={{ fontSize: "10px", fontWeight: 700 }}>
+                        John Doe
+                      </p>
+                      <div
+                        style={{
+                          height: "5px",
+                          width: "90px",
+                          borderRadius: "10px",
+                          backgroundColor: "#D2E9E6",
+                          marginTop: "10px",
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Stats Card */}
+                  <div
+                    style={{
+                      backgroundColor: "#FFFFFF",
+                      padding: "10px",
+                      borderRadius: "10px",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#000000",
+                      boxShadow: "0px 4px 14px 10px rgba(0, 0, 0, 0.25)",
+                      position: "absolute",
+                      right: -10,
+                      bottom: 30,
+                    }}
+                  >
+                    <h5
+                      style={{
+                        fontWeight: 700,
+                        fontSize: "15px",
+                        color: "#1F1F1F",
+                      }}
+                    >
+                      1500+
+                    </h5>
+                    <p
+                      style={{
+                        fontWeight: 400,
+                        fontSize: "10px",
+                        color: "#545454",
+                      }}
+                    >
+                      Financial Adviser
+                    </p>
                   </div>
                 </div>
-
-                {/* Stats Card */}
-                <div
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    padding: "10px",
-                    borderRadius: "10px",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#000000",
-                    boxShadow: "0px 4px 14px 10px rgba(0, 0, 0, 0.25)",
-                    position: "absolute",
-                    right: -10,
-                    bottom:30,
-                  }}
-                >
-                  <h5
-                    style={{
-                      fontWeight: 700,
-                      fontSize: "15px",
-                      color: "#1F1F1F",
-                    }}
-                  >
-                    1500+
-                  </h5>
-                  <p
-                    style={{
-                      fontWeight: 400,
-                      fontSize: "10px",
-                      color: "#545454",
-                    }}
-                  >
-                    Financial Adviser
-                  </p>
-                </div>
               </div>
-            </div>
-              <div
-               
-                className={styles.hero_content_left_subtitle}  
-              >
+              <div className={styles.hero_content_left_subtitle}>
                 Compare, connect, and build your financial plan with confidence
               </div>
               <div className={styles.hero_content_left_button}>
-                <div
-                  className={styles.hero_content_left_button_text}
-                >
+                <div className={styles.hero_content_left_button_text}>
                   Spend 5 mins and answer some simple questions and receive your
                   Free Wealth Journal & Financial Plan
                 </div>
                 <PopupButton
                   id={process.env.NEXT_PUBLIC_TYPEFORM_ID!}
-                  
-                  className={styles.hero_content_left_button_cta}
+                  style={{
+                    backgroundColor: "#137C7A",
+                    color: "#FFFFFF",
+                    borderRadius: "10px",
+                    padding: "10px 10px", 
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    cursor: "pointer", 
+                  }}
                 >
-                  Get Started
+                 <div className={styles.hero_content_left_button_text_main}>Get Started</div>
                 </PopupButton>
               </div>
             </div>
-           
+
             <div className={styles.hero_content_center}>
               <div>
                 <svg
