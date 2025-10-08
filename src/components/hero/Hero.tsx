@@ -157,17 +157,9 @@ export default function Hero() {
                 </div>
                 <PopupButton
                   id={process.env.NEXT_PUBLIC_TYPEFORM_ID!}
-                  style={{
-                    backgroundColor: "#137C7A",
-                    color: "#FFFFFF",
-                    borderRadius: "10px",
-                    padding: "10px 10px", 
-                    fontWeight: 700,
-                    fontSize: "16px",
-                    cursor: "pointer", 
-                  }}
+                   className={styles.hero_content_left_button_text_main}
                 >
-                 <div className={styles.hero_content_left_button_text_main}>Get Started</div>
+                 <div >Get Started</div>
                 </PopupButton>
               </div>
             </div>

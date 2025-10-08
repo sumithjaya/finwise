@@ -1,7 +1,7 @@
 .hero {
   box-sizing: border-box;
   justify-content: space-between;
-  padding: 50px 100px;
+  padding: 100px 100px;
   width: 100vw;
   height: 85vh;
   background: linear-gradient(
@@ -108,10 +108,16 @@
 .hero_content_left_button_text_main{
   font-size: 16px;
   font-weight: 700;
-  width: 100%; 
+  width: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
+  background-color: #137c7a;
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: #ffffff;
+  flex-shrink: 0;
 }
 @media (max-width: 900px) {
   .hero_content_left_title {
