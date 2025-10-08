@@ -87,3 +87,13 @@
   font-weight: 400;
   margin: 10px 0px;
 }
+
+
+@media (max-width: 1024px) {
+  .adviser_profile {
+    margin: 50px 50px;
+  }
+  .adviser_profile_container{
+    flex-direction: column;
+  }
+}

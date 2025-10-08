@@ -61,7 +61,7 @@ const makeVariants = (prefersReduced: boolean) =>
 
 export default function Testimonials() {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(1); // 1 = next, -1 = prev
+  const [direction, setDirection] = useState(1);
   const prefersReducedMotion = useReducedMotion();
   const variants = makeVariants(!!prefersReducedMotion);
 
@@ -79,15 +79,14 @@ export default function Testimonials() {
 
   return (
     <div
-      style={{ display: "flex"  }}
       className={styles.testi_main_container}
       aria-roledescription="carousel"
       aria-label="Customer testimonials"
     >
       {/* Left illustration / figure */}
-      <div style={{ flex: 1 }} className={styles.tst_figure_container}>
+      <div className={styles.tst_figure_container}>
         <div className={styles.tst_figure_back} />
-        <div style={{ position: "absolute", top: 140, left: 130 }}>
+        <div className={styles.tst_figure_img_top}>
           <Image
             src="/images/quaters-green.png"
             alt=""
@@ -96,7 +95,7 @@ export default function Testimonials() {
             priority
           />
         </div>
-        <div style={{ position: "absolute", bottom: -50, right: 50, zIndex: -2 }}>
+        <div className={styles.tst_figure_img_bottom}>
           <Image
             src="/images/svg/dot-grid.svg"
             alt=""
@@ -105,7 +104,7 @@ export default function Testimonials() {
             priority
           />
         </div>
-        <div style={{ width: "451px", height: "670px", overflow: "hidden" }}>
+        <div className={styles.tst_figure_img_main}>
           <Image
             src="/images/Testimonial_figure.png"
             alt="Customer success illustration"
@@ -117,28 +116,17 @@ export default function Testimonials() {
       </div>
 
       {/* Right content */}
-      <div style={{ flex: 1 ,height:'100%',padding:'120px',display:'flex',flexDirection:'column', justifyContent:'space-between' }}>
-        <div style={{ fontWeight: 700, fontSize: "25px", color: "#137C7A" }}>
-          — Testimonial
-        </div>
-        <div>
-          <div style={{ fontSize: "40px", fontWeight: 500 }}>
-            What Our{" "}
-            <span
-              style={{ color: "#137C7A", fontStyle: "italic", fontWeight: 800 }}
-            >
-              Customer’s Say
-            </span>
-          </div>
+      <div className={styles.tst_content_wrapper}>
+        <div className={styles.tst_subtitle}>— Testimonial</div>
+        <div className={styles.tst_title}>
+          What Our <span>Customer’s Say</span>
         </div>
 
-        {/* Animated content container */}
         <div
           className={`${styles.tst_conatiner} ${styles.tst_anim_wrap}`}
           role="group"
           aria-live="polite"
           aria-atomic="true"
-
         >
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -157,14 +145,7 @@ export default function Testimonials() {
           </AnimatePresence>
         </div>
 
-        <div
-          style={{
-            width: "15%",
-            display: "flex",
-            justifyContent: "space-between",
-            paddingTop: "50px",
-          }}
-        >
+        <div className={styles.testimonial_buttons}>
           <button
             type="button"
             className={styles.pre_button}

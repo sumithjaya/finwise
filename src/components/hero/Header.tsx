@@ -33,14 +33,14 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-     if (open) {
-    const original = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    if (open) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
 
-    return () => {
-      document.body.style.overflow = original; // now returns void
-    };
-  }
+      return () => {
+        document.body.style.overflow = original; // now returns void
+      };
+    }
   }, [open]);
 
   useEffect(() => setOpen(false), [pathname]);
@@ -70,7 +70,7 @@ export default function Header() {
           )}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className={styles.navLinks}>
           <Link href="/get-started" className={styles.navLink1}>
             Sign in
           </Link>
@@ -90,17 +90,18 @@ export default function Header() {
         </button>
 
         {open && (
-          <div
-            className={styles.drawerOverlay}
-            onClick={() => setOpen(false)}
-          >
+          <div className={styles.drawerOverlay} onClick={() => setOpen(false)}>
             <div
               ref={drawerRef}
               className={styles.drawer}
               onClick={(e) => e.stopPropagation()}
             >
               <div className={styles.drawerHeader}>
-                <Link href="/" onClick={() => setOpen(false)}>
+                <Link
+                  href="/"
+                  onClick={() => setOpen(false)}
+                  className={styles.drawerLogo}
+                >
                   FINWISE
                 </Link>
                 <button onClick={() => setOpen(false)} aria-label="Close menu">
@@ -108,7 +109,7 @@ export default function Header() {
                 </button>
               </div>
 
-              <div className="space-y-1 flex-1">
+              <div className={styles.drawerLinks}>
                 {NAV.map((item) =>
                   "href" in item ? (
                     <Link
@@ -122,14 +123,15 @@ export default function Header() {
                   ) : null
                 )}
               </div>
-
-              <Link
-                href="/get-started"
-                className={styles.drawerButton}
-                onClick={() => setOpen(false)}
-              >
-                Get Started
-              </Link>
+              <div className={styles.navLinks_mobile}>
+                <Link href="/get-started" className={styles.navLink1_mobile}>
+                  Sign in
+                </Link>
+                <Link href="/join-in" className={styles.navLink2_mobile}>
+                  Join In
+                </Link>
+              </div>
+               
             </div>
           </div>
         )}

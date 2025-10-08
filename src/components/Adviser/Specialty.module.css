@@ -100,3 +100,13 @@
     
   color: #1f1f1f;
 }
+
+@media (max-width: 1024px) {
+  .specialty_container {
+    padding: 50px 50px;
+  }
+  .specialty_card_container{
+    flex-direction: column;
+  }
+  
+}

@@ -46,3 +46,12 @@
     padding: 15px 30px;
     border: none;
 }
+
+@media (max-width: 1024px) {
+    .cta_container{
+        padding: 50px 50px;
+    }
+    .cta_section{
+        padding: 50px 50px;
+    }
+}

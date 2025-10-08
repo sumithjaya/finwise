@@ -1,100 +1,46 @@
 "use client";
-import Image from "next/image";  // if @ alias points to project root
-import styles from "./HowItWorks.module.css"; 
+import Image from "next/image";
+import styles from "./HowItWorks.module.css";
 import RevealStagger from "./ui/RevealStagger";
+
 export default function HowItWorks() {
   return (
     <RevealStagger stagger={200}>
-      <div
-        style={{
-          boxSizing: "border-box",
-          justifyContent: "space-between",
-          padding: "100px 100px",
-          paddingTop: "20px",
-          width: "100vw",
-          borderTop: "1px dashed #137c7a46",
-        }}
-      >
-        <section style={{ backgroundColor: "#fff" }}>
+      <div className={styles.howitworks_container}>
+        <section className={styles.howitworks_section}>
           <div>
-            <div className="text-center p-10">
-              <h2
-                style={{
-                  fontSize: "40px",
-                  fontWeight: 500,
-                  fontFamily: "Creato Display",
-                  fontStyle: "normal",
-                }}
-              >
+            <div className={styles.howitworks_header}>
+              <h2 className={styles.howitworks_title}>
                 How It{" "}
-                <span
-                  style={{
-                    color: "#137C7A",
-                    fontWeight: 800,
-                    fontStyle: "italic",
-                    fontFamily: "Creato Display",
-                    fontSize: "40px",
-                  }}
-                >
-                  Works
-                </span>
+                <span className={styles.howitworks_title_highlight}>Works</span>
               </h2>
-              <p
-                style={{
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  fontFamily: "Creato Display",
-                  fontStyle: "normal",
-                  color: "#545454",
-                  paddingTop: "20px",
-                }}
-              >
+              <p className={styles.howitworks_subtitle}>
                 There is now an abundance of readable dummy texts. These are
                 usually used when a text is required
               </p>
             </div>
 
-            <div style={{ padding: "10px 50px 0 50px",}}>
-              <div
-                className="flex"
-                style={{
-                  backgroundImage: 'url("./images/svg/curvedline.svg")',
-                  backgroundRepeat: "no-repeat",
-                  justifyContent: "space-between",
-                  backgroundSize: "87%",
-                  backgroundPosition: "center",
-                  width: "100%",
-                  position: "relative",
-                }}
-              >
+            <div className={styles.howitworks_bullets_wrapper}>
+              <div className={styles.howitworks_bullets}>
                 <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    maxWidth: "225px",
-                    marginTop:"85px"
-                  }}
+                  className={`${styles.howitworks_bullet} ${styles.howitworks_bullet_top1}`}
                 >
-                  <div
-                    style={{
-                      backgroundColor: "#fff",
-                      border: "2px solid #dddddd",
-                      width: "110px",
-                      height: "110px",
-                      borderRadius: "50%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
+                  <div className={styles.howitworks_bullet_icon_wrapper}>
                     <Image
                       src={"./images/svg/doc-search.svg"}
                       alt="book icon"
                       width={49}
                       height={49}
                       draggable={false}
+                      className={styles.howitworks_bullet_icon}
+                    />
+                    <Image
+                      src={"./images/svg/doc-search.svg"}
+                      alt="book icon"
+                      width={28}
+                      height={28}
+                      draggable={false}
+                      className={styles.howitworks_bullet_icon_mobile}
                     />
                   </div>
                   <div className={styles.howitworks_bullet_text}>
@@ -102,101 +48,76 @@ export default function HowItWorks() {
                     are looking for
                   </div>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                 maxWidth: "225px",
-                  }}
-                >
-                  <div
-                    style={{
-                      backgroundColor: "#FFFFFF",
-                      border: "2px solid #dddddd",
-                      width: "110px",
-                      height: "110px",
-                      borderRadius: "50%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    className={styles.howitworks_bullet_icon}
-                  >
+
+                <div className={styles.howitworks_bullet}>
+                  <div className={styles.howitworks_bullet_icon_wrapper}>
                     <Image
                       src={"./images/svg/bookjournal.svg"}
                       alt="book icon"
                       width={49}
                       height={49}
                       draggable={false}
+                      className={styles.howitworks_bullet_icon}
+                    />
+                    <Image
+                      src={"./images/svg/bookjournal.svg"}
+                      alt="book icon"
+                      width={28}
+                      height={28}
+                      draggable={false}
+                      className={styles.howitworks_bullet_icon_mobile}
                     />
                   </div>
                   <div className={styles.howitworks_bullet_text}>
-                    Receive your Free Wealth Journal/Financial Plan 
+                    Receive your Free Wealth Journal/Financial Plan
                   </div>
                 </div>
+
                 <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  maxWidth: "225px",
-                    marginTop:"155px"
-                  }}
+                  className={`${styles.howitworks_bullet} ${styles.howitworks_bullet_top2}`}
                 >
-                  <div
-                    style={{
-                      backgroundColor: "#FFFFFF",
-                      border: "2px solid #dddddd",
-                      width: "110px",
-                      height: "110px",
-                      borderRadius: "50%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
+                  <div className={styles.howitworks_bullet_icon_wrapper}>
                     <Image
                       src={"./images/svg/user-tick.svg"}
                       alt="book icon"
                       width={49}
                       height={49}
                       draggable={false}
+                      className={styles.howitworks_bullet_icon}
+                    />{" "}
+                    <Image
+                      src={"./images/svg/user-tick.svg"}
+                      alt="book icon"
+                      width={28}
+                      height={28}
+                      draggable={false}
+                      className={styles.howitworks_bullet_icon_mobile}
                     />
                   </div>
                   <div className={styles.howitworks_bullet_text}>
                     Get matched with a Qualified Financial Expert
                   </div>
                 </div>
+
                 <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    maxWidth: "225px",  marginTop:"105px"
-                  }}
+                  className={`${styles.howitworks_bullet} ${styles.howitworks_bullet_top3}`}
                 >
-                  <div
-                    style={{
-                      backgroundColor: "#FFFFFF",
-                      border: "2px solid #dddddd",
-                      width: "110px",
-                      height: "110px",
-                      borderRadius: "50%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
+                  <div className={styles.howitworks_bullet_icon_wrapper}>
                     <Image
                       src={"./images/svg/book.svg"}
                       alt="book icon"
                       width={49}
                       height={49}
                       draggable={false}
+                      className={styles.howitworks_bullet_icon}
+                    />{" "}
+                    <Image
+                      src={"./images/svg/book.svg"}
+                      alt="book icon"
+                      width={28}
+                      height={28}
+                      draggable={false}
+                      className={styles.howitworks_bullet_icon_mobile}
                     />
                   </div>
                   <div className={styles.howitworks_bullet_text}>

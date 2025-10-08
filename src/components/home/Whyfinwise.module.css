@@ -11,4 +11,148 @@
   font-weight: 400;
   color: "#545454";
   text-align: center;
- }
+ }.wrapper {
+  display: flex;
+  gap: 20px;
+  padding: 0 100px;
+  margin-top: 100px;
+}
+
+.leftSection {
+  flex: 1;
+}
+
+.leftSectionTitle {
+  font-size: 40px;
+  font-weight: 500;
+  font-family: "Creato Display";
+}
+
+.leftSectionTitle span {
+  font-weight: 800;
+  font-style: italic;
+  color: #137c7a;
+}
+
+.underlineContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-left: 100px;
+}
+
+.underline {
+  width: 227px;
+  height: 8px;
+}
+
+.leftSectionText {
+  font-size: 16px;
+  margin-top: 30px;
+  font-weight: 400;
+  color: #545454;
+  font-family: "Creato Display";
+}
+
+.cardsWrapper {
+  display: flex;
+  flex: 3;
+  justify-content: space-around;
+}
+
+.cardContainer {
+  position: relative;
+}
+
+.cardBackgroundSmall {
+  background-color: #d5f0edff;
+  width: 57px;
+  height: 57px;
+  border-radius: 6px;
+  position: absolute;
+  left: -30px;
+  bottom: 80px;
+  z-index: -1;
+}
+
+.cardBackgroundLarge {
+  background-color: #137c7a;
+  width: 78px;
+  height: 78px;
+  border-radius: 6px;
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  z-index: -1;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 260px;
+  height: 300px;
+  box-shadow: 5px 5px 25px 16px #699e9d3d;
+  position: relative;
+  z-index: 1;
+}
+
+.cardGradientWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0) 60%, rgba(19, 124, 122, 1) 100%);
+  box-shadow: 0px 7px 54px 0px #699e9d26;
+  border-radius: 20px;
+  width: 270px;
+  height: 310px;
+  padding: 5px;
+  margin-top: 100px;
+}
+
+.cardGradientInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 260px;
+  height: 300px;
+  box-shadow: 0px 7px 54px 30px #699e9d2f;
+}
+
+.cardIconWrapper {
+  display: flex;
+  background-color: #ecf5f4;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+}
+
+
+@media (max-width: 1024px) {
+  .wrapper {
+    padding: 0 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .underlineContainer {
+    padding-left: 50px;
+  }
+
+  .cardsWrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; 
+  }
+}

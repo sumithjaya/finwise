@@ -97,7 +97,7 @@
 .hero_content_left_button_text {
   display: flex;
   text-align: left;
-  align-items: center; 
+  align-items: center;
   border-radius: 20px;
   padding: 10px 20px;
   font-family: "Creato Display";
@@ -105,7 +105,7 @@
   font-size: 13px;
   background-color: #ffffff;
 }
-.hero_content_left_button_text_main{
+.hero_content_left_button_text_main {
   font-size: 16px;
   font-weight: 700;
   width: auto;
@@ -129,7 +129,13 @@
   .hero_content_left_title_grn {
     font-size: 40px;
   }
-
+  .hero_content_left_button_text {
+    font-size: 12px;
+    text-align: center;
+  }
+  .hero_content_left_button_text_main {
+    margin: 20px;
+  }
   .hero_content_left_subtitle {
     font-weight: 500;
     font-size: 12px;

@@ -1,21 +1,15 @@
-import Image from "next/image"; 
+"use client";
+
+import Image from "next/image";
+import styles from "./AdviserHero.module.css";
+
 export default function AdviserHero() {
   return (
-    <div
-      style={{
-        position: "relative",
-        background:
-          "linear-gradient(0deg,rgba(255, 255, 255, 0) 0%, rgba(19, 124, 122, 0.20) 100%)",
-        backgroundImage: 'url("/images/svg/twistedlinesingle.svg")',
-        backgroundPosition: "bottom",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        overflow: "hidden",
-      }}
-    >
-      <div className="flex" style={{ padding: "0  100px" }}>
-        <div className="flex-1   " style={{ padding: "120px 150px" }}>
-          <div style={{ fontSize: "28px", fontWeight: 400 ,display:"flex",alignItems:"center",gap:"10px"}}>
+    <div className={styles.adviser_hero_container}>
+      <div className={styles.adviser_hero_inner}>
+        {/* Left side */}
+        <div className={styles.adviser_hero_left}>
+          <div className={styles.adviser_hero_greeting}>
             Hello World!{" "}
             <Image
               src="/images/wavinghand.png"
@@ -23,35 +17,21 @@ export default function AdviserHero() {
               width={24}
               height={24}
               priority
-            />{" "}
+            />
           </div>
-          <div style={{ fontSize: "60px", fontWeight: 500 }}>
+          <div className={styles.adviser_hero_name}>
             I’m{" "}
-            <span
-              style={{ color: "#137C7A", fontWeight: 800, fontStyle: "italic" }}
-            >
-              Carla Press,
-            </span>{" "}
-            Wealth Management Based in USA
+            <span>Carla Press,</span> Wealth Management Based in USA
           </div>
-          <div style={{ color: "#545454", fontSize: "24px", fontWeight: 500 }}>
+          <div className={styles.adviser_hero_tagline}>
             Helping you retire with confidence
           </div>
         </div>
-        <div className="flex-1  " style={{ position: "relative" }}>
-          <div
-            style={{
-              backgroundImage: 'url("/images/svg/blob-green.svg")',
-              backgroundRepeat: "no-repeat",
-              width: "566px",
-              height: "373px",
-              position: "absolute",
-              zIndex: -1,
-              left: -80,
-              bottom: 50,
-            }}
-          />
-          <div>
+
+        {/* Right side */}
+        <div className={styles.adviser_hero_right}>
+          <div className={styles.adviser_hero_blob} />
+          <div className={styles.adviser_hero_image}>
             <Image
               src="/images/adviser-hero.png"
               alt="Scale hand illustration"
@@ -60,7 +40,7 @@ export default function AdviserHero() {
               priority
             />
           </div>
-          <div style={{ position: "absolute", left: 0, top: 100 }}>
+          <div className={styles.adviser_hero_svg}>
             <svg
               width="56"
               height="68"
@@ -75,7 +55,7 @@ export default function AdviserHero() {
               />
             </svg>
           </div>
-          <div style={{ position: "absolute", right: -120, top: 200 }}>
+          <div className={styles.adviser_hero_element}>
             <Image
               src="/images/svg/element03.svg"
               alt="Scale hand illustration"
