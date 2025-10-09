@@ -31,25 +31,41 @@ type PostItem = {
   tags?: Tag[];
 }; 
 
-async function getPosts(): Promise<PostItem[]> {
-  const STRAPI = process.env.STRAPI_API_URL || "http://localhost:1337";
-  const res = await fetch(`${STRAPI}/api/posts?populate=*`, {
-    next: { revalidate: 60 },
-  });
+// Get the Strapi URL with fallback
+function getStrapiUrl(): string {
+  return process.env.NEXT_PUBLIC_STRAPI_API_URL || 
+         process.env.STRAPI_API_URL || 
+         "http://localhost:1337";
+}
 
-  if (!res.ok) {
-    console.error("Strapi fetch failed:", res.status, await res.text());
+async function getPosts(): Promise<PostItem[]> {
+  try {
+    const STRAPI = getStrapiUrl();
+    const res = await fetch(`${STRAPI}/api/posts?populate=*`, {
+      next: { revalidate: 60 },
+    });
+
+    if (!res.ok) {
+      console.error("Strapi fetch failed:", res.status, await res.text());
+      return [];
+    }
+
+    const json = await res.json();
+    console.log("Raw items:", json.data);
+
+    return Array.isArray(json.data) ? json.data : [];
+  } catch (error) {
+    console.error("Error fetching posts:", error);
     return [];
   }
-
-  const json = await res.json();
-  console.log("Raw items:", json.data);
-
-  return Array.isArray(json.data) ? json.data : [];
 }
+
+// Make this page dynamic to avoid build-time failures
+export const dynamic = 'force-dynamic';
 
 export default async function PostsPage() {
   const posts = await getPosts();
+  const strapiUrl = getStrapiUrl();
 
   if (!posts.length) {
     return (
@@ -82,25 +98,27 @@ export default async function PostsPage() {
 
           return (
             <article key={id} className="border p-4 rounded-lg shadow">
-              <h2 className="text-2xl font-semibold mb-2">{Title}</h2>
+              <Link
+                href={`/posts/${id}`}
+                className="text-2xl font-semibold mb-2 block hover:text-blue-600"
+              >
+                {Title}
+              </Link>
 
               {imgUrl && (
-                <Image
-                  src={`http://localhost:1337${imgUrl}`}
-                  width={600}
-                  height={400}
-                  alt={postImage?.alternativeText || Title}
-                  className="rounded mb-4"
-                />
+                <div className="relative w-full h-64 mb-4">
+                  <Image
+                    src={`${strapiUrl}${imgUrl}`}
+                    layout="fill"
+                    objectFit="cover"
+                    alt={postImage?.alternativeText || Title}
+                    className="rounded"
+                  />
+                </div>
               )}
 
-              <p className="mb-2">{contentText || "No content."}</p>
-              <Link
-                href={`/posts/${post.id}`}
-                className="text-2xl font-semibold mb-2 block"
-              >
-                {post.Title}
-              </Link>
+              <p className="mb-2 line-clamp-3">{contentText || "No content."}</p>
+
               {tags.length > 0 && (
                 <div className="text-sm text-gray-600">
                   Tags: {tags.map((t) => t.Name).join(", ")}
