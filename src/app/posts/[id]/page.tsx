@@ -37,13 +37,28 @@ export const revalidate = 60; // ISR: revalidate every 60 seconds
 
 /**
  * Pre-generate static params for known posts at build time
+ *
+ * NOTE: This function will NOT attempt to fetch from localhost during CI/build.
+ * You must set NEXT_PUBLIC_STRAPI_API_URL or STRAPI_API_URL in the build environment.
  */
 export async function generateStaticParams() {
-  const STRAPI = process.env.STRAPI_API_URL || "http://localhost:1337";
+  const STRAPI =
+    process.env.NEXT_PUBLIC_STRAPI_API_URL ?? process.env.STRAPI_API_URL ?? "";
+
+  if (!STRAPI) {
+    // No public API configured for build-time data — skip prerendering to avoid build failures.
+    console.warn(
+      "generateStaticParams: no STRAPI API URL configured (NEXT_PUBLIC_STRAPI_API_URL / STRAPI_API_URL). Skipping static params."
+    );
+    return [];
+  }
 
   try {
-    const res = await fetch(`${STRAPI}/api/posts?pagination[pageSize]=100`);
-    if (!res.ok) return [];
+    const res = await fetch(`${STRAPI.replace(/\/$/, "")}/api/posts?pagination[pageSize]=100`);
+    if (!res.ok) {
+      console.warn("generateStaticParams: fetch returned !ok", res.status, res.statusText);
+      return [];
+    }
     const json = await res.json();
     const data = Array.isArray(json.data) ? json.data : [];
     return data.map((p: any) => ({
@@ -89,22 +104,34 @@ export default async function PostPage({ params }: Props) {
 
   // Flatten rich text blocks into string
   const contentText = Array.isArray(post.Content)
-    ? post.Content.map((block) =>
-        Array.isArray(block.children)
-          ? block.children.map((c) => c.text ?? "").join("")
-          : ""
-      ).join("\n")
+    ? post.Content
+        .map((block) =>
+          Array.isArray(block.children)
+            ? block.children.map((c) => c.text ?? "").join("")
+            : ""
+        )
+        .join("\n")
     : String(post.Content ?? "");
+
+  // Use the same env var as generateStaticParams; default to empty so we never point to localhost in CI.
+  const STRAPI =
+    process.env.NEXT_PUBLIC_STRAPI_API_URL ?? process.env.STRAPI_API_URL ?? "";
+
+  // Build full image src only if STRAPI is configured and imgUrl looks like a relative path.
+  const fullImgSrc =
+    imgUrl && STRAPI
+      ? `${STRAPI.replace(/\/$/, "")}${imgUrl.startsWith("/") ? imgUrl : `/${imgUrl}`}`
+      : null;
 
   return (
     <main className="max-w-3xl mx-auto p-6">
       <article className="prose lg:prose-xl">
         <h1 className="text-4xl font-bold mb-4">{post.Title}</h1>
 
-        {imgUrl && (
+        {fullImgSrc && (
           <div className="mb-6 rounded overflow-hidden">
             <Image
-              src={`${process.env.STRAPI_API_URL || "http://localhost:1337"}${imgUrl}`}
+              src={fullImgSrc}
               alt={post.Image?.alternativeText ?? post.Title}
               width={1200}
               height={700}
@@ -113,9 +140,7 @@ export default async function PostPage({ params }: Props) {
           </div>
         )}
 
-        <div className="mb-6 whitespace-pre-wrap">
-          {contentText || "No content."}
-        </div>
+        <div className="mb-6 whitespace-pre-wrap">{contentText || "No content."}</div>
 
         {post.tags && post.tags.length > 0 && (
           <div className="text-sm text-gray-600">
