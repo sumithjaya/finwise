@@ -7,10 +7,7 @@ import styles from "./Header.module.css";
 
 type NavItem =
   | { label: string; href: string }
-  | {
-      label: string;
-      items: { label: string; href: string; description?: string }[];
-    };
+  | { label: string; items: { label: string; href: string; description?: string }[] };
 
 const NAV: NavItem[] = [
   { label: "For Advisers", href: "/adviser-profile" },
@@ -18,33 +15,36 @@ const NAV: NavItem[] = [
 ];
 
 export default function Header() {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "/";
   const [open, setOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname?.startsWith(href + "/");
+  const isActive = (href: string) => {
+    if (!pathname) return false;
+    return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  };
 
+  // Close drawer on Escape key
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Lock scroll when drawer is open
   useEffect(() => {
-    if (open) {
-      const original = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-
-      return () => {
-        document.body.style.overflow = original; // now returns void
-      };
-    }
+    const original = document.body.style.overflow;
+    document.body.style.overflow = open ? "hidden" : original;
+    return () => {
+      document.body.style.overflow = original;
+    };
   }, [open]);
 
+  // Close drawer on route change
   useEffect(() => setOpen(false), [pathname]);
 
+  // Detect scroll for header shadow
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -52,9 +52,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header
-      className={`${styles.header} ${scrolled ? styles.headerScrolled : ""}`}
-    >
+    <header className={`${styles.header} ${scrolled ? styles.headerScrolled : ""}`}>
       <div className={styles.headerContainer}>
         <Link href="/" className={styles.logo}>
           FinWise
@@ -63,14 +61,18 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-4">
           {NAV.map((item) =>
             "href" in item ? (
-              <Link key={item.href} href={item.href} className={styles.navLink}>
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`${styles.navLink} ${isActive(item.href) ? styles.active : ""}`}
+              >
                 {item.label}
               </Link>
             ) : null
           )}
         </nav>
 
-        <div className={styles.navLinks}>
+        <div className="hidden md:flex items-center gap-2">
           <Link href="/get-started" className={styles.navLink1}>
             Sign in
           </Link>
@@ -79,6 +81,7 @@ export default function Header() {
           </Link>
         </div>
 
+        {/* Mobile menu toggle */}
         <button
           className={styles.mobileToggle}
           aria-label="Open menu"
@@ -89,8 +92,13 @@ export default function Header() {
           </svg>
         </button>
 
+        {/* Mobile drawer */}
         {open && (
-          <div className={styles.drawerOverlay} onClick={() => setOpen(false)}>
+          <div
+            className={styles.drawerOverlay}
+            onClick={() => setOpen(false)}
+            role="presentation"
+          >
             <div
               ref={drawerRef}
               className={styles.drawer}
@@ -116,22 +124,32 @@ export default function Header() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className={styles.drawerLink}
+                      className={`${styles.drawerLink} ${
+                        isActive(item.href) ? styles.active : ""
+                      }`}
                     >
                       {item.label}
                     </Link>
                   ) : null
                 )}
               </div>
+
               <div className={styles.navLinks_mobile}>
-                <Link href="/get-started" className={styles.navLink1_mobile}>
+                <Link
+                  href="/get-started"
+                  className={styles.navLink1_mobile}
+                  onClick={() => setOpen(false)}
+                >
                   Sign in
                 </Link>
-                <Link href="/join-in" className={styles.navLink2_mobile}>
+                <Link
+                  href="/join-in"
+                  className={styles.navLink2_mobile}
+                  onClick={() => setOpen(false)}
+                >
                   Join In
                 </Link>
               </div>
-               
             </div>
           </div>
         )}

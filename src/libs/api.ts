@@ -1,19 +1,31 @@
 // lib/api.ts
-export async function fetchAPI(path: string, opts: RequestInit = {}) {
-  const base = process.env.API_URL ?? "http://127.0.0.1:1337"; // local dev fallback
+export async function fetchAPI<T = any>(
+  path: string,
+  opts: RequestInit = {},
+  baseURL?: string
+): Promise<T | null> {
+  // Default to public Strapi URL; allow override with env or param
+  const base =
+    baseURL ??
+    process.env.NEXT_PUBLIC_STRAPI_API_URL ??
+    process.env.STRAPI_API_URL ??
+    "http://ec2-52-201-227-20.compute-1.amazonaws.com:1337";
+
   const url = `${base.replace(/\/$/, "")}${path.startsWith("/") ? path : "/" + path}`;
 
   try {
     const res = await fetch(url, {
       ...opts,
-      // If you want ISR behavior during builds / runtime
-      // next: { revalidate: 60 } // uncomment if using next-specific fetch caching
     });
-    if (!res.ok) throw new Error(`API ${res.status} ${res.statusText}`);
-    return await res.json();
+
+    if (!res.ok) {
+      console.error(`[fetchAPI] Failed: ${res.status} ${res.statusText} for ${url}`);
+      return null;
+    }
+
+    return (await res.json()) as T;
   } catch (err) {
-    // Log so you can inspect build logs; do NOT rethrow when you want to avoid failing the build.
-    console.error(`[fetchAPI] failed to fetch ${url}`, err);
-    return null; // return null so callers can handle gracefully
+    console.error(`[fetchAPI] Network error fetching ${url}:`, err);
+    return null;
   }
 }
