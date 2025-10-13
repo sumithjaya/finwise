@@ -112,7 +112,7 @@ export default async function PostPage({ params }: Props) {
   // Safe Typeform URL (or any embed URL)
   const TYPEFORM_ID = process.env.NEXT_PUBLIC_TYPEFORM_ID ?? null;
   let typeformUrl: string | null = null;
-  if (TYPEFORM_ID) {
+  if (TYPEFORM_ID && typeof TYPEFORM_ID === "string" && TYPEFORM_ID.trim() !== "") {
     try {
       typeformUrl = TYPEFORM_ID.startsWith("http://") || TYPEFORM_ID.startsWith("https://")
         ? TYPEFORM_ID
