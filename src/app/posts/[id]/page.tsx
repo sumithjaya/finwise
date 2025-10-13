@@ -35,20 +35,13 @@ type PostItem = {
 
 export const revalidate = 60; // ISR: revalidate every 60 seconds
 
-/**
- * Pre-generate static params for known posts at build time
- *
- * NOTE: This function will NOT attempt to fetch from localhost during CI/build.
- * You must set NEXT_PUBLIC_STRAPI_API_URL or STRAPI_API_URL in the build environment.
- */
 export async function generateStaticParams() {
   const STRAPI =
     process.env.NEXT_PUBLIC_STRAPI_API_URL ?? process.env.STRAPI_API_URL ?? "";
 
   if (!STRAPI) {
-    // No public API configured for build-time data — skip prerendering to avoid build failures.
     console.warn(
-      "generateStaticParams: no STRAPI API URL configured (NEXT_PUBLIC_STRAPI_API_URL / STRAPI_API_URL). Skipping static params."
+      "generateStaticParams: no STRAPI API URL configured. Skipping static params."
     );
     return [];
   }
@@ -70,9 +63,6 @@ export async function generateStaticParams() {
   }
 }
 
-/**
- * The page component for /posts/[id]
- */
 type Props = {
   params: Promise<{
     id: string;
@@ -80,7 +70,6 @@ type Props = {
 };
 
 export default async function PostPage({ params }: Props) {
-  // Await the params Promise
   const { id } = await params;
   const post: PostItem | null = await getPostById(id);
 
@@ -102,7 +91,6 @@ export default async function PostPage({ params }: Props) {
     post.Image?.url ||
     null;
 
-  // Flatten rich text blocks into string
   const contentText = Array.isArray(post.Content)
     ? post.Content
         .map((block) =>
@@ -113,15 +101,27 @@ export default async function PostPage({ params }: Props) {
         .join("\n")
     : String(post.Content ?? "");
 
-  // Use the same env var as generateStaticParams; default to empty so we never point to localhost in CI.
   const STRAPI =
     process.env.NEXT_PUBLIC_STRAPI_API_URL ?? process.env.STRAPI_API_URL ?? "";
 
-  // Build full image src only if STRAPI is configured and imgUrl looks like a relative path.
   const fullImgSrc =
     imgUrl && STRAPI
       ? `${STRAPI.replace(/\/$/, "")}${imgUrl.startsWith("/") ? imgUrl : `/${imgUrl}`}`
       : null;
+
+  // Safe Typeform URL (or any embed URL)
+  const TYPEFORM_ID = process.env.NEXT_PUBLIC_TYPEFORM_ID ?? null;
+  let typeformUrl: string | null = null;
+  if (TYPEFORM_ID) {
+    try {
+      typeformUrl = TYPEFORM_ID.startsWith("http://") || TYPEFORM_ID.startsWith("https://")
+        ? TYPEFORM_ID
+        : `https://example.typeform.com/to/${TYPEFORM_ID}`;
+    } catch (err) {
+      console.warn("Invalid Typeform ID:", TYPEFORM_ID, err);
+      typeformUrl = null;
+    }
+  }
 
   return (
     <main className="max-w-3xl mx-auto p-6">
@@ -150,6 +150,15 @@ export default async function PostPage({ params }: Props) {
               .filter(Boolean)
               .join(", ")}
           </div>
+        )}
+
+        {/* Only render Typeform embed if valid */}
+        {typeformUrl && (
+          <iframe
+            title="Typeform Embed"
+            src={typeformUrl}
+            style={{ width: "100%", height: "500px", border: "none" }}
+          />
         )}
 
         <Link href="/posts" className="text-blue-600 mt-8 block">
