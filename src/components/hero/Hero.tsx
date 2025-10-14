@@ -4,6 +4,7 @@ import { PopupButton } from "@typeform/embed-react";
 import styles from "./Hero.module.css";
 import RevealStagger from "../ui/RevealStagger";
 export default function Hero() {
+  const typeformId = process.env.NEXT_PUBLIC_TYPEFORM_ID ?? "";
   return (
     <RevealStagger stagger={200}>
       <div style={{}} className={styles.hero}>
@@ -156,7 +157,7 @@ export default function Hero() {
                   Free Wealth Journal & Financial Plan
                 </div>
                 <PopupButton
-                  id={process.env.NEXT_PUBLIC_TYPEFORM_ID!}
+                  id={typeformId}
                    className={styles.hero_content_left_button_text_main}
                 >
                  <div >Get Started</div>
