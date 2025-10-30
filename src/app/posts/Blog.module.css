@@ -1,0 +1,477 @@
+/* src/app/posts/Blog.module.css */
+
+/* Page layout */
+.pagemain {
+  padding: 48px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial;
+  color: #0f172a;
+}
+
+/* Header block */
+.inner {
+  text-align: left;
+  margin-bottom: 36px;
+}
+
+.readblogphill {
+  font-size: 14px;
+  font-weight: 700;
+  color: #3a6d8c; /* matches your palette */
+  letter-spacing: 0.6px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.pageHeaderTitle {
+  font-size: 32px;
+  line-height: 1.05;
+  margin: 0 0 8px 0;
+  font-weight: 800;
+  color: #001f3f;
+}
+
+.pageHeaderTitleHighlight {
+  color: #6a9ab0;
+}
+
+.pageHeaderDescription {
+  color: #475569;
+  font-size: 15px;
+  margin-top: 6px;
+  max-width: 720px;
+}
+
+/* Featured post container */
+.feturedPostContainer {
+  margin-bottom: 40px;
+}
+
+/* NOTE: dynamic background via --bg-image CSS var set inline from TSX */
+.feturedPost {
+  display: block;
+  width: 100%;
+  min-height: 320px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 8px 30px rgba(2, 6, 23, 0.08);
+}
+
+/* overlay */
+.feturedPost::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.22) 0%,
+    rgba(0, 0, 0, 0.42) 70%
+  );
+  mix-blend-mode: multiply;
+}
+
+/* content */
+.feturedPostContent {
+  position: relative; /* sits above overlay */
+  z-index: 2;
+  padding: 28px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.feturedPostTitleContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.feturedPostTitle {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.05;
+  text-shadow: 0 6px 22px rgba(2, 6, 23, 0.5);
+}
+
+.feturedPostClick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+}
+
+/* description */
+.feturedPostDescription {
+  margin-top: 8px;
+  max-width: 70%;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* meta row */
+.feturedPostMeta {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.feturedPostMetaContainer {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+/* author */
+.feturedPostAuthor {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.feturedPostAuthorImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  overflow: hidden;
+  flex: 0 0 48px;
+  box-shadow: 0 4px 12px rgba(2, 6, 23, 0.25);
+}
+
+.feturedPostAuthorName {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* date */
+.feturedPostDate {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+}
+
+.feturedPostDateIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  opacity: 0.95;
+}
+
+/* tags */
+.feturedPostTags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.feturedPostTag {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Posts list */
+.postsList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+/* no posts block */
+.noPosts {
+  text-align: center;
+  padding: 32px;
+  background: #fffbeb; /* similar to bg-yellow-50 */
+  border-radius: 10px;
+}
+
+.noPostsTitle {
+  color: #0f172a;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.noPostsText {
+  color: #475569;
+  font-size: 14px;
+}
+
+/* post cards */
+.postCard {
+  border: 1px solid rgba(2, 6, 23, 0.06);
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.04);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.postLink {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: block;
+  text-decoration: none;
+  color: #001f3f;
+}
+
+.postLink:hover {
+  color: #3a6d8c;
+  text-decoration: underline;
+}
+
+/* image wrapper */
+.postImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.postImage {
+  border-radius: 8px;
+}
+
+/* excerpt */
+.postExcerpt {
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+  color: #334155;
+}
+
+/* tags text */
+.postTagsText {
+  font-size: 13px;
+  color: #475569;
+  margin-top: 8px;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .feturedPostContent {
+    padding: 36px;
+  }
+  .feturedPostDescription {
+    max-width: 50%;
+  }
+  .postsList {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pagemain {
+    padding: 64px 32px;
+  }
+  .feturedPost {
+    min-height: 420px;
+  }
+  .postsList {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.readblogphill {
+  background-color: #ddf1ef;
+  border-radius: 30px;
+  padding: 12px 20px;
+  color: #137c7a;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "Creato Display";
+  font-style: normal;
+  width: fit-content;
+}
+
+.pageHeaderTitle {
+  font-size: 40px;
+  font-weight: 500;
+  color: #1f1f1f;
+  text-align: left;
+  margin: 0px;
+  font-family: "Creato Display";
+  text-align: left;
+}
+.pageHeaderTitleHighlight {
+  color: #137c7a;
+  font-weight: 800;
+  font-style: italic;
+}
+.pageHeaderDescription {
+  font-size: 20px;
+  font-weight: 400;
+  color: #545454;
+  font-family: "Creato Display";
+}
+
+.feturedPost {
+  border-radius: 30px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "Creato Display";
+  font-style: normal;
+  width: 100%;
+  height: 600px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+.inner {
+  width: 100%;
+  height: 100%;
+}
+.pagemain {
+  padding: 20px 100px;
+}
+
+.feturedPostContent {
+  background-color: #202b2a5d;
+  padding: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.feturedPostTitle {
+  font-size: 30px;
+  font-weight: 500;
+  font-style: normal;
+  color: #ffffff;
+}
+.feturedPostDescription {
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: -10px;
+}
+
+.feturedPostAuthorImage img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.feturedPostAuthorName {
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  color: #ffffff;
+}
+.feturedPostAuthor {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 20px;
+}
+.feturedPostAuthorImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.feturedPostDate {
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  color: #ffffff;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 20px;
+}
+.feturedPostMeta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 100%;
+  flex: 5;
+}
+.feturedPostMetaContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex: 2;
+  width: 100%;
+}
+.feturedPostDateIcon {
+  border: #ffffff 1px solid;
+  border-radius: 50%;
+  padding: 5px;
+}
+.feturedPostDate img {
+  width: 20px;
+  height: 20px;
+}
+.feturedPostTags {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 20px;
+  flex: 4;
+  justify-content: flex-end;
+}
+.feturedPostTag {
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  color: #ffffff;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border: #ffffff 1px solid;
+  border-radius: 30px;
+  padding: 10px 20px;
+  width: fit-content;
+}
+.feturedPostTag img {
+  width: 20px;
+  height: 20px;
+}
+.feturedPostClick {
+  font-size: 5rem;
+}
+.feturedPostTitleContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex: 1;
+}
