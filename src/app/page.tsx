@@ -12,24 +12,19 @@ export default function Home() {
       className="font-sans items-center justify-items-center  "
       style={{ marginBottom: 0, paddingBottom: 0 }}
     >
-      <Reveal delay={1} direction="up">
-        <Hero />
-      </Reveal>
-      <Reveal delay={1} direction="up">
-        <HowItWorks />
-      </Reveal>
-      <Reveal delay={1} direction="up">
+      <Hero />
+
+      <HowItWorks />
+
+      {/* <Reveal delay={1} direction="up">
         <Featured />
-      </Reveal>
-      <Reveal delay={0} direction="up">
-        <Whyfinwise />
-      </Reveal>
-      <Reveal delay={0} direction="up">
-        <Testimonials />
-      </Reveal>
-      <Reveal delay={0} direction="up">
-        <ReadyToFind />
-      </Reveal>
+      </Reveal> */}
+
+      <Whyfinwise />
+
+      <Testimonials />
+
+      <ReadyToFind />
     </div>
   );
 }
