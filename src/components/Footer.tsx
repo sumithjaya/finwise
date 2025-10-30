@@ -20,7 +20,7 @@ export default function Footer() {
         <div className={styles.footer_content}>
           {/* Branding */}
           <div className={styles.footer_branding_content}>
-            <h1>FinWise</h1>
+            <h1>WEALFY</h1>
             <p>
               Lorem Ipsum is simply dummy text of the printing and industry.
               Lorem Ipsum has been the industry's standard dummy text ever since
@@ -82,7 +82,7 @@ export default function Footer() {
         <div className={styles.footer_bottomline}>
           <div className={styles.copyright_box}>
             <MdCopyright aria-hidden="true" />
-            <div>{year} FinWise. All rights reserved.</div>
+            <div>{year} WEALFY. All rights reserved.</div>
           </div>
 
           <div className={styles.footer_social_conatainer}>

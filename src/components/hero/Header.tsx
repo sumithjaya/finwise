@@ -55,7 +55,7 @@ export default function Header() {
     <header className={`${styles.header} ${scrolled ? styles.headerScrolled : ""}`}>
       <div className={styles.headerContainer}>
         <Link href="/" className={styles.logo}>
-          FinWise
+          WEALFY
         </Link>
 
         <nav className="hidden md:flex items-center gap-4">
