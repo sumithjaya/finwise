@@ -1,113 +1,200 @@
-// src/lib/posts.ts 
-
-type Tag = {
+// src/lib/posts.ts
+export type Tag = {
   id?: number;
-  Name?: string;
-  slug?: string;
+  Name?: string | null;
+  name?: string | null;
+  slug?: string | null;
 };
 
-type MediaFormat = {
-  url?: string;
-};
+export type MediaFormat = { url?: string | null };
 
-type Media = {
-  url?: string;
+export type Media = {
+  url?: string | null;
   formats?: {
-    thumbnail?: MediaFormat;
-    small?: MediaFormat;
-    medium?: MediaFormat;
-    large?: MediaFormat;
-  };
-  alternativeText?: string;
+    thumbnail?: MediaFormat | null;
+    small?: MediaFormat | null;
+    medium?: MediaFormat | null;
+    large?: MediaFormat | null;
+  } | null;
+  alternativeText?: string | null;
 };
 
-type PostItem = {
+export type RichTextChild = {
+  type?: string;
+  text?: string;
+};
+
+export type RichTextBlock = {
+  type?: string;
+  children?: RichTextChild[];
+};
+
+export type PostItem = {
   id: number | string;
   Title: string;
-  Content?: { type?: string; children?: { type?: string; text?: string }[] }[] | string | null;
-  Image?: Media | null;
-  tags?: Tag[];
+  Content?: RichTextBlock[] | string | null;
+  CoverImage?: Media | null;
+  tags?: Tag[] | null;
+  documentId?: string;
 };
-const STRAPI = process.env.STRAPI_API_URL || "http://localhost:1337";
 
-async function safeFetch(input: RequestInfo, init?: RequestInit, timeoutMs = 5000) {
+// ----------------- STRAPI CONFIG -----------------
+
+const STRAPI =
+  process.env.NEXT_PUBLIC_STRAPI_API_URL ??
+  process.env.NEXT_PUBLIC_STRAPI_URL ??
+  process.env.STRAPI_API_URL ??
+  "http://localhost:1337";
+
+const STRAPI_API_TOKEN =
+  process.env.STRAPI_API_TOKEN ??
+  process.env.NEXT_PUBLIC_STRAPI_API_TOKEN ??
+  null;
+
+// ----------------- FETCH UTILS -----------------
+
+async function safeFetch(
+  input: RequestInfo,
+  init?: RequestInit,
+  timeoutMs = 7000
+) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const res = await fetch(input, { ...(init || {}), signal: controller.signal });
+    const res = await fetch(input, {
+      ...(init || {}),
+      signal: controller.signal,
+    });
     clearTimeout(timeout);
     return res;
-  } catch (err) {
+  } catch (err: any) {
     clearTimeout(timeout);
+    if (err?.name === "AbortError") {
+      const e = new Error(`Request aborted after ${timeoutMs}ms`);
+      (e as any).code = "ETIMEDOUT";
+      throw e;
+    }
     throw err;
   }
 }
 
-export async function getPostById(id: string | number): Promise<PostItem | null> {
-   try {
-    const res = await safeFetch(`${STRAPI}/api/posts/${id}?populate=deep,3`, {
-      next: { revalidate: 60 },
-    }, 7000);
+// ----------------- MAIN FUNCTION -----------------
+
+export async function getPostById(
+  documentId: string | number
+): Promise<PostItem | null> {
+  const idStr = String(documentId);
+  const base = STRAPI.replace(/\/$/, "");
+  const url = `${base}/api/wealfy-blog-posts/${encodeURIComponent(idStr)}?populate=*`;
+
+  const headers: Record<string, string> = {
+    Accept: "application/json",
+  };
+  if (STRAPI_API_TOKEN) {
+    headers["Authorization"] = `Bearer ${STRAPI_API_TOKEN}`;
+  }
+
+  try {
+    const res = await safeFetch(url, { headers, next: { revalidate: 60 } }, 7000);
 
     if (!res.ok) {
-      console.warn("Strapi get post failed:", res.status, await res.text());
+      let bodyText = "<no body>";
+      try {
+        bodyText = await res.text();
+      } catch {}
+      console.warn(
+        "Strapi fetch failed:",
+        res.status,
+        res.statusText,
+        "url:",
+        url,
+        "body:",
+        bodyText
+      );
       return null;
     }
 
     const json = await res.json();
-    const raw = json.data ?? json; // handle either shape
-
+    const raw = Array.isArray(json.data) ? json.data[0] : json.data ?? json;
     if (!raw) return null;
 
-    // Normalize attributes
     const attrs = raw.attributes ?? raw;
 
-    // Title
     const Title = attrs.Title ?? attrs.title ?? attrs.name ?? "Untitled";
-
-    // Content
     const Content = attrs.Content ?? attrs.content ?? null;
 
-    // Tags (handle v4 tags.data)
+    // --- Tags normalization ---
     let tags: Tag[] = [];
     if (attrs.tags) {
       if (Array.isArray(attrs.tags)) {
-        tags = attrs.tags.map((t: any) => (t?.attributes ? { id: t.id, Name: t.attributes.Name ?? t.attributes.name } : { id: t.id ?? undefined, Name: t.Name ?? t.name }));
-      } else if (attrs.tags.data) {
+        tags = attrs.tags.map((t: any) =>
+          t?.attributes
+            ? { id: t.id, Name: t.attributes.Name ?? t.attributes.name }
+            : { id: t.id ?? undefined, Name: t.Name ?? t.name }
+        );
+      } else if (attrs.tags.data && Array.isArray(attrs.tags.data)) {
         tags = attrs.tags.data.map((t: any) => {
           const tAttrs = t.attributes ?? {};
           return { id: t.id, Name: tAttrs.Name ?? tAttrs.name ?? "" };
         });
+      } else if (typeof attrs.tags === "object") {
+        const maybeAttrs = attrs.tags.attributes ?? attrs.tags;
+        tags = [
+          {
+            id: maybeAttrs.id ?? undefined,
+            Name: maybeAttrs.Name ?? maybeAttrs.name ?? "",
+          },
+        ];
       }
     }
 
-    // Image mapping
-    let Image: Media | null = null;
-    if (attrs.Image) {
-      const imageData = attrs.Image?.data?.attributes ?? attrs.Image?.attributes ?? attrs.Image;
+    // --- Image normalization ---
+    let CoverImage: Media | null = null;
+    if (attrs.CoverImage) {
+      const imageData =
+        attrs.CoverImage?.data?.attributes ??
+        attrs.CoverImage?.attributes ??
+        attrs.CoverImage?.data ??
+        attrs.CoverImage;
+
       if (imageData) {
-        Image = {
-          url: imageData.url,
-          alternativeText: imageData.alternativeText ?? imageData.alternative_text ?? imageData.alt,
+        const urlCandidate =
+          imageData.url ??
+          imageData.formats?.medium?.url ??
+          imageData.formats?.small?.url ??
+          null;
+
+        const absoluteUrl =
+          urlCandidate && typeof urlCandidate === "string" && urlCandidate.startsWith("/")
+            ? `${base}${urlCandidate}`
+            : urlCandidate;
+
+        CoverImage = {
+          url: absoluteUrl ?? null,
+          alternativeText:
+            imageData.alternativeText ??
+            imageData.alternative_text ??
+            imageData.alt ??
+            null,
           formats: imageData.formats ?? undefined,
         };
       }
     }
 
     return {
-      id: raw.id ?? id,
+      id: raw.id ?? idStr,
       Title,
       Content,
-      Image,
+      CoverImage,
       tags,
+      documentId: idStr,
     };
   } catch (err: any) {
-    if (err?.name === "AbortError") {
-      console.warn("getPostById aborted (timeout).");
+    if (err?.code === "ETIMEDOUT" || err?.name === "AbortError") {
+      console.warn("getPostById aborted (timeout). url:", url);
     } else {
       console.warn("getPostById error:", err?.message ?? err);
     }
     return null;
   }
 }
- 

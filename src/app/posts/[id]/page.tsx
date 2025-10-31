@@ -1,37 +1,49 @@
 // src/app/posts/[id]/page.tsx
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from "next/link";
 import { getPostById } from "@/libs/posts";
+// types.ts (or paste at top of src/lib/posts.ts)
 
-type Tag = {
+export type Tag = {
   id?: number;
-  Name?: string;
-  slug?: string;
+  Name?: string | null;
+  name?: string | null;
+  slug?: string | null;
 };
 
-type MediaFormat = { url?: string };
+export type MediaFormat = { url?: string | null };
 
-type Media = {
-  url?: string;
+export type Media = {
+  url?: string | null;
   formats?: {
-    thumbnail?: MediaFormat;
-    small?: MediaFormat;
-    medium?: MediaFormat;
-    large?: MediaFormat;
-  };
-  alternativeText?: string;
+    thumbnail?: MediaFormat | null;
+    small?: MediaFormat | null;
+    medium?: MediaFormat | null;
+    large?: MediaFormat | null;
+  } | null;
+  alternativeText?: string | null;
 };
 
-type PostItem = {
+export type RichTextChild = {
+  type?: string;
+  text?: string;
+};
+
+export type RichTextBlock = {
+  type?: string;
+  children?: RichTextChild[];
+};
+
+export type PostItem = {
   id: number | string;
   Title: string;
-  Content?:
-    | { type?: string; children?: { type?: string; text?: string }[] }[]
-    | string
-    | null;
-  Image?: Media | null;
-  tags?: Tag[];
+  Content?: RichTextBlock[] | string | null;
+  CoverImage?: Media | null;
+  tags?: Tag[] | null;
+  // `documentId` is optional but when present it's a string (normalized)
+  documentId?: string;
 };
+
 
 export const revalidate = 60; // ISR: revalidate every 60 seconds
 
@@ -47,31 +59,45 @@ export async function generateStaticParams() {
   }
 
   try {
-    const res = await fetch(`${STRAPI.replace(/\/$/, "")}/api/posts?pagination[pageSize]=100`);
+    const res = await fetch(
+      `${STRAPI.replace(/\/$/, "")}/api/wealfy-blog-posts?pagination[pageSize]=100`
+    );
     if (!res.ok) {
-      console.warn("generateStaticParams: fetch returned !ok", res.status, res.statusText);
+      console.warn(
+        "generateStaticParams: fetch returned !ok",
+        res.status,
+        res.statusText
+      );
       return [];
     }
     const json = await res.json();
     const data = Array.isArray(json.data) ? json.data : [];
+    // NOTE: return documentId to match your page param name
     return data.map((p: any) => ({
-      id: String(p.id ?? p?.attributes?.id ?? p),
+      documentId: String(p.id ?? p?.attributes?.id ?? p),
     }));
   } catch (err) {
     console.warn("generateStaticParams failed:", (err as any)?.message ?? err);
     return [];
   }
 }
-
 type Props = {
-  params: Promise<{
-    id: string;
-  }>;
+  params: { id?: string; documentId?: string } | Promise<{ id?: string; documentId?: string }>;
 };
 
+
 export default async function PostPage({ params }: Props) {
-  const { id } = await params;
-  const post: PostItem | null = await getPostById(id);
+  // Await params to satisfy Next.js runtime (covers both Promise and plain object)
+  
+  const p = (await params) as { id?: string; documentId?: string };
+  const documentId = p.documentId ?? p.id ?? null;
+  // Debugging logs (server-side only)
+  console.log("=== Strapi Fetch Debug ===");
+  console.log("Document ID:", documentId);
+  console.log("Params:", params);
+
+  // const post: PostItem | null = await getPostById(documentId);
+const post: PostItem | null = await getPostById(documentId ?? "");
 
   if (!post) {
     return (
@@ -85,12 +111,11 @@ export default async function PostPage({ params }: Props) {
     );
   }
 
-  const imgUrl =
-    post.Image?.formats?.medium?.url ||
-    post.Image?.formats?.small?.url ||
-    post.Image?.url ||
+  const imgUrl = 
+    post.CoverImage?.url ||
     null;
-
+console.log("imgUrl", imgUrl);
+  // Normalize content to plain text
   const contentText = Array.isArray(post.Content)
     ? post.Content
         .map((block) =>
@@ -107,19 +132,25 @@ export default async function PostPage({ params }: Props) {
   const fullImgSrc =
     imgUrl && STRAPI
       ? `${STRAPI.replace(/\/$/, "")}${imgUrl.startsWith("/") ? imgUrl : `/${imgUrl}`}`
-      : null;
+      : imgUrl ?? null; // if STRAPI not set, allow absolute imgUrl if provided
 
-  // Safe Typeform URL (or any embed URL)
+  // Typeform: if user passes a full URL in env, keep it; otherwise build a common Typeform path
   const TYPEFORM_ID = process.env.NEXT_PUBLIC_TYPEFORM_ID ?? null;
   let typeformUrl: string | null = null;
-  if (TYPEFORM_ID && typeof TYPEFORM_ID === "string" && TYPEFORM_ID.trim() !== "") {
-    try {
-      typeformUrl = TYPEFORM_ID.startsWith("http://") || TYPEFORM_ID.startsWith("https://")
-        ? TYPEFORM_ID
-        : `https://example.typeform.com/to/${TYPEFORM_ID}`;
-    } catch (err) {
-      console.warn("Invalid Typeform ID:", TYPEFORM_ID, err);
-      typeformUrl = null;
+  if (
+    TYPEFORM_ID &&
+    typeof TYPEFORM_ID === "string" &&
+    TYPEFORM_ID.trim() !== ""
+  ) {
+    // allow either a full URL or a raw ID
+    if (
+      TYPEFORM_ID.startsWith("http://") ||
+      TYPEFORM_ID.startsWith("https://")
+    ) {
+      typeformUrl = TYPEFORM_ID;
+    } else {
+      // standard Typeform embed URL pattern
+      typeformUrl = `https://form.typeform.com/to/${TYPEFORM_ID}`;
     }
   }
 
@@ -132,34 +163,32 @@ export default async function PostPage({ params }: Props) {
           <div className="mb-6 rounded overflow-hidden">
             <Image
               src={fullImgSrc}
-              alt={post.Image?.alternativeText ?? post.Title}
+              alt={post.CoverImage?.alternativeText ?? post.Title}
               width={1200}
               height={700}
+              // If the image host isn't in next.config.js domains you can either:
+              // - set unoptimized (not recommended for prod), or
+              // - add the domain to next.config.js images.domains
               unoptimized
             />
           </div>
         )}
 
-        <div className="mb-6 whitespace-pre-wrap">{contentText || "No content."}</div>
+        <div className="mb-6 whitespace-pre-wrap">
+          {contentText || "No content."}
+        </div>
 
         {post.tags && post.tags.length > 0 && (
           <div className="text-sm text-gray-600">
             Tags:{" "}
             {post.tags
-              .map((t) => t.Name)
+              .map((t) => t.Name ?? t.name)
               .filter(Boolean)
               .join(", ")}
           </div>
         )}
 
-        {/* Only render Typeform embed if valid */}
-        {typeformUrl && (
-          <iframe
-            title="Typeform Embed"
-            src={typeformUrl}
-            style={{ width: "100%", height: "500px", border: "none" }}
-          />
-        )}
+       
 
         <Link href="/posts" className="text-blue-600 mt-8 block">
           ← Back to posts

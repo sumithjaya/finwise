@@ -1,10 +1,7 @@
 /* src/app/posts/Blog.module.css */
 
 /* Page layout */
-.pagemain {
-  padding: 48px 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+.pagemain {   
   box-sizing: border-box;
   font-family:
     Inter,
@@ -300,7 +297,7 @@
 
 @media (min-width: 1024px) {
   .pagemain {
-    padding: 64px 32px;
+    padding: 64px 100px;
   }
   .feturedPost {
     min-height: 420px;
@@ -359,10 +356,10 @@
 }
 .inner {
   width: 100%;
-  height: 100%;
+  height: 100%; 
 }
 .pagemain {
-  padding: 20px 100px;
+  padding: 20px 150px; 
 }
 
 .feturedPostContent {
@@ -371,6 +368,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  height: 40%;
 }
 .feturedPostTitle {
   font-size: 30px;

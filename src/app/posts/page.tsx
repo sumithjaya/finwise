@@ -1,18 +1,13 @@
-// src/app/posts/page.tsx
+"use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./Blog.module.css";
 import { HiArrowUpRight } from "react-icons/hi2";
 import Image from "next/image";
 
-type Tag = {
-  Title: string;
-};
-
-type MediaFormat = {
-  url?: string;
-};
-
+type Tag = { Title: string };
+type MediaFormat = { url?: string };
 type Media = {
   url?: string;
   formats?: {
@@ -23,105 +18,40 @@ type Media = {
   };
   alternativeText?: string;
 };
+type ContentBlock = { type: string; children: { type: string; text: string }[] };
 
 type PostItem = {
   id: number;
+  documentId: string;
   Title: string;
-  Content?: { type: string; children: { type: string; text: string }[] }[];
+  Content?: ContentBlock[];
   CoverImage?: Media;
   tags?: Tag[];
   publishedAt?: string;
-  createdAt?: string;
-  updatedAt?: string;
 };
 
-    type StrapiResponse = {
-      data: PostItem[];
-      meta?: {
-        pagination?: {
-          page: number;
-          pageSize: number;
-          pageCount: number;
-          total: number;
-        };
-      };
+type StrapiResponse = {
+  data: PostItem[];
+  meta?: {
+    pagination?: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
     };
+  };
+};
 
-// Get the Strapi URL with fallback
+const PAGE_SIZE = 6;
+
 function getStrapiUrl(): string {
   return (
     process.env.NEXT_PUBLIC_STRAPI_API_URL ||
     process.env.NEXT_PUBLIC_STRAPI_URL ||
-    process.env.STRAPI_API_URL ||
     "http://localhost:1337"
   );
 }
 
-async function getBlogPosts(): Promise<PostItem[]> {
-  const strapiUrl = getStrapiUrl();
-  const apiToken = process.env.STRAPI_API_TOKEN;
-
-  console.log("=== Strapi Fetch Debug ===");
-  console.log("Strapi URL:", strapiUrl);
-  console.log("API Token exists:", !!apiToken);
-  console.log("API Token length:", apiToken?.length || 0);
-
-  try {
-    const url = `${strapiUrl}/api/wealfy-blog-posts?populate=*&sort=publishedAt:desc&pagination[limit]=10`;
-    console.log("Fetching from:", url);
-
-    const headers: HeadersInit = {
-      "Content-Type": "application/json",
-    };
-
-    if (apiToken) {
-      headers["Authorization"] = `Bearer ${apiToken}`;
-    }
-
-    console.log("Request headers:", {
-      ...headers,
-      Authorization: apiToken ? "Bearer ***" : "none",
-    });
-
-    const response = await fetch(url, {
-      headers,
-      cache: "no-store",
-    });
-
-    console.log("Response status:", response.status);
-    console.log("Response statusText:", response.statusText);
-    console.log("Response ok:", response.ok);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Error response body:", errorText);
-      throw new Error(
-        `Failed to fetch: ${response.status} ${response.statusText}`
-      );
-    }
-
-    const data: StrapiResponse = await response.json();
-    console.log("Successfully fetched posts count:", data.data?.length || 0);
-    console.log("First post (if any):", data.data?.[0]?.Title || "No posts");
-    return data.data || [];
-  } catch (error) {
-    console.error("=== Error Details ===");
-    console.error("Error fetching blog posts:", error);
-    if (error instanceof Error) {
-      console.error("Error name:", error.name);
-      console.error("Error message:", error.message);
-      console.error("Error cause:", error.cause);
-    }
-    // Return empty array instead of throwing
-    return [];
-  }
-}
-
-/**
- * Helper: given a Media object (Strapi file object), return the best URL
- * priority: formats.medium.url -> formats.small.url -> url -> formats.thumbnail.url
- * returns null if none found.
- */
 function pickImagePath(media?: Media | null): string | null {
   if (!media) return null;
   return (
@@ -133,26 +63,73 @@ function pickImagePath(media?: Media | null): string | null {
   );
 }
 
-export default async function PostsPage() {
-  const posts = await getBlogPosts();
-  console.log("Posts:", posts);
-  const latestPost = posts[0];
-
-  console.log("Latest post:", latestPost);
-  const remainingPosts = posts.slice(1);
+export default function PostsPageClient() {
   const strapiUrl = getStrapiUrl();
-  const fallbackImage = "/images/bloghero.jpg";
+  const apiToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+  const [posts, setPosts] = useState<PostItem[]>([]);
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Prefer latestPost.Image, fall back to latestPost.CoverImage
-  const featuredImgPath = pickImagePath(latestPost?.CoverImage) || null;
+  const fetchPosts = async (pageToFetch: number) => {
+    setLoading(true);
+    setError(null);
 
-  const featuredImageUrl = featuredImgPath
-    ? featuredImgPath.startsWith("http")
-      ? featuredImgPath
-      : `${strapiUrl}${featuredImgPath}`
-    : fallbackImage;
+    try {
+      const url = `${strapiUrl}/api/wealfy-blog-posts?populate=*&sort=publishedAt:desc&pagination[page]=${pageToFetch}&pagination[pageSize]=${PAGE_SIZE}`;
+      const headers: HeadersInit = { "Content-Type": "application/json" };
+      if (apiToken) headers["Authorization"] = `Bearer ${apiToken}`;
 
-  console.log("Rendering page with", posts.length, "posts");
+      const res = await fetch(url, { headers, cache: "no-store" });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`Strapi fetch failed: ${res.status} ${res.statusText} - ${text}`);
+      }
+
+      const data: StrapiResponse = await res.json();
+      setPosts((prev) => [...prev, ...data.data]);
+      setPageCount(data.meta?.pagination?.pageCount || null);
+    } catch (err: any) {
+      console.error("Fetch posts error:", err);
+      setError(err?.message || "Unknown error while fetching posts");
+    } finally {
+      setLoading(false);
+      setInitialLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts(1);
+  }, []); // initial load
+
+  const loadMore = async () => {
+    if (loading) return;
+    if (pageCount !== null && page >= pageCount) return;
+
+    const nextPage = page + 1;
+    setPage(nextPage);
+    await fetchPosts(nextPage);
+  };
+
+  const latestPost = posts[0];
+  const remainingPosts = posts.slice(1);
+
+  const buildImageUrl = (path?: string | null) =>
+    path?.startsWith("http") ? path : path ? `${strapiUrl}${path}` : null;
+
+  const renderContentText = (Content?: ContentBlock[]) => {
+    if (!Content || Content.length === 0) return "";
+    return Content.map((block) =>
+      (block.children || [])
+        .map((c) => (c.text || "").trim())
+        .filter(Boolean)
+        .join("")
+    )
+      .filter(Boolean)
+      .join("\n");
+  };
 
   return (
     <main className={styles.pagemain}>
@@ -167,206 +144,86 @@ export default async function PostsPage() {
         </div>
       </div>
 
-      <div className={styles.feturedPostContainer}>
-        <div
-          className={styles.feturedPost}
-          style={{ ["--bg-image" as any]: `url(${featuredImageUrl})` }}
-        >
-          <div className={styles.feturedPostContent}>
-            <div className={styles.feturedPostTitleContainer}>
-              <div className={styles.feturedPostTitle}>
-                {latestPost?.Title || "Featured story"}
-              </div>
-              <div className={styles.feturedPostClick}>
-                <HiArrowUpRight />
-              </div>
-            </div>
-            <div className={styles.feturedPostDescription}>
-              {latestPost?.Content && latestPost.Content.length > 0
-                ? latestPost.Content.map((block) =>
-                    (block.children || [])
-                      .map((c) => (c.text || "").trim())
-                      .filter(Boolean)
-                      .join("")
-                  )
-                    .join("\n")
-                    .substring(0, 150)
-                    .trim() +
-                  (latestPost.Content.join("").length > 150 ? "..." : "")
-                : "Read the latest insights on wealth management and personal finance."}
-            </div>
-            <div className={styles.feturedPostMeta}>
-              <div className={styles.feturedPostMetaContainer}>
-                <div className={styles.feturedPostAuthor}>
-                  <div className={styles.feturedPostAuthorImage}>
-                    <Image
-                      src="/images/adviser02.jpg"
-                      alt="logo"
-                      width={100}
-                      height={100}
-                    />
-                  </div>
-                  <div className={styles.feturedPostAuthorName}>Jhone Doe</div>
-                </div>
-                <div className={styles.feturedPostDate}>
-                  <div className={styles.feturedPostDateIcon}>
-                    {/* calendar svg omitted for brevity */}
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M6.00012 1.50195V3.75195"
-                        stroke="white"
-                        strokeMiterlimit="10"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M11.9999 1.50195V3.75195"
-                        stroke="white"
-                        strokeMiterlimit="10"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M2.62512 6.81836H15.3751"
-                        stroke="white"
-                        strokeMiterlimit="10"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M15.75 6.37695V12.752C15.75 15.002 14.625 16.502 12 16.502H6C3.375 16.502 2.25 15.002 2.25 12.752V6.37695C2.25 4.12695 3.375 2.62695 6 2.62695H12C14.625 2.62695 15.75 4.12695 15.75 6.37695Z"
-                        stroke="white"
-                        strokeMiterlimit="10"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M11.7709 10.2773H11.7776"
-                        stroke="white"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M11.7709 12.5273H11.7776"
-                        stroke="white"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M8.99673 10.2773H9.00347"
-                        stroke="white"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M8.99673 12.5273H9.00347"
-                        stroke="white"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M6.22061 10.2773H6.22735"
-                        stroke="white"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M6.22061 12.5273H6.22735"
-                        stroke="white"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                  <div className={styles.feturedPostDateText}>
-                    {latestPost?.publishedAt
-                      ? new Date(latestPost.publishedAt).toLocaleDateString()
-                      : "14 Jun 2025"}
-                  </div>
+      {/* Featured post */}
+      {latestPost && (
+        <div className={styles.feturedPostContainer}>
+          <div
+            className={styles.feturedPost}
+            style={{
+              ["--bg-image" as any]: `url(${
+                buildImageUrl(pickImagePath(latestPost.CoverImage)) ||
+                "/images/bloghero.jpg"
+              })`,
+            }}
+          >
+            <div className={styles.feturedPostContent}>
+              <div className={styles.feturedPostTitleContainer}>
+                <div className={styles.feturedPostTitle}>{latestPost.Title}</div>
+                <div className={styles.feturedPostClick}>
+                  <Link href={`/posts/${latestPost.documentId}`}><HiArrowUpRight /></Link>
                 </div>
               </div>
-              <div className={styles.feturedPostTags}>
-                {latestPost?.tags &&
-                  latestPost.tags.map((tag, idx) => (
-                    <div key={idx} className={styles.feturedPostTag}>
-                      {tag.Title}
-                    </div>
-                  ))}
+              <div className={styles.feturedPostDescription}>
+                {renderContentText(latestPost.Content)?.substring(0, 150) || ""}
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
+      {/* Posts list */}
       <div className={styles.postsList}>
-        {posts.length === 0 ? (
-          <div className={styles.noPosts}>
-            <p className={styles.noPostsTitle}>No blog posts found</p>
-            <p className={styles.noPostsText}>
-              Check your server terminal logs for detailed error information
-            </p>
-          </div>
+        {initialLoading ? (
+          <div className={styles.noPosts}>Loading posts…</div>
+        ) : posts.length === 0 ? (
+          <div className={styles.noPosts}>No blog posts found</div>
         ) : (
           remainingPosts.map((post) => {
-            console.log("post", post);
-
-            const { id, Title, Content = [], tags = [], CoverImage } = post;
-
-            // prefer Image, then CoverImage
-            const postImagePath = pickImagePath(CoverImage);
-
-            const imgUrl = postImagePath
-              ? postImagePath.startsWith("http")
-                ? postImagePath
-                : `${strapiUrl}${postImagePath}`
-              : null;
-            console.log("imgUrl", imgUrl);
-            // Convert rich text blocks to plain text, filtering empty nodes
-            const contentText = Content.map((block) =>
-              (block.children || [])
-                .map((c) => (c.text || "").trim())
-                .filter(Boolean)
-                .join("")
-            )
-              .filter(Boolean)
-              .join("\n");
-
+            const imgUrl = buildImageUrl(pickImagePath(post.CoverImage));
+            const text = renderContentText(post.Content);
             return (
-              <article key={id} className={styles.postCard}>
+              <article key={post.id} className={styles.postCard}>
                 {imgUrl && (
                   <div className={styles.postImageWrapper}>
-                    <Image
-                      src={imgUrl}
-                      alt="Post Image"
-                      width={500}
-                      height={300}
-                    />
+                    <Image src={imgUrl} alt={post.Title} width={500} height={300} />
                   </div>
                 )}
-                <Link href={`/posts/${id}`} className={styles.postLink}>
-                  {Title}
+                <Link href={`/posts/${post.documentId}`} className={styles.postLink}>
+                  {post.Title}
                 </Link>
-
-                <p className={styles.postExcerpt}>
-                  {contentText || "No content."}
-                </p>
-                <div>
-                  <div> </div>  
-                </div>
-                {tags.length > 0 && (
+                <p className={styles.postExcerpt}>{text.substring(0, 150)}...</p>
+                {post.tags && post.tags.length > 0 && (
                   <div className={styles.postTagsText}>
-                    Tags: {tags.map((t) => t.Title).join(", ")}
+                    Tags: {post.tags.map((t) => t.Title).join(", ")}
                   </div>
                 )}
               </article>
             );
           })
+        )}
+      </div>
+
+      {/* Load more button */}
+      <div style={{ textAlign: "center", margin: "40px 0" }}>
+        {pageCount !== null && page >= pageCount ? (
+          <div style={{ color: "#888" }}>No more posts.</div>
+        ) : (
+          <button
+            onClick={loadMore}
+            disabled={loading}
+            style={{
+              padding: "12px 22px",
+              background: "#001F3F",
+              color: "#fff",
+              borderRadius: "8px",
+              border: "none",
+              cursor: loading ? "not-allowed" : "pointer",
+              fontWeight: "600",
+              fontSize: "16px",
+            }}
+          >
+            {loading ? "Loading..." : "Load More"}
+          </button>
         )}
       </div>
     </main>
