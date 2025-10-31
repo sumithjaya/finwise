@@ -73,9 +73,7 @@ export default function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
-          <Link href="/get-started" className={styles.navLink1}>
-            Sign in
-          </Link>
+         
           <Link href="/join-in" className={styles.navLink2}>
             Join In
           </Link>
@@ -135,13 +133,7 @@ export default function Header() {
               </div>
 
               <div className={styles.navLinks_mobile}>
-                <Link
-                  href="/get-started"
-                  className={styles.navLink1_mobile}
-                  onClick={() => setOpen(false)}
-                >
-                  Sign in
-                </Link>
+           
                 <Link
                   href="/join-in"
                   className={styles.navLink2_mobile}

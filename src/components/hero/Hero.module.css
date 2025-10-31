@@ -42,7 +42,7 @@
   position: relative;
   align-items: center;
   justify-content: center;
-  display: flex;
+  display: none;
 }
 .hero_content_left_button {
   display: flex;
@@ -55,12 +55,13 @@
   font-size: 16px;
   background-color: #ffffff;
   margin-top: 50px;
+  width: fit-content;
 }
 
 .hero_content_left_title {
   font-weight: 800;
-  font-size: 60px;
-  line-height: 6cqh;
+  font-size: 80px;
+  line-height: 80px;
   font-family: "Creato Display";
   color: #1f1f1f;
   margin-bottom: 12px;
@@ -83,13 +84,13 @@
 .hero_content_left_title_grn {
   color: #137c7a;
   font-weight: 800;
-  font-size: 60px;
+  font-size: 80px;
   font-style: italic;
   font-family: "Creato Display";
   text-align: left;
   padding: 0px;
   margin: 0px;
-  line-height: 60px;
+  line-height: 80px;
 }
 .hero_content_mobile_image {
   display: none;
@@ -114,10 +115,12 @@
   justify-content: center;
   white-space: nowrap;
   background-color: #137c7a;
-  padding: 10px 20px;
+  padding: 10px 50px;
   border-radius: 20px;
   color: #ffffff;
+  width: fit-content;
   flex-shrink: 0;
+  margin-top: 10px;
 }
 @media (max-width: 900px) {
   .hero_content_left_title {
@@ -165,7 +168,7 @@
     display: block;
   }
   .hero_content_left_button {
-    display: flex;
+    display: flex;    
     flex-direction: column;
     padding: 0;
   }

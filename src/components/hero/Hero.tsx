@@ -156,13 +156,19 @@ export default function Hero() {
                   Spend 5 mins and answer some simple questions and receive your
                   Free Wealth Journal & Financial Plan
                 </div>
-                <PopupButton
+                {/* <PopupButton
+                  id={typeformId}
+                   className={styles.hero_content_left_button_text_main}
+                >
+                 <div >Get Started</div>
+                </PopupButton> */}
+              </div>
+               <PopupButton
                   id={typeformId}
                    className={styles.hero_content_left_button_text_main}
                 >
                  <div >Get Started</div>
                 </PopupButton>
-              </div>
             </div>
 
             <div className={styles.hero_content_center}>
