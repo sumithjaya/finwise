@@ -35,17 +35,17 @@ type PostItem = {
   updatedAt?: string;
 };
 
-type StrapiResponse = {
-  data: PostItem[];
-  meta?: {
-    pagination?: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
+    type StrapiResponse = {
+      data: PostItem[];
+      meta?: {
+        pagination?: {
+          page: number;
+          pageSize: number;
+          pageCount: number;
+          total: number;
+        };
+      };
     };
-  };
-};
 
 // Get the Strapi URL with fallback
 function getStrapiUrl(): string {
@@ -357,7 +357,7 @@ export default async function PostsPage() {
                   {contentText || "No content."}
                 </p>
                 <div>
-                  <div> </div>
+                  <div> </div>  
                 </div>
                 {tags.length > 0 && (
                   <div className={styles.postTagsText}>

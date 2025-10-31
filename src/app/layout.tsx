@@ -16,8 +16,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Finwise | Financial Experts",
-  description: "Finwise is a platform for financial experts to share their knowledge and expertise with the community.",
+  title: "WEALFY | Financial Experts",
+  description: "WEALFY is a platform for financial experts to share their knowledge and expertise with the community.",
+   icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-32x32.png",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({

@@ -10,6 +10,17 @@ type Testimonial = {
   role: string;
 };
 
+type StrapiResponse = {
+  data: Testimonial[];
+  meta?: {
+    pagination?: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+};
 const TESTIMONIALS: Testimonial[] = [
   {
     quote:
@@ -36,7 +47,66 @@ const TESTIMONIALS: Testimonial[] = [
     role: "Head of Operations",
   },
 ];
+function getStrapiUrl(): string {
+  return (
+    process.env.NEXT_PUBLIC_STRAPI_API_URL ||
+    process.env.NEXT_PUBLIC_STRAPI_URL ||
+    process.env.STRAPI_API_URL ||
+    "http://localhost:1337"
+  );
+}
+async function getTestimonials(): Promise<Testimonial[]> {
+ const strapiUrl = getStrapiUrl();
+  const apiToken = process.env.STRAPI_API_TOKEN;
 
+  console.log("=== Strapi Fetch Debug ===");
+  console.log("Strapi URL:", strapiUrl);
+  console.log("API Token exists:", !!apiToken);
+  console.log("API Token length:", apiToken?.length || 0);
+
+
+  try {
+     const url = `${strapiUrl}/api/wealfy-testimonials?populate=*&sort=publishedAt:desc&pagination[limit]=10`;
+    console.log("Fetching from:", url);
+
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+    };
+
+    if (apiToken) {
+      headers["Authorization"] = `Bearer ${apiToken}`;
+    }
+
+    console.log("Request headers:", {
+      ...headers,
+      Authorization: apiToken ? "Bearer ***" : "none",
+    });
+
+    const response = await fetch(url, {
+      headers,
+      cache: "no-store",
+    });
+
+    console.log("Response status:", response.status);
+    console.log("Response statusText:", response.statusText);
+    console.log("Response ok:", response.ok);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Error response body:", errorText);
+      throw new Error(
+        `Failed to fetch: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const data: StrapiResponse = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("=== Error Details ===");
+    console.error("Error fetching blog posts:", error);
+    return [];
+  }
+}
 // Animation variants
 const makeVariants = (prefersReduced: boolean) =>
   prefersReduced
