@@ -161,3 +161,17 @@
   width: fit-content;
 }
 }
+
+/* skeleton placeholders */
+.tst_skeleton { display:flex; flex-direction:column; gap:12px; }
+.skel_large { height: 110px; border-radius: 8px; background: linear-gradient(90deg,#f3f3f3,#eee); animation: skel 1.2s linear infinite; }
+.skel_name { width: 180px; height: 18px; border-radius: 6px; background: linear-gradient(90deg,#f3f3f3,#eee); animation: skel 1.2s linear infinite; }
+.skel_role { width: 120px; height: 14px; border-radius: 6px; background: linear-gradient(90deg,#f3f3f3,#eee); animation: skel 1.2s linear infinite; }
+
+@keyframes skel { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+/* disabled btn */
+.disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+
+/* error + empty */
+.tst_error, .tst_empty { color: #666; padding: 16px 8px; }

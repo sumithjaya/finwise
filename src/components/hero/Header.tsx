@@ -58,7 +58,7 @@ export default function Header() {
           WEALFY
         </Link>
 
-        <nav className="hidden md:flex items-center gap-4">
+        <nav className={styles.nav}>
           {NAV.map((item) =>
             "href" in item ? (
               <Link
@@ -70,16 +70,17 @@ export default function Header() {
               </Link>
             ) : null
           )}
-        </nav>
-
-        <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-2">
           {/* <Link href="/get-started" className={styles.navLink1}>
             Sign in
           </Link> */}
-          {/* <Link href="/join-in" className={styles.navLink2}>
+           <Link href="/join-in" className={styles.navLink2}>
             Join In
-          </Link> */}
+          </Link>  
         </div>
+        </nav>
+
+        
 
         {/* Mobile menu toggle */}
         <button

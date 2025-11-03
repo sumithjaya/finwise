@@ -1,5 +1,5 @@
 .specialty_container {
-  padding: 50px 100px;
+  padding: 50px 150px;
 }
 
 .specialty_title_container {
@@ -43,7 +43,12 @@
   align-items: start;
   justify-content: center;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 
+}
+.specialty_card:hover {
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 .specialty_card_icon {
@@ -98,7 +103,7 @@
 
 .specialty_read_more:hover {
     
-  color: #1f1f1f;
+  color: #16a19e;
 }
 
 @media (max-width: 1024px) {

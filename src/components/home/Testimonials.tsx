@@ -1,12 +1,12 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import styles from "./Testimonials.module.css";
 
 type Testimonial = {
-  quote: string;
-  name: string;
+  Testimonial: string;
+  ClientName: string;
   role: string;
 };
 
@@ -21,32 +21,6 @@ type StrapiResponse = {
     };
   };
 };
-const TESTIMONIALS: Testimonial[] = [
-  {
-    quote:
-      "Lorem Ipsum is simply dummy text of the printing and industry. It has been the standard ever since the 1500s—reliable, clear, and timeless.",
-    name: "Henry Paddington",
-    role: "Designer",
-  },
-  {
-    quote:
-      "We shipped 2x faster after adopting their workflow. Support is on point and the docs are refreshingly direct.",
-    name: "Amaya Perera",
-    role: "Product Manager",
-  },
-  {
-    quote:
-      "From onboarding to scaling, everything felt thoughtfully engineered. Zero fluff—just results.",
-    name: "Liam Chen",
-    role: "CTO",
-  },
-  {
-    quote:
-      "Our team finally has a single source of truth. The ROI was obvious within the first week.",
-    name: "Sofia Martínez",
-    role: "Head of Operations",
-  },
-];
 function getStrapiUrl(): string {
   return (
     process.env.NEXT_PUBLIC_STRAPI_API_URL ||
@@ -55,59 +29,29 @@ function getStrapiUrl(): string {
     "http://localhost:1337"
   );
 }
+
 async function getTestimonials(): Promise<Testimonial[]> {
- const strapiUrl = getStrapiUrl();
+  const strapiUrl = getStrapiUrl();
   const apiToken = process.env.STRAPI_API_TOKEN;
 
-  console.log("=== Strapi Fetch Debug ===");
-  console.log("Strapi URL:", strapiUrl);
-  console.log("API Token exists:", !!apiToken);
-  console.log("API Token length:", apiToken?.length || 0);
-
-
   try {
-     const url = `${strapiUrl}/api/wealfy-testimonials?populate=*&sort=publishedAt:desc&pagination[limit]=10`;
-    console.log("Fetching from:", url);
+    const url = `${strapiUrl}/api/wealfy-testimonials?populate=*&sort=publishedAt:desc&pagination[limit]=10`;
+    const headers: HeadersInit = { "Content-Type": "application/json" };
+    if (apiToken) headers["Authorization"] = `Bearer ${apiToken}`;
 
-    const headers: HeadersInit = {
-      "Content-Type": "application/json",
-    };
-
-    if (apiToken) {
-      headers["Authorization"] = `Bearer ${apiToken}`;
-    }
-
-    console.log("Request headers:", {
-      ...headers,
-      Authorization: apiToken ? "Bearer ***" : "none",
-    });
-
-    const response = await fetch(url, {
-      headers,
-      cache: "no-store",
-    });
-
-    console.log("Response status:", response.status);
-    console.log("Response statusText:", response.statusText);
-    console.log("Response ok:", response.ok);
-
+    const response = await fetch(url, { headers, cache: "no-store" });
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("Error response body:", errorText);
-      throw new Error(
-        `Failed to fetch: ${response.status} ${response.statusText}`
-      );
+      throw new Error(`Failed to fetch: ${response.status} ${response.statusText} - ${errorText}`);
     }
-
     const data: StrapiResponse = await response.json();
-    return data.data;
+    return data.data ?? [];
   } catch (error) {
-    console.error("=== Error Details ===");
-    console.error("Error fetching blog posts:", error);
-    return [];
+    console.error("Error fetching testimonials:", error);
+    throw error;
   }
 }
-// Animation variants
+
 const makeVariants = (prefersReduced: boolean) =>
   prefersReduced
     ? {
@@ -116,17 +60,9 @@ const makeVariants = (prefersReduced: boolean) =>
         exit: { opacity: 0 },
       }
     : {
-        enter: (dir: number) => ({
-          x: dir > 0 ? 40 : -40,
-          opacity: 0,
-          filter: "blur(2px)",
-        }),
+        enter: (dir: number) => ({ x: dir > 0 ? 40 : -40, opacity: 0, filter: "blur(2px)" }),
         center: { x: 0, opacity: 1, filter: "blur(0px)" },
-        exit: (dir: number) => ({
-          x: dir < 0 ? 40 : -40,
-          opacity: 0,
-          filter: "blur(2px)",
-        }),
+        exit: (dir: number) => ({ x: dir < 0 ? 40 : -40, opacity: 0, filter: "blur(2px)" }),
       };
 
 export default function Testimonials() {
@@ -135,53 +71,89 @@ export default function Testimonials() {
   const prefersReducedMotion = useReducedMotion();
   const variants = makeVariants(!!prefersReducedMotion);
 
+  const [TESTIMONIALS, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch testimonials
+  useEffect(() => {
+    let mounted = true;
+    const fetchTestimonials = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const testimonials = await getTestimonials();
+        if (!mounted) return;
+        setTestimonials(testimonials);
+      } catch (err: any) {
+        if (!mounted) return;
+        setError(err?.message || "Failed to fetch testimonials.");
+        setTestimonials([]);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+    fetchTestimonials();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  // Reset index if testimonials array changes (prevents out-of-bounds)
+  useEffect(() => {
+    if (TESTIMONIALS.length === 0) {
+      setIndex(0);
+    } else {
+      setIndex((cur) => Math.min(cur, TESTIMONIALS.length - 1));
+    }
+  }, [TESTIMONIALS.length]);
+
+  // Prev / Next handlers (depend on testimonials length)
   const prev = useCallback(() => {
+    if (TESTIMONIALS.length <= 1) return;
     setDirection(-1);
     setIndex((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
-  }, []);
+  }, [TESTIMONIALS.length]);
 
   const next = useCallback(() => {
+    if (TESTIMONIALS.length <= 1) return;
     setDirection(1);
     setIndex((i) => (i + 1) % TESTIMONIALS.length);
-  }, []);
+  }, [TESTIMONIALS.length]);
 
-  const t = TESTIMONIALS[index];
+  // Optional: auto-advance every 6s (comment out if you don't want it)
+  /*
+  useEffect(() => {
+    if (TESTIMONIALS.length <= 1) return;
+    const iv = setInterval(() => {
+      setDirection(1);
+      setIndex((i) => (i + 1) % TESTIMONIALS.length);
+    }, 6000);
+    return () => clearInterval(iv);
+  }, [TESTIMONIALS.length]);
+  */
+
+  // Current testimonial (guarded)
+  const t = TESTIMONIALS.length ? TESTIMONIALS[index] : null;
 
   return (
     <div
       className={styles.testi_main_container}
       aria-roledescription="carousel"
       aria-label="Customer testimonials"
+      aria-busy={loading ? "true" : "false"}
     >
-      {/* Left illustration / figure */}
+      {/* left illustration (unchanged) */}
       <div className={styles.tst_figure_container}>
         <div className={styles.tst_figure_back} />
         <div className={styles.tst_figure_img_top}>
-          <Image
-            src="/images/quaters-green.png"
-            alt=""
-            width={110}
-            height={656}
-            priority
-          />
+          <Image src="/images/quaters-green.png" alt="" width={110} height={656} priority />
         </div>
         <div className={styles.tst_figure_img_bottom}>
-          <Image
-            src="/images/svg/dot-grid.svg"
-            alt=""
-            width={110}
-            height={656}
-            priority
-          />
+          <Image src="/images/svg/dot-grid.svg" alt="" width={110} height={656} priority />
         </div>
         <div className={styles.tst_figure_img_main}>
-          <Image
-            src="/images/Testimonial_figure.png"
-            alt="Customer success illustration"
-            width={451}
-            height={656}
-            priority
-          />
+          <Image src="/images/Testimonial_figure.png" alt="Customer success illustration" width={451} height={656} priority />
         </div>
       </div>
 
@@ -198,69 +170,68 @@ export default function Testimonials() {
           aria-live="polite"
           aria-atomic="true"
         >
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={index}
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.35, ease: "easeOut" }}
-            >
-              <div className={styles.tst_content}>{t.quote}</div>
-              <div className={styles.tst_customer_name}>{t.name}</div>
-              <div className={styles.tst_customer_designation}>{t.role}</div>
-            </motion.div>
-          </AnimatePresence>
+          {/* Loading skeleton */}
+          {loading ? (
+            <div className={styles.tst_skeleton} aria-hidden="true">
+              <div className={styles.skel_large} />
+              <div className={styles.skel_name} />
+              <div className={styles.skel_role} />
+            </div>
+          ) : error ? (
+            // Error state
+            <div className={styles.tst_error} role="status">
+              <p>Sorry — could not load testimonials.</p>
+              <small>{error}</small>
+            </div>
+          ) : !t ? (
+            // Empty state
+            <div className={styles.tst_empty} role="status">
+              <p>No testimonials available yet.</p>
+            </div>
+          ) : (
+            // Normal content (animated)
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={index}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.35, ease: "easeOut" }}
+              >
+                <div className={styles.tst_content}>{t.Testimonial}</div>
+                <div className={styles.tst_customer_name}>{t.ClientName}</div>
+                <div className={styles.tst_customer_designation}>{t.role}</div>
+              </motion.div>
+            </AnimatePresence>
+          )}
         </div>
 
         <div className={styles.testimonial_buttons}>
           <button
             type="button"
-            className={styles.pre_button}
+            className={`${styles.pre_button} ${TESTIMONIALS.length <= 1 ? styles.disabled : ""}`}
             onClick={prev}
             aria-label="Previous testimonial"
+            disabled={TESTIMONIALS.length <= 1 || loading}
           >
-            <svg
-              width="24"
-              height="8"
-              viewBox="0 0 24 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path
-                d="M23 7L2 7L6.95506 1"
-                stroke="#1F1F1F"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
+            {/* svg left */}
+            <svg width="24" height="8" viewBox="0 0 24 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path d="M23 7L2 7L6.95506 1" stroke="#1F1F1F" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </button>
 
           <button
             type="button"
-            className={styles.pre_button}
+            className={`${styles.pre_button} ${TESTIMONIALS.length <= 1 ? styles.disabled : ""}`}
             onClick={next}
             aria-label="Next testimonial"
+            disabled={TESTIMONIALS.length <= 1 || loading}
           >
-            <svg
-              width="24"
-              height="8"
-              viewBox="0 0 24 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path
-                d="M1 7H22L17.0449 1"
-                stroke="#137C7A"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
+            {/* svg right */}
+            <svg width="24" height="8" viewBox="0 0 24 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path d="M1 7H22L17.0449 1" stroke="#137C7A" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </button>
         </div>

@@ -1,7 +1,7 @@
 /* src/app/posts/Blog.module.css */
 
 /* Page layout */
-.pagemain {   
+.pagemain {
   box-sizing: border-box;
   font-family:
     Inter,
@@ -22,12 +22,11 @@
 }
 
 .readblogphill {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 500;
   color: #3a6d8c; /* matches your palette */
   letter-spacing: 0.6px;
-  margin-bottom: 8px;
-  text-transform: uppercase;
+  margin-bottom: 21px;
 }
 
 .pageHeaderTitle {
@@ -45,8 +44,9 @@
 .pageHeaderDescription {
   color: #475569;
   font-size: 15px;
-  margin-top: 6px;
+  margin-top: 16px;
   max-width: 720px;
+  margin-bottom: 40px;
 }
 
 /* Featured post container */
@@ -116,6 +116,11 @@
   width: 38px;
   height: 38px;
 }
+.avatarImage {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+}
 
 /* description */
 .feturedPostDescription {
@@ -132,7 +137,11 @@
   justify-content: space-between;
   align-items: center;
 }
-
+.avatarContainer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 .feturedPostMetaContainer {
   display: flex;
   gap: 20px;
@@ -168,8 +177,31 @@
   gap: 8px;
   color: rgba(255, 255, 255, 0.9);
   font-size: 13px;
+  border: #ffffff 1px solid;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
 }
-
+.feturedPostDateContainer {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.feturedPostDateText {
+  font-size: 18px;
+  font-weight: 400;
+  font-style: normal;
+  color: #ffffff;
+  font-family: "Creato Display";
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
 .feturedPostDateIcon {
   display: inline-flex;
   align-items: center;
@@ -196,6 +228,15 @@
   font-weight: 600;
 }
 
+.postTitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: #1f1f1f;
+  text-align: left;
+  margin: 0px;
+  font-family: "Creato Display";
+  text-align: left;
+}
 /* Posts list */
 .postsList {
   display: grid;
@@ -217,7 +258,63 @@
   margin-bottom: 8px;
   font-size: 18px;
 }
-
+.postMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: #0228a3 1px dashed;
+  opacity: 0.5;
+  padding: 12px 0px;
+  height: 70px;
+}
+.postDateBadge {
+  background-color: #137c7a;
+  height: 75px;
+  width: 72px;
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.postDateBadgeText{
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Creato Display";
+  display: flex;
+  align-items: center; 
+  text-align: center;
+}
+.postDateBadgeDay{
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
+  font-family: "Creato Display";
+  display: flex;
+  align-items: center; 
+  text-align: center;
+}
+.postAuthor {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.postAuthorName {
+  font-size: 16px;
+  font-weight: 500;
+  color: #464545;
+  text-align: left;
+  margin: 0px;
+  font-family: "Creato Display";
+  text-align: left;
+}
 .noPostsText {
   color: #475569;
   font-size: 14px;
@@ -225,10 +322,10 @@
 
 /* post cards */
 .postCard {
-  border: 1px solid rgba(2, 6, 23, 0.06);
   padding: 18px;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.04);
+  border-radius: 20px;
+  box-shadow: 0px 7px 54px 0px #699e9d26;
+
   background: #ffffff;
   display: flex;
   flex-direction: column;
@@ -264,6 +361,10 @@
 
 /* excerpt */
 .postExcerpt {
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Creato Display";
   margin-bottom: 6px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -273,7 +374,19 @@
   line-height: 1.5;
   color: #334155;
 }
-
+.postReadMore {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: "Creato Display";
+  font-style: normal;
+  color: #137c7a;
+  text-decoration: none;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  transition: all;
+}
 /* tags text */
 .postTagsText {
   font-size: 13px;
@@ -316,6 +429,7 @@
   font-family: "Creato Display";
   font-style: normal;
   width: fit-content;
+  margin-top: 88px;
 }
 
 .pageHeaderTitle {
@@ -356,10 +470,10 @@
 }
 .inner {
   width: 100%;
-  height: 100%; 
+  height: 100%;
 }
 .pagemain {
-  padding: 20px 150px; 
+  padding: 20px 150px;
 }
 
 .feturedPostContent {
@@ -420,8 +534,8 @@
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  width: 100%;
-  flex: 5;
+
+  flex: 2;
 }
 .feturedPostMetaContainer {
   display: flex;

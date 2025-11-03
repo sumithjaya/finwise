@@ -1,11 +1,11 @@
 .ready_to_find_container {
   background-color: #137c7a;
-  padding: 0 100px;
+  padding: 50px   100px;
   position: relative;
   overflow: hidden;
   width: 100%;
   min-width: 100vw;
-  margin-top: 100px;
+  margin-top: 100px; 
 }
 
 /* the curve background */
@@ -70,14 +70,14 @@
 /* Underline below headline */
 .cta_underline {
   position: absolute;
-  left: 50%;
+
   transform: translateX(-50%);
-  bottom: -10px;
-  width: 360px;
+  margin-left: 540px;
+  width: 460px;
   height: 10px;
   background-image: url("/images/svg/understrike.svg");
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   pointer-events: none;
 }
@@ -90,6 +90,7 @@
   font-size: 18px;
   font-weight: 400;
   color: #545454;
+  font-family: "Creato Display";
   margin: 0 auto;
 }
 
@@ -101,9 +102,11 @@
   font-weight: 700;
   font-size: 18px;
   padding: 20px 50px;
-  margin-top: 10px;
+  margin-top: 30px;
   text-decoration: none;
   display: inline-block;
+  cursor: pointer;
+  font-family: "Creato Display";
   text-align: center;
   transition:
     transform 150ms ease,
@@ -136,22 +139,21 @@
   .cta_card_wrapper {
     padding: 0 40px;
   }
-  .cta_headline{
+  .cta_headline {
     font-size: 32px;
   }
-  .cta_headline span{
+  .cta_headline span {
     font-size: 32px;
   }
-  .cta_subtext{
+  .cta_subtext {
     font-size: 16px;
   }
-  .cta_button{
+  .cta_button {
     font-size: 16px;
     padding: 15px 30px;
-  } 
-  .cta_subtext{
+  }
+  .cta_subtext {
     width: 80%;
     font-family: "Creato Display";
   }
-
 }

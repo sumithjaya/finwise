@@ -68,7 +68,7 @@ export default function Footer() {
               </li>
               <li className="flex gap-4 items-center">
                 <IoMailOutline aria-hidden="true" />
-                <span>FinWise@gmail.com</span>
+                <span>wealfy@gmail.com</span>
               </li>
               <li className="flex gap-4 items-center">
                 <FaWhatsapp aria-hidden="true" />

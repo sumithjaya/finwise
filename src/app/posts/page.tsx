@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./Blog.module.css";
-import { HiArrowUpRight } from "react-icons/hi2";
+import { HiArrowUpRight, HiOutlineUser } from "react-icons/hi2";
 import Image from "next/image";
+import { BsCalendar } from "react-icons/bs";
+import { FaUserAlt } from "react-icons/fa";
+import { HiOutlineShare } from "react-icons/hi";
 
 type Tag = { Title: string };
 type MediaFormat = { url?: string };
@@ -18,7 +21,10 @@ type Media = {
   };
   alternativeText?: string;
 };
-type ContentBlock = { type: string; children: { type: string; text: string }[] };
+type ContentBlock = {
+  type: string;
+  children: { type: string; text: string }[];
+};
 
 type PostItem = {
   id: number;
@@ -26,8 +32,9 @@ type PostItem = {
   Title: string;
   Content?: ContentBlock[];
   CoverImage?: Media;
-  tags?: Tag[];
+  Tags?: Tag[];
   publishedAt?: string;
+  Auther?: string;
 };
 
 type StrapiResponse = {
@@ -62,7 +69,26 @@ function pickImagePath(media?: Media | null): string | null {
     null
   );
 }
-
+const formatDate = (dateStr: string): string => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};
+const formatDateMonth = (dateStr: string): string => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-GB", {
+    month: "short",
+  });
+};
+const formatDateDay = (dateStr: string): string => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+  });
+};
 export default function PostsPageClient() {
   const strapiUrl = getStrapiUrl();
   const apiToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
@@ -85,7 +111,9 @@ export default function PostsPageClient() {
       const res = await fetch(url, { headers, cache: "no-store" });
       if (!res.ok) {
         const text = await res.text();
-        throw new Error(`Strapi fetch failed: ${res.status} ${res.statusText} - ${text}`);
+        throw new Error(
+          `Strapi fetch failed: ${res.status} ${res.statusText} - ${text}`
+        );
       }
 
       const data: StrapiResponse = await res.json();
@@ -130,7 +158,7 @@ export default function PostsPageClient() {
       .filter(Boolean)
       .join("\n");
   };
-
+  console.log("latestPost", latestPost);
   return (
     <main className={styles.pagemain}>
       <div className={styles.inner}>
@@ -158,13 +186,130 @@ export default function PostsPageClient() {
           >
             <div className={styles.feturedPostContent}>
               <div className={styles.feturedPostTitleContainer}>
-                <div className={styles.feturedPostTitle}>{latestPost.Title}</div>
+                <div className={styles.feturedPostTitle}>
+                  {latestPost.Title}
+                </div>
                 <div className={styles.feturedPostClick}>
-                  <Link href={`/posts/${latestPost.documentId}`}><HiArrowUpRight /></Link>
+                  <Link href={`/posts/${latestPost.documentId}`}>
+                    <HiArrowUpRight />
+                  </Link>
                 </div>
               </div>
               <div className={styles.feturedPostDescription}>
                 {renderContentText(latestPost.Content)?.substring(0, 150) || ""}
+              </div>
+              <div className={styles.feturedPostMeta}>
+                <div className={styles.avatarContainer}>
+                  <div className={styles.avatar}>
+                    <Image
+                      src="/images/heroavatar.jpg"
+                      alt="Avatar"
+                      width={54}
+                      height={54}
+                      priority
+                      className={styles.avatarImage}
+                    />
+                  </div>
+                  <div>
+                    {latestPost.Auther && latestPost.Auther != null
+                      ? latestPost.Auther
+                      : "NA"}
+                  </div>
+                </div>
+                <div className={styles.feturedPostDateContainer}>
+                  <div className={styles.feturedPostDate}>
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M6.00012 1.50195V3.75195"
+                        stroke="white"
+                        stroke-miterlimit="10"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M11.9999 1.50195V3.75195"
+                        stroke="white"
+                        stroke-miterlimit="10"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M2.62512 6.81836H15.3751"
+                        stroke="white"
+                        stroke-miterlimit="10"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M15.75 6.37695V12.752C15.75 15.002 14.625 16.502 12 16.502H6C3.375 16.502 2.25 15.002 2.25 12.752V6.37695C2.25 4.12695 3.375 2.62695 6 2.62695H12C14.625 2.62695 15.75 4.12695 15.75 6.37695Z"
+                        stroke="white"
+                        stroke-miterlimit="10"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M11.7709 10.2773H11.7776"
+                        stroke="white"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M11.7709 12.5273H11.7776"
+                        stroke="white"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M8.99673 10.2773H9.00347"
+                        stroke="white"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M8.99673 12.5273H9.00347"
+                        stroke="white"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M6.22061 10.2773H6.22735"
+                        stroke="white"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M6.22061 12.5273H6.22735"
+                        stroke="white"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div className={styles.feturedPostDateText}>
+                    {latestPost?.publishedAt
+                      ? formatDate(latestPost.publishedAt)
+                      : null}
+                  </div>
+                </div>
+                <div>
+                  {latestPost &&
+                    latestPost.Tags &&
+                    latestPost.Tags.length > 0 && (
+                      <div className={styles.feturedPostTags}>
+                        {latestPost.Tags.map((Tag, index) => (
+                          <div key={index} className={styles.feturedPostTag}>
+                            {Tag.Title}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                </div>
               </div>
             </div>
           </div>
@@ -185,18 +330,49 @@ export default function PostsPageClient() {
               <article key={post.id} className={styles.postCard}>
                 {imgUrl && (
                   <div className={styles.postImageWrapper}>
-                    <Image src={imgUrl} alt={post.Title} width={500} height={300} />
+                    <Image
+                      src={imgUrl}
+                      alt={post.Title}
+                      width={500}
+                      height={300}
+                    />
+                    <div className={styles.postDateBadge}>
+                      <div className={styles.postDateBadgeText}>
+                        {post?.publishedAt
+                          ? formatDateMonth(post.publishedAt)
+                          : null}
+                      </div>
+                      <div className={styles.postDateBadgeDay}>
+                        {post?.publishedAt
+                          ? formatDateDay(post.publishedAt)
+                          : null}
+                      </div>
+                    </div>
                   </div>
                 )}
-                <Link href={`/posts/${post.documentId}`} className={styles.postLink}>
-                  {post.Title}
+
+                <div className={styles.postTitle}> {post.Title}</div>
+                <p className={styles.postExcerpt}>
+                  {text.substring(0, 150)}...
+                </p>
+
+                <Link
+                  href={`/posts/${post.documentId}`}
+                  className={styles.postLink}
+                >
+                  <div className={styles.postReadMore}>Read More</div>
                 </Link>
-                <p className={styles.postExcerpt}>{text.substring(0, 150)}...</p>
-                {post.tags && post.tags.length > 0 && (
-                  <div className={styles.postTagsText}>
-                    Tags: {post.tags.map((t) => t.Title).join(", ")}
+                <div className={styles.postMeta}>
+                  <div className={styles.postAuthor}>
+                    <HiOutlineUser />
+                    <div className={styles.postAuthorName}>
+                      {post.Auther && post.Auther != null ? post.Auther : "NA"}
+                    </div>
                   </div>
-                )}
+                  <div>
+                    <HiOutlineShare />
+                  </div>
+                </div>
               </article>
             );
           })

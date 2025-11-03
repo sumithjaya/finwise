@@ -10,10 +10,24 @@ export default function HowItWorks() {
         <section className={styles.howitworks_section}>
           <div>
             <div className={styles.howitworks_header}>
-              <h2 className={styles.howitworks_title}>
-                How It{" "}
-                <span className={styles.howitworks_title_highlight}>Works</span>
-              </h2>
+              <div className={styles.howitworks_title_wrapper}>
+                <h2 className={styles.howitworks_title}>
+                  How It{" "}
+                  <span className={styles.howitworks_title_highlight}>
+                    Works
+                  </span>
+                </h2>
+                <div className={styles.howitworks_underline_wrapper}>
+                  <Image
+                    src={"./images/svg/understrike01.svg"}
+                    alt="Underline"
+                    width={227}
+                    height={8}
+                    draggable={false}
+                    className={styles.howitworks_underline}
+                  />
+                </div>
+              </div>
               <p className={styles.howitworks_subtitle}>
                 There is now an abundance of readable dummy texts. These are
                 usually used when a text is required
@@ -127,6 +141,16 @@ export default function HowItWorks() {
                 </div>
               </div>
             </div>
+          </div>
+          <div className={styles.howitworks_image_wrapper}>
+            <Image
+              src={"./images/svg/star01.svg"}
+              alt="star icon"
+              width={42}
+              height={500}
+              draggable={false}
+              className={styles.howitworks_image}
+            />
           </div>
         </section>
       </div>

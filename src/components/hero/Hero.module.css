@@ -1,7 +1,7 @@
 .hero {
   box-sizing: border-box;
   justify-content: space-between;
-  padding: 100px 100px;
+  padding: 100px 150px;
   width: 100vw;
   height: 85vh;
   background: linear-gradient(
@@ -68,6 +68,7 @@
   text-align: left;
   font-style: italic;
   padding: 0px;
+  line-height: 80px;
 }
 .hero_content_left_subtitle {
   font-weight: 500;
@@ -90,6 +91,7 @@
   text-align: left;
   padding: 0px;
   margin: 0px;
+  margin-bottom: 12px;
   line-height: 80px;
 }
 .hero_content_mobile_image {
@@ -121,6 +123,7 @@
   width: fit-content;
   flex-shrink: 0;
   margin-top: 10px;
+  cursor: pointer;
 }
 @media (max-width: 900px) {
   .hero_content_left_title {
