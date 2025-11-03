@@ -97,3 +97,30 @@
     flex-direction: column;
   }
 }
+
+@media (max-width:670px) {
+  .adviser_profile{
+    padding: 20px ;
+    margin: 0;
+    width: 100vw;
+    overflow: hidden; 
+  }
+  .adviser_profile_container{ 
+    padding: 20px;
+    width: 100%;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .adviser_profile_image_wrapper{
+    justify-content: center;
+    width: 100%;
+  }
+  .adviser_profile_image{
+    width: 300px; 
+    height: auto;
+  }
+  .adviser_profile_content{
+    padding: 0px; 
+    overflow: hidden;
+  }
+}

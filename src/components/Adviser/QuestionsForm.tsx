@@ -1,15 +1,15 @@
 import React from "react";
-import styles from "./QuestionsForm.module.css"; 
+import styles from "./QuestionsForm.module.css";
 import Image from "next/image";
 
 export default function QuestionsForm() {
   return (
     <div className={styles.questions_form_container}>
-        <div className={styles.footer_bgCurve} aria-hidden="true" />
-      <div style={{width: "100%",zIndex:1}}>
+      <div className={styles.footer_bgCurve} aria-hidden="true" />
+      <div style={{ width: "100%", zIndex: 1 }}>
         <div className={styles.questions_form_content}>
-          <div
-            style={{ display: "flex", flex: 2, width: "100%", padding: "70px" }}
+          <div 
+            className={styles.questions_form_content_right}
           >
             <div className={styles.questions_form_content_left}>
               <div className={styles.questions_form_content_left_title}>
@@ -106,21 +106,21 @@ export default function QuestionsForm() {
                         stroke="#137C7A"
                         strokeWidth="1.5"
                         strokeLinecap="round"
-                        strokeLinejoin ="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M15.6166 16.1488C14.1333 17.5072 12.1666 18.3322 9.99997 18.3322C7.8333 18.3322 5.86663 17.5072 4.3833 16.1488C4.46663 15.3655 4.96663 14.5988 5.8583 13.9988C8.14163 12.4822 11.875 12.4822 14.1416 13.9988C15.0333 14.5988 15.5333 15.3655 15.6166 16.1488Z"
                         stroke="#137C7A"
                         strokeWidth="1.5"
                         strokeLinecap="round"
-                        strokeLinejoin ="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M9.99984 18.3346C14.6022 18.3346 18.3332 14.6037 18.3332 10.0013C18.3332 5.39893 14.6022 1.66797 9.99984 1.66797C5.39746 1.66797 1.6665 5.39893 1.6665 10.0013C1.6665 14.6037 5.39746 18.3346 9.99984 18.3346Z"
                         stroke="#137C7A"
                         strokeWidth="1.5"
                         strokeLinecap="round"
-                        strokeLinejoin ="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
 
@@ -164,7 +164,7 @@ export default function QuestionsForm() {
                         strokeWidth="1.5"
                         strokeMiterlimit="10"
                         strokeLinecap="round"
-                        strokeLinejoin ="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M14.1668 7.5L11.5585 9.58333C10.7002 10.2667 9.29183 10.2667 8.43349 9.58333L5.8335 7.5"
@@ -172,7 +172,7 @@ export default function QuestionsForm() {
                         strokeWidth="1.5"
                         strokeMiterlimit="10"
                         strokeLinecap="round"
-                        strokeLinejoin ="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
 
@@ -217,7 +217,7 @@ export default function QuestionsForm() {
                         strokeWidth="1.5"
                         strokeMiterlimit="10"
                         strokeLinecap="round"
-                        strokeLinejoin ="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M14.1668 7.5L11.5585 9.58333C10.7002 10.2667 9.29183 10.2667 8.43349 9.58333L5.8335 7.5"
@@ -225,7 +225,7 @@ export default function QuestionsForm() {
                         strokeWidth="1.5"
                         strokeMiterlimit="10"
                         strokeLinecap="round"
-                        strokeLinejoin ="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
 
