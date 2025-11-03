@@ -111,7 +111,7 @@ export default function Header() {
                   onClick={() => setOpen(false)}
                   className={styles.drawerLogo}
                 >
-                  FINWISE
+                  WEALFY
                 </Link>
                 <button onClick={() => setOpen(false)} aria-label="Close menu">
                   ✕
@@ -142,14 +142,14 @@ export default function Header() {
                   onClick={() => setOpen(false)}
                 >
                   Sign in
-                </Link>
+                </Link>*/}
                 <Link
                   href="/join-in"
                   className={styles.navLink2_mobile}
                   onClick={() => setOpen(false)}
                 >
                   Join In
-                </Link> */}
+                </Link> 
               </div>
             </div>
           </div>

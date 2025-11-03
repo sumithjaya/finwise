@@ -163,8 +163,39 @@
   }
   .howitworks_bullet_icon {
     display: none;
+  } 
+}
+
+@media (max-width: 768px) {
+  .howitworks_container {
+    padding: 100px 30px;
+  }
+  .howitworks_bullet_text{
+    font-size: 18px;
+  }
+  .howitworks_title {
+    font-size: 30px;
+  }
+  .howitworks_title_highlight {
+    font-size: 30px;
   }
   .howitworks_bullet_icon_mobile {
     display: block;
+    width: 40px;
+    height: 40px;
+  }
+  .howitworks_bullet_icon_wrapper {
+    background-color: #fff;
+    border: 2px solid #dddddd;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 7px 54px 0px #699e9d26;
+  }
+  .howitworks_bullet_icon {
+    display: none;
   }
 }

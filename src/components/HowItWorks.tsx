@@ -4,8 +4,7 @@ import styles from "./HowItWorks.module.css";
 import RevealStagger from "./ui/RevealStagger";
 
 export default function HowItWorks() {
-  return (
-    <RevealStagger stagger={200}>
+  return ( 
       <div className={styles.howitworks_container}>
         <section className={styles.howitworks_section}>
           <div>
@@ -153,7 +152,6 @@ export default function HowItWorks() {
             />
           </div>
         </section>
-      </div>
-    </RevealStagger>
+      </div> 
   );
 }
