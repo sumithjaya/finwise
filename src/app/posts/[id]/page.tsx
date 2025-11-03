@@ -2,8 +2,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getPostById } from "@/libs/posts";
-// types.ts (or paste at top of src/lib/posts.ts)
+import type { Metadata } from "next";
 
+// --- types (keep these in a shared types file if you prefer) ---
 export type Tag = {
   id?: number;
   Name?: string | null;
@@ -40,13 +41,13 @@ export type PostItem = {
   Content?: RichTextBlock[] | string | null;
   CoverImage?: Media | null;
   tags?: Tag[] | null;
-  // `documentId` is optional but when present it's a string (normalized)
   documentId?: string;
 };
 
+// ISR
+export const revalidate = 60;
 
-export const revalidate = 60; // ISR: revalidate every 60 seconds
-
+// IMPORTANT: file is [id], so return { id: "..." } here
 export async function generateStaticParams() {
   const STRAPI =
     process.env.NEXT_PUBLIC_STRAPI_API_URL ?? process.env.STRAPI_API_URL ?? "";
@@ -63,41 +64,29 @@ export async function generateStaticParams() {
       `${STRAPI.replace(/\/$/, "")}/api/wealfy-blog-posts?pagination[pageSize]=100`
     );
     if (!res.ok) {
-      console.warn(
-        "generateStaticParams: fetch returned !ok",
-        res.status,
-        res.statusText
-      );
+      console.warn("generateStaticParams: fetch returned !ok", res.status);
       return [];
     }
     const json = await res.json();
     const data = Array.isArray(json.data) ? json.data : [];
-    // NOTE: return documentId to match your page param name
-    return data.map((p: any) => ({
-      documentId: String(p.id ?? p?.attributes?.id ?? p),
-    }));
+    // Return 'id' because this route file is posts/[id]/page.tsx
+    return data.map((p: any) => ({ id: String(p.id ?? p?.attributes?.id ?? p) }));
   } catch (err) {
     console.warn("generateStaticParams failed:", (err as any)?.message ?? err);
     return [];
   }
 }
-type Props = {
-  params: { id?: string; documentId?: string } | Promise<{ id?: string; documentId?: string }>;
-};
 
+// FIXED: In Next.js 15, params must be a Promise
+type Params = { id?: string };
+type Props = { params: Promise<Params> };
 
 export default async function PostPage({ params }: Props) {
-  // Await params to satisfy Next.js runtime (covers both Promise and plain object)
-  
-  const p = (await params) as { id?: string; documentId?: string };
-  const documentId = p.documentId ?? p.id ?? null;
-  // Debugging logs (server-side only)
-  console.log("=== Strapi Fetch Debug ===");
-  console.log("Document ID:", documentId);
-  console.log("Params:", params);
-
-  // const post: PostItem | null = await getPostById(documentId);
-const post: PostItem | null = await getPostById(documentId ?? "");
+  // FIXED: await params before using it
+  const { id } = await params;
+  const documentId = id; // keep the term you use downstream
+  // If you have legacy links that provide documentId as a query, handle them upstream
+  const post: PostItem | null = await getPostById(documentId ?? "");
 
   if (!post) {
     return (
@@ -111,10 +100,8 @@ const post: PostItem | null = await getPostById(documentId ?? "");
     );
   }
 
-  const imgUrl = 
-    post.CoverImage?.url ||
-    null;
-console.log("imgUrl", imgUrl);
+  const imgUrl = post.CoverImage?.url ?? null;
+
   // Normalize content to plain text
   const contentText = Array.isArray(post.Content)
     ? post.Content
@@ -132,26 +119,16 @@ console.log("imgUrl", imgUrl);
   const fullImgSrc =
     imgUrl && STRAPI
       ? `${STRAPI.replace(/\/$/, "")}${imgUrl.startsWith("/") ? imgUrl : `/${imgUrl}`}`
-      : imgUrl ?? null; // if STRAPI not set, allow absolute imgUrl if provided
+      : imgUrl ?? null;
 
-  // Typeform: if user passes a full URL in env, keep it; otherwise build a common Typeform path
+  // Typeform: keep a small UI affordance to actually use it (prevents "assigned but never used")
   const TYPEFORM_ID = process.env.NEXT_PUBLIC_TYPEFORM_ID ?? null;
   let typeformUrl: string | null = null;
-  if (
-    TYPEFORM_ID &&
-    typeof TYPEFORM_ID === "string" &&
-    TYPEFORM_ID.trim() !== ""
-  ) {
-    // allow either a full URL or a raw ID
-    if (
-      TYPEFORM_ID.startsWith("http://") ||
-      TYPEFORM_ID.startsWith("https://")
-    ) {
-      typeformUrl = TYPEFORM_ID;
-    } else {
-      // standard Typeform embed URL pattern
-      typeformUrl = `https://form.typeform.com/to/${TYPEFORM_ID}`;
-    }
+  if (TYPEFORM_ID && typeof TYPEFORM_ID === "string" && TYPEFORM_ID.trim() !== "") {
+    typeformUrl =
+      TYPEFORM_ID.startsWith("http://") || TYPEFORM_ID.startsWith("https://")
+        ? TYPEFORM_ID
+        : `https://form.typeform.com/to/${TYPEFORM_ID}`;
   }
 
   return (
@@ -166,29 +143,31 @@ console.log("imgUrl", imgUrl);
               alt={post.CoverImage?.alternativeText ?? post.Title}
               width={1200}
               height={700}
-              // If the image host isn't in next.config.js domains you can either:
-              // - set unoptimized (not recommended for prod), or
-              // - add the domain to next.config.js images.domains
               unoptimized
             />
           </div>
         )}
 
-        <div className="mb-6 whitespace-pre-wrap">
-          {contentText || "No content."}
-        </div>
+        <div className="mb-6 whitespace-pre-wrap">{contentText || "No content."}</div>
 
         {post.tags && post.tags.length > 0 && (
           <div className="text-sm text-gray-600">
-            Tags:{" "}
-            {post.tags
-              .map((t) => t.Name ?? t.name)
-              .filter(Boolean)
-              .join(", ")}
+            Tags: {post.tags.map((t) => t.Name ?? t.name).filter(Boolean).join(", ")}
           </div>
         )}
 
-       
+        {typeformUrl && (
+          <div className="mt-8">
+            <a
+              href={typeformUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-sm text-blue-600"
+            >
+              Give feedback
+            </a>
+          </div>
+        )}
 
         <Link href="/posts" className="text-blue-600 mt-8 block">
           ← Back to posts

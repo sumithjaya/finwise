@@ -9,6 +9,8 @@ import { BsCalendar } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { HiOutlineShare } from "react-icons/hi";
 import ReadyToFind from "@/components/home/ReadyToFind";
+import { MdTaxiAlert } from "react-icons/md";
+import { IoAlertCircle } from "react-icons/io5";
 
 type Tag = { Title: string };
 type MediaFormat = { url?: string };
@@ -322,7 +324,7 @@ export default function PostsPageClient() {
         {initialLoading ? (
           <div className={styles.noPosts}>Loading posts…</div>
         ) : posts.length === 0 ? (
-          <div className={styles.noPosts}>No blog posts found</div>
+          <div className={styles.noPosts}><IoAlertCircle/> No blog posts found</div>
         ) : (
           remainingPosts.map((post) => {
             const imgUrl = buildImageUrl(pickImagePath(post.CoverImage));

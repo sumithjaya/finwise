@@ -251,7 +251,7 @@
 .noPosts {
   text-align: center;
   padding: 32px;
-  background: #fffbeb; /* similar to bg-yellow-50 */
+  background: #dff2f0; /* similar to bg-yellow-50 */
   border-radius: 10px;
 }
 
@@ -260,6 +260,9 @@
   font-weight: 700;
   margin-bottom: 8px;
   font-size: 18px;
+  width: 100%;
+  font-family: "Creato Display";
+  text-align: center;
 }
 .postMeta {
   display: flex;
@@ -284,24 +287,24 @@
   justify-content: center;
   align-items: center;
 }
-.postDateBadgeText{
+.postDateBadgeText {
   color: #ffffff;
   font-size: 25px;
   font-weight: 600;
   font-style: normal;
   font-family: "Creato Display";
   display: flex;
-  align-items: center; 
+  align-items: center;
   text-align: center;
 }
-.postDateBadgeDay{
+.postDateBadgeDay {
   color: #ffffff;
   font-size: 18px;
   font-weight: 500;
   font-style: normal;
   font-family: "Creato Display";
   display: flex;
-  align-items: center; 
+  align-items: center;
   text-align: center;
 }
 .postAuthor {
@@ -321,6 +324,7 @@
 .noPostsText {
   color: #475569;
   font-size: 14px;
+  background-color: #dff2f0;
 }
 
 /* post cards */
@@ -412,7 +416,6 @@
 }
 
 @media (min-width: 1024px) {
-  
   .feturedPost {
     min-height: 420px;
   }
@@ -473,7 +476,7 @@
   width: 100%;
   height: 100%;
 }
-.pagemain { 
+.pagemain {
 }
 
 .feturedPostContent {
