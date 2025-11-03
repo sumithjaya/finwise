@@ -8,6 +8,7 @@ import Image from "next/image";
 import { BsCalendar } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { HiOutlineShare } from "react-icons/hi";
+import ReadyToFind from "@/components/home/ReadyToFind";
 
 type Tag = { Title: string };
 type MediaFormat = { url?: string };
@@ -378,7 +379,8 @@ export default function PostsPageClient() {
           })
         )}
       </div>
-
+       
+        
       {/* Load more button */}
       <div style={{ textAlign: "center", margin: "40px 0" }}>
         {pageCount !== null && page >= pageCount ? (
@@ -389,7 +391,7 @@ export default function PostsPageClient() {
             disabled={loading}
             style={{
               padding: "12px 22px",
-              background: "#001F3F",
+              background: "#137C7A",
               color: "#fff",
               borderRadius: "8px",
               border: "none",
@@ -402,6 +404,8 @@ export default function PostsPageClient() {
           </button>
         )}
       </div>
+      
+          <ReadyToFind/>
     </main>
   );
 }
