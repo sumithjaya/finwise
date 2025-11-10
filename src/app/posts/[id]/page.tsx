@@ -171,7 +171,7 @@ export default async function PostPage({ params }: Props) {
 
         <Link href="/posts" className="text-blue-600 mt-8 block">
           ← Back to posts
-        </Link>
+        </Link> 
       </article>
     </main>
   );
