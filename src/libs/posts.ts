@@ -86,7 +86,7 @@ export async function getPostById(
   const idStr = String(documentId);
   const base = STRAPI.replace(/\/$/, "");
   const url = `${base}/api/wealfy-blog-posts/${encodeURIComponent(idStr)}?populate=*`;
-
+  console.log("Strapi url:", url);
   const headers: Record<string, string> = {
     Accept: "application/json",
   };
@@ -95,8 +95,9 @@ export async function getPostById(
   }
 
   try {
-    const res = await safeFetch(url, { headers, next: { revalidate: 60 } }, 7000);
+    const res = await fetch(url, { headers, next: { revalidate: 60 } });
 
+    console.log("Strapi res:", res);
     if (!res.ok) {
       let bodyText = "<no body>";
       try {
@@ -115,7 +116,7 @@ export async function getPostById(
     }
 
     const json = await res.json();
-    const raw = Array.isArray(json.data) ? json.data[0] : json.data ?? json;
+    const raw = Array.isArray(json.data) ? json.data[0] : (json.data ?? json);
     if (!raw) return null;
 
     const attrs = raw.attributes ?? raw;
@@ -165,7 +166,9 @@ export async function getPostById(
           null;
 
         const absoluteUrl =
-          urlCandidate && typeof urlCandidate === "string" && urlCandidate.startsWith("/")
+          urlCandidate &&
+          typeof urlCandidate === "string" &&
+          urlCandidate.startsWith("/")
             ? `${base}${urlCandidate}`
             : urlCandidate;
 

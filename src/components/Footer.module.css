@@ -192,7 +192,9 @@
     flex-direction: column;
     gap: 10px;
   }
-
+.footer_branding_element{
+  top: 180px;
+}
   .footer_social_icon{
     width: 30px;
     height: 30px;

@@ -1,23 +1,31 @@
- .wfw_card_title{
-  font-size: '20px';
+/* ==================================================
+   BASE / DESKTOP (default)
+   ================================================== */
+
+.wfw_card_title {
+  font-size: 20px;
   font-weight: 700;
-  color: "#1F1F1F";
+  color: #1F1F1F;
   text-align: center;
   padding: 20px 20px;
- }
+}
 
-  .wfw_card_content{
-  font-size: '16px';
+.wfw_card_content {
+  font-size: 16px;
   font-weight: 400;
-  color: "#545454";
+  color: #545454;
   text-align: center;
- }.wrapper {
+}
+
+/* Layout wrapper */
+.wrapper {
   display: flex;
   gap: 20px;
   padding: 0 100px;
   margin-top: 100px;
 }
 
+/* Left section */
 .leftSection {
   flex: 1;
 }
@@ -34,6 +42,7 @@
   color: #137c7a;
 }
 
+/* Underline */
 .underlineContainer {
   display: flex;
   flex-direction: row;
@@ -46,6 +55,7 @@
   height: 8px;
 }
 
+/* Text block */
 .leftSectionText {
   font-size: 16px;
   margin-top: 30px;
@@ -54,16 +64,21 @@
   font-family: "Creato Display";
 }
 
+/* Cards layout */
 .cardsWrapper {
   display: flex;
   flex: 3;
   justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 40px;
 }
 
+/* Individual card container */
 .cardContainer {
   position: relative;
 }
 
+/* Background decorations */
 .cardBackgroundSmall {
   background-color: #d5f0edff;
   width: 57px;
@@ -86,6 +101,7 @@
   z-index: -1;
 }
 
+/* Card base */
 .card {
   display: flex;
   flex-direction: column;
@@ -100,6 +116,7 @@
   z-index: 1;
 }
 
+/* Gradient wrapper */
 .cardGradientWrapper {
   display: flex;
   flex-direction: column;
@@ -126,6 +143,7 @@
   box-shadow: 0px 7px 54px 30px #699e9d2f;
 }
 
+/* Card icon */
 .cardIconWrapper {
   display: flex;
   background-color: #ecf5f4;
@@ -137,22 +155,110 @@
 }
 
 
+/* ==================================================
+   TABLET (≤ 1024px)
+   ================================================== */
+
 @media (max-width: 1024px) {
   .wrapper {
-    padding: 0 50px;
-    display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  
-  .underlineContainer {
-    padding-left: 50px;
+    padding: 0 50px;
   }
 
-  .cardsWrapper{
+  .underlineContainer {
+    padding-left: 50px;
+    justify-content: center;
+  }
+
+  .leftSectionTitle {
+    font-size: 36px;
+    text-align: center;
+  }
+
+  .leftSectionText {
+    font-size: 15px;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .cardsWrapper {
+   display: flex;
+   margin-top: 60px;
+  }
+
+  .cardGradientWrapper,
+  .card {
+    width: 240px;
+    height: 280px;
+  }
+
+  .cardIconWrapper {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+
+/* ==================================================
+   MOBILE (≤ 768px)
+   ================================================== */
+
+@media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 30px;
+    margin-top: 60px;
+  }
+
+  .underlineContainer {
+    padding-left: 0;
+    justify-content: center;
+  }
+
+  .leftSectionTitle {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .leftSectionText {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .cardsWrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px; 
+    gap: 25px;
+  }
+
+  .cardGradientWrapper,
+  .card {
+    width: 220px;
+    height: 260px;
+  }
+
+  .cardIconWrapper {
+    width: 70px;
+    height: 70px;
+  }
+
+  .wfw_card_title {
+    font-size: 18px;
+  }
+
+  .wfw_card_content {
+    font-size: 14px;
   }
 }
+
+/* ==================================================
+   NOTES
+   - Desktop: Original layout, flex row with full width cards.
+   - Tablet: 2x2 grid for cards, smaller padding & text scaling.
+   - Mobile: Single column stack, compact spacing.
+   - No colors, shadows, or font weights changed.
+   ================================================== */

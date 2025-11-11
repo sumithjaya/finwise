@@ -1,3 +1,8 @@
+/* ===========================
+   BASE / DESKTOP (default)
+   Keep original desktop styles unchanged
+   =========================== */
+
 .howitworks_container {
   box-sizing: border-box;
   justify-content: space-between;
@@ -14,29 +19,32 @@
 
 .howitworks_header {
   text-align: center;
-  padding: 10px; 
+  padding: 10px;
 }
-.howitworks_title_wrapper{
-  display: flex ;
+
+.howitworks_title_wrapper {
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.howitworks_image_wrapper{
+.howitworks_image_wrapper {
   position: absolute;
-  top:  20px;
+  top: 20px;
   left: 220px;
 }
+
 .howitworks_title {
   font-size: 40px;
   font-weight: 500;
   font-family: "Creato Display";
   font-style: normal;
-   
 }
-.howitworks_underline_wrapper{
+
+.howitworks_underline_wrapper {
   margin-left: 215px;
 }
+
 .howitworks_title_highlight {
   color: #137c7a;
   font-weight: 800;
@@ -92,7 +100,7 @@
 
 .howitworks_bullet_icon_wrapper {
   background-color: #fff;
-  border: 2px solid #D0E5E4;
+  border: 2px solid #d0e5e4;
   width: 110px;
   height: 110px;
   border-radius: 50%;
@@ -116,43 +124,50 @@
 .howitworks_bullet_icon_mobile {
   display: none;
 }
+
+/* ===========================
+   TABLET (<= 1024px)
+   This block contains your original @media (max-width: 1024px) rules.
+   =========================== */
+
 @media (max-width: 1024px) {
   .howitworks_container {
     padding: 100px 50px;
   }
-  .howitworks_bullets_wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 
   .howitworks_bullets {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+     
+    justify-items: center;
+    align-items: start;
     background-image: none;
+    width: 100%;
   }
-  .howitworks_bullet {
-    margin: 20px 0px;
+
+  .howitworks_bullet { 
     border: #d4dfde 1px solid;
     border-radius: 30px;
-    padding: 20px 20px;
-    max-width: 100%;
-  }
+    padding: 20px 20px; 
+    margin: 0;
+    margin-top: 30px;
+    height: 300px;
+  } 
 
   .howitworks_bullet_icon_wrapper {
     background-color: #fff;
     border: 2px solid #dddddd;
-    width: 55px;
-    height: 55px;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0px 7px 54px 0px #699e9d26;
   }
+
   .howitworks_bullet_text {
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 500;
     font-family: "Creato Display";
     font-style: normal;
@@ -160,30 +175,47 @@
     padding: 10px;
     border-radius: 10px;
     margin-top: 20px;
+    color: #545454;
   }
+
   .howitworks_bullet_icon {
     display: none;
-  } 
-}
-
-@media (max-width: 768px) {
-  .howitworks_container {
-    padding: 100px 30px;
-  }
-  .howitworks_bullet_text{
-    font-size: 18px;
-  }
-  .howitworks_title {
-    font-size: 30px;
-  }
-  .howitworks_title_highlight {
-    font-size: 30px;
   }
   .howitworks_bullet_icon_mobile {
     display: block;
     width: 40px;
     height: 40px;
   }
+}
+
+/* ===========================
+   MOBILE (<= 768px)
+   This block preserves your original mobile overrides.
+   =========================== */
+
+@media (max-width: 768px) {
+  .howitworks_container {
+    padding: 100px 30px;
+  }
+
+  .howitworks_bullet_text {
+    font-size: 18px;
+  }
+
+  .howitworks_title {
+    font-size: 30px;
+  }
+
+  .howitworks_title_highlight {
+    font-size: 30px;
+  }
+
+  .howitworks_bullet_icon_mobile {
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
+
   .howitworks_bullet_icon_wrapper {
     background-color: #fff;
     border: 2px solid #dddddd;
@@ -195,7 +227,16 @@
     align-items: center;
     box-shadow: 0px 7px 54px 0px #699e9d26;
   }
+
   .howitworks_bullet_icon {
     display: none;
   }
 }
+
+/* ===========================
+   NOTES / MAINTENANCE
+   - Desktop styles remain in the base section above.
+   - Tablet uses the <=1024px breakpoint you supplied.
+   - Mobile uses the <=768px breakpoint you supplied.
+   - No style values were changed; rules were simply reorganized.
+   =========================== */

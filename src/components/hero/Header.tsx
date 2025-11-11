@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./Header.module.css";
+import { PopupButton } from "@typeform/embed-react";
 
 type NavItem =
   | { label: string; href: string }
@@ -50,6 +51,7 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+ const typeformId = process.env.NEXT_PUBLIC_TYPEFORM_ID ?? "";
 
   return (
     <header className={`${styles.header} ${scrolled ? styles.headerScrolled : ""}`}>
@@ -74,9 +76,20 @@ export default function Header() {
           {/* <Link href="/get-started" className={styles.navLink1}>
             Sign in
           </Link> */}
-           <Link href="/join-in" className={styles.navLink2}>
+           {/* <Link href="/join-in" className={styles.navLink2}>
             Join In
-          </Link>  
+          </Link>  */}
+            {/* <Link href="/join-in" className={styles.navLink2}>
+            Join In
+          </Link>  */}
+            <PopupButton
+              id={typeformId}
+             
+              className={styles.navLink2}
+              aria-label="Get started with Typeform"
+            >
+              Join In
+            </PopupButton> 
         </div>
         </nav>
 

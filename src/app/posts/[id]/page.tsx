@@ -86,6 +86,7 @@ export default async function PostPage({ params }: Props) {
   const { id } = await params;
   const documentId = id; // keep the term you use downstream
   // If you have legacy links that provide documentId as a query, handle them upstream
+  console.log("documentnid ",documentId)
   const post: PostItem | null = await getPostById(documentId ?? "");
 
   if (!post) {
@@ -156,7 +157,7 @@ export default async function PostPage({ params }: Props) {
           </div>
         )}
 
-        {typeformUrl && (
+        {/* {typeformUrl && (
           <div className="mt-8">
             <a
               href={typeformUrl}
@@ -167,7 +168,7 @@ export default async function PostPage({ params }: Props) {
               Give feedback
             </a>
           </div>
-        )}
+        )} */}
 
         <Link href="/posts" className="text-blue-600 mt-8 block">
           ← Back to posts

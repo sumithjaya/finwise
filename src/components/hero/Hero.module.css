@@ -1,18 +1,19 @@
+/* ===========================
+   BASE / Desktop (default)
+   =========================== */
+
 .hero {
   box-sizing: border-box;
   justify-content: space-between;
   padding: 100px 150px;
-  height: 85vh;
-  background: linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(19, 124, 122, 0.3) 100%
-  ); 
+  height: 85vh; 
 }
-.hero_container{
+
+.hero_container {
   overflow: hidden; 
   width: 100vw;
 }
+
 .hero_content {
   display: flex;
   flex: 7;
@@ -20,6 +21,7 @@
   flex-direction: row;
 }
 
+/* Left column */
 .hero_content_left {
   display: flex;
   flex-direction: column;
@@ -28,16 +30,19 @@
   width: 100%;
   justify-content: space-around;
 }
+
+/* Center column */
 .hero_content_center {
   flex: 1;
   position: relative;
   align-items: center;
   justify-content: center;
   display: flex;
-  flex-direction: column;
-
+  flex-direction: column; 
   justify-content: space-around;
 }
+
+/* Right column */
 .hero_content_right {
   flex: 3;
   width: 100%;
@@ -46,6 +51,8 @@
   justify-content: center;
   display: none;
 }
+
+/* Button area */
 .hero_content_left_button {
   display: flex;
   text-align: left;
@@ -58,8 +65,10 @@
   background-color: #ffffff;
   margin-top: 50px;
   width: fit-content;
+  align-items: center;
 }
 
+/* Title and subtitle */
 .hero_content_left_title {
   font-weight: 800;
   font-size: 80px;
@@ -72,6 +81,7 @@
   padding: 0px;
   line-height: 80px;
 }
+
 .hero_content_left_subtitle {
   font-weight: 500;
   font-size: 20px;
@@ -84,6 +94,7 @@
   padding-left: 10px;
   border-left: #137c7a 5px solid;
 }
+
 .hero_content_left_title_grn {
   color: #137c7a;
   font-weight: 800;
@@ -96,20 +107,39 @@
   margin-bottom: 12px;
   line-height: 80px;
 }
+
+/* Mobile-specific image holder (hidden by default) */
 .hero_content_mobile_image {
   display: none;
 }
+
+/* Underline graphic */
+.underlineContainer {
+  position: relative;
+  width: 100%; 
+  height: 10px; /* control height here */
+}
+
+.underline {
+  object-fit: contain; 
+  width: 500px;/* or 'cover' if you want */
+}
+
+/* Button text / CTA */
 .hero_content_left_button_text {
   display: flex;
   text-align: left;
   align-items: center;
   border-radius: 20px;
-  padding: 10px 20px;
+  padding: 0 20px;
   font-family: "Creato Display";
-  color: #5e6362;
-  font-size: 13px;
+  color: #137c7a;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 15px;
   background-color: #ffffff;
 }
+
 .hero_content_left_button_text_main {
   font-size: 16px;
   font-weight: 700;
@@ -127,9 +157,49 @@
   margin-top: 10px;
   cursor: pointer;
 }
+
+/* Mobile underline container (hidden by default) */
+.underlineContainerMobile {
+  display: none;
+}
+
+/* ===========================
+   TABLET range
+   (between mobile max and desktop)
+   Use: 901px — 1366px (inclusive)
+   =========================== */
+
+@media (min-width: 901px) and (max-width: 1366px) {
+  /* Keep the visual style but adapt layout for tablet sizes */
+  .hero {
+    height: auto;
+  }
+
+  .hero_content {
+    /* keep row layout by default; adjust only if needed later */
+  }
+
+  /* If you want tablet-specific tweaks, add here without changing styles */
+  /* Example placeholders (no style changes applied) */
+}
+
+/* ===========================
+   MOBILE (small screens)
+   max-width: 900px
+   =========================== */
+
 @media (max-width: 900px) {
+  /* Underline / mobile underline swap */
+  .underlineContainer {
+    display: none;
+  }
+  .underlineContainerMobile {
+    display: block; 
+  }
+
+  /* Title size adjustments */
   .hero_content_left_title {
-    font-weight: 700;
+    font-weight: 800;
     font-size: 40px;
     color: #1f1f1f;
     margin-bottom: 12px;
@@ -140,14 +210,24 @@
   .hero_content_left_title_grn {
     font-size: 40px;
     margin-bottom: 0px;
+    line-height: 40px;
+    margin-top: 20px;  
   }
+
+  .textunderlineContainer {
+    margin-bottom: 10px;
+    display: block;
+  }
+
   .hero_content_left_button_text {
     font-size: 12px;
     text-align: center;
   }
+
   .hero_content_left_button_text_main {
     margin: 20px;
   }
+
   .hero_content_left_subtitle {
     font-weight: 500;
     font-size: 22px;
@@ -159,13 +239,19 @@
     padding-left: 10px;
     border-left: #137c7a 5px solid;
   }
+
+  /* Hero padding collapse for mobile */
   .hero {
     padding: 20px 0;
   }
+
+  /* Stack columns vertically on mobile */
   .hero_content {
     flex-direction: column;
     padding: 0 20px; 
   }
+
+  /* Hide center & right on mobile */
   .hero_content_center {
     display: none;
   }
@@ -175,10 +261,14 @@
   .hero_content_mobile_image {
     display: none;
   }
+
+  /* Button layout changes on mobile (visual styles kept) */
   .hero_content_left_button {
     display: flex;    
     flex-direction: column;
     padding: 0;
+    background-color: transparent;
+    border: none;
   }
 
   .hero_content_left_button_button {
@@ -198,13 +288,17 @@
 
   .hero_content_left_button_text {
     display: flex;
-    text-align: left;
+    text-align: center;
     align-items: center;
     border: 1px solid #ddeae9;
     border-radius: 20px;
     padding: 10px 20px;
     color: #545454;
-    font-size: 16px;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 28px;
     background-color: #ffffff;
+    margin-bottom: 30px;
   }
 }
+ 

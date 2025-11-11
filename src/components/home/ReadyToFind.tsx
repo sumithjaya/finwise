@@ -2,8 +2,11 @@
 import Image from "next/image";
 import styles from "./ReadyToFind.module.css";
 import Link from "next/link";
+import { PopupButton } from "@typeform/embed-react";
 
 export default function ReadyToFind() {
+  const typeformId = process.env.NEXT_PUBLIC_TYPEFORM_ID ?? "";
+
   return (
     <div className={styles.ready_to_find_container}>
       <div className={styles.footer_bgCurve} aria-hidden="true" />
@@ -12,8 +15,7 @@ export default function ReadyToFind() {
           <div className={styles.cta_card}>
             {/* Headline + underline */}
             <div className={styles.cta_headline}>
-              Ready to find your{" "}
-              <span>financial adviser?</span>
+              Ready to find your <span>financial adviser?</span>
               <div className={styles.cta_underline} aria-hidden="true" />
             </div>
 
@@ -24,14 +26,21 @@ export default function ReadyToFind() {
             </div>
 
             {/* CTA button */}
-            <Link
+            {/* <Link
               href="/get-started"
               aria-label="Get Started"
               className={styles.cta_button}
             >
               Get Started
-            </Link>
-
+            </Link> */}
+            <PopupButton
+              id={typeformId}
+             
+              className={styles.hero_content_left_button_text_main}
+              aria-label="Get started with Typeform"
+            >
+              Get Started
+            </PopupButton>
             {/* Decorative tiles */}
             <div className={styles.cta_tiles}>
               <Image
