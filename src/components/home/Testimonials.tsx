@@ -32,6 +32,7 @@ function getStrapiUrl(): string {
 
 async function getTestimonials(): Promise<Testimonial[]> {
   const strapiUrl = getStrapiUrl();
+  console.log("strapiUrl for testimonials", strapiUrl);
   const apiToken = process.env.STRAPI_API_TOKEN;
 
   try {
