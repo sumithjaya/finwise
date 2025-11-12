@@ -1,16 +1,17 @@
+'use client';
 import React from "react";
 import styles from "./QuestionsForm.module.css";
 import Image from "next/image";
+import { PopupButton } from "@typeform/embed-react";
 
 export default function QuestionsForm() {
+  const typeformId = process.env.NEXT_PUBLIC_TYPEFORM_ID ?? "";
   return (
     <div className={styles.questions_form_container}>
       <div className={styles.footer_bgCurve} aria-hidden="true" />
       <div style={{ width: "100%", zIndex: 1 }}>
         <div className={styles.questions_form_content}>
-          <div 
-            className={styles.questions_form_content_right}
-          >
+          <div className={styles.questions_form_content_right}>
             <div className={styles.questions_form_content_left}>
               <div className={styles.questions_form_content_left_title}>
                 Hi! Have <span style={{ fontWeight: 800 }}>Questions?</span>
@@ -84,8 +85,8 @@ export default function QuestionsForm() {
               </div>
             </div>
             <div className={styles.questions_form_content_right}>
-              <form
-                action=""
+              <div
+              
                 className={styles.questions_form_content_right_form}
               >
                 <div className={styles.questions_form_content_right_form_input}>
@@ -249,16 +250,25 @@ export default function QuestionsForm() {
                     ></textarea>
                   </div>
                   <div>
-                    <button
+                    {/* <button
                       className={
                         styles.questions_form_content_right_form_button
                       }
                     >
                       Submit
-                    </button>
+                    </button> */}
+                    <PopupButton
+                      id={typeformId}
+                      className={
+                        styles.questions_form_content_right_form_button
+                      }
+                      aria-label="Join via Typeform"
+                    >
+                      Submit
+                    </PopupButton>
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
           <div
