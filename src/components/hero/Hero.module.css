@@ -6,11 +6,11 @@
   box-sizing: border-box;
   justify-content: space-between;
   padding: 100px 150px;
-  height: 85vh; 
+  height: 85vh;
 }
 
 .hero_container {
-  overflow: hidden; 
+  overflow: hidden;
   width: 100vw;
 }
 
@@ -38,7 +38,7 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: space-around;
 }
 
@@ -116,13 +116,13 @@
 /* Underline graphic */
 .underlineContainer {
   position: relative;
-  width: 100%; 
+  width: 100%;
   height: 10px; /* control height here */
 }
 
 .underline {
-  object-fit: contain; 
-  width: 500px;/* or 'cover' if you want */
+  object-fit: contain;
+  width: 500px; /* or 'cover' if you want */
 }
 
 /* Button text / CTA */
@@ -194,7 +194,7 @@
     display: none;
   }
   .underlineContainerMobile {
-    display: block; 
+    display: block;
   }
 
   /* Title size adjustments */
@@ -203,7 +203,7 @@
     font-size: 40px;
     color: #1f1f1f;
     margin-bottom: 12px;
-    font-style: normal; 
+    font-style: normal;
     line-height: 40px;
     margin-bottom: 0px;
   }
@@ -211,7 +211,7 @@
     font-size: 40px;
     margin-bottom: 0px;
     line-height: 40px;
-    margin-top: 20px;  
+    margin-top: 20px;
   }
 
   .textunderlineContainer {
@@ -248,7 +248,7 @@
   /* Stack columns vertically on mobile */
   .hero_content {
     flex-direction: column;
-    padding: 0 20px; 
+    padding: 0 20px;
   }
 
   /* Hide center & right on mobile */
@@ -264,7 +264,7 @@
 
   /* Button layout changes on mobile (visual styles kept) */
   .hero_content_left_button {
-    display: flex;    
+    display: flex;
     flex-direction: column;
     padding: 0;
     background-color: transparent;
@@ -301,4 +301,90 @@
     margin-bottom: 30px;
   }
 }
- 
+
+@media (max-width: 500px) {
+  .hero_content {
+    padding-top: 100px;
+    z-index: -1 !important;
+  }
+
+  .hero_content_left_title {
+    font-size: 42px;
+    font-weight: 500;
+
+    font-family: "Creato Display";
+  }
+  .hero_content_left_title_grn {
+    font-size: 42px;
+    font-weight: 800;
+    font-family: "Creato Display";
+  }
+  .hero_content_left_subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    font-family: "Creato Display";
+    color: #545454;
+    border-left: #137c7abb 3px solid;
+  }
+
+  .hero_content_left_button {
+    margin-top: 26px;
+  }
+  .hero_content_left_button_text {
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Creato Display";
+    color: #1f1f1f;
+    border: none;
+    padding: 10px;
+    margin: 0px;
+    margin-bottom: 16px;
+    background-color: transparent;
+  }
+  .hero_content_left_button_text_main {
+    width: 100%;
+    margin: 0px;
+    border-radius: 10px;
+  }
+  .hero_content_left_button_wrapper {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px 20px;
+    width: 100%;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 2px 6px 10px rgba(16, 78, 3, 0.116);
+  }
+}
+
+@media (max-width: 400px) {
+  .hero{
+    z-index: -1;
+  }
+  .hero_content_left_title {
+    font-size: 36px;
+    font-weight: 500;
+    font-family: "Creato Display";
+    font-style: normal;
+  }
+  .hero_content_left_title_grn {
+    font-size: 36px;
+    font-weight: 800;
+    font-family: "Creato Display";
+    font-style: italic;
+  }
+  .hero_content_left_subtitle {
+    font-size: 17px;
+    font-weight: 400;
+    font-family: "Creato Display";
+    color: #545454;
+    border-left: #137c7abb 3px solid;
+    margin-bottom: 0;
+    margin-top: 30px;
+  }
+  .hero_content_left_button_wrapper {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+}

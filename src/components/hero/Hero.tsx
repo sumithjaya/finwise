@@ -12,7 +12,7 @@ export default function Hero() {
     <div className={styles.hero_container}>
       <div className={styles.hero}>
         <section
-          className="relative text-center flex flex-row"
+         
           aria-labelledby="hero-heading"
         >
           <div className={styles.backdrop} />
@@ -54,7 +54,8 @@ export default function Hero() {
                         </g>
                       </g>
                     </svg>
-                  </div>   <div className={styles.underlineContainerMobile}>
+                  </div>{" "}
+                  <div className={styles.underlineContainerMobile}>
                     <svg
                       width="252"
                       height="9"
@@ -120,16 +121,18 @@ export default function Hero() {
               </div>
 
               <div className={styles.hero_content_left_button}>
-                <div className={styles.hero_content_left_button_text}>
-                  Spend 5 mins and answer some simple questions and receive your
-                  Free Wealth Journal & Financial Plan
+                <div className={styles.hero_content_left_button_wrapper}>
+                  <div className={styles.hero_content_left_button_text}>
+                    Spend 5 mins and answer some simple questions and receive
+                    your Free Wealth Journal & Financial Plan
+                  </div>
+                  <PopupButton
+                    id={typeformId}
+                    className={styles.hero_content_left_button_text_main}
+                  >
+                    <div>Get Started</div>
+                  </PopupButton>
                 </div>
-                <PopupButton
-                  id={typeformId}
-                  className={styles.hero_content_left_button_text_main}
-                >
-                  <div>Get Started</div>
-                </PopupButton>
               </div>
             </div>
 

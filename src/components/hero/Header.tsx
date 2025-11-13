@@ -8,7 +8,10 @@ import { PopupButton } from "@typeform/embed-react";
 
 type NavItem =
   | { label: string; href: string }
-  | { label: string; items: { label: string; href: string; description?: string }[] };
+  | {
+      label: string;
+      items: { label: string; href: string; description?: string }[];
+    };
 
 const NAV: NavItem[] = [
   { label: "For Advisers", href: "/adviser-profile" },
@@ -38,6 +41,9 @@ export default function Header() {
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const typeformId = process.env.NEXT_PUBLIC_TYPEFORM_ID ?? "";
+  const lastScrollRef = useRef(0);
+  const tickingRef = useRef(false);
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
@@ -60,9 +66,48 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
+    const onScroll = () => {
+      const current = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (!tickingRef.current) {
+        window.requestAnimationFrame(() => {
+          const diff = current - lastScrollRef.current;
+          // ignore tiny scrolls
+          if (Math.abs(diff) < 8) {
+            tickingRef.current = false;
+            return;
+          }
+
+          // if scrolling down and scrolled past top offset -> hide
+          if (current > lastScrollRef.current && current > 80) {
+            setHidden(true);
+          } else if (current < lastScrollRef.current) {
+            // scrolling up -> show
+            setHidden(false);
+          }
+
+          lastScrollRef.current = Math.max(0, current);
+          tickingRef.current = false;
+        });
+
+        tickingRef.current = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   return (
-    <header className={cx(styles.header, scrolled && styles.headerScrolled)}>
+    <header
+      className={cx(
+        styles.header,
+        scrolled && styles.headerScrolled,
+        hidden && styles.headerHidden
+      )}
+    >
       <div className={styles.headerContainer}>
         <Link href="/" className={styles.logo}>
           WEALFY
@@ -74,7 +119,10 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={cx(styles.navLink, isSection(item.href) && styles.navLinkActive)}
+                className={cx(
+                  styles.navLink,
+                  isSection(item.href) && styles.navLinkActive
+                )}
                 aria-current={isSection(item.href) ? "page" : undefined}
               >
                 {item.label}
@@ -99,7 +147,12 @@ export default function Header() {
           aria-expanded={open}
           onClick={() => setOpen(true)}
         >
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor" aria-hidden>
+          <svg
+            viewBox="0 0 24 24"
+            className="h-6 w-6"
+            fill="#6e9291ff"
+            aria-hidden
+          >
             <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
           </svg>
         </button>
@@ -114,7 +167,11 @@ export default function Header() {
               aria-modal="true"
             >
               <div className={styles.drawerHeader}>
-                <Link href="/" onClick={() => setOpen(false)} className={styles.drawerLogo}>
+                <Link
+                  href="/"
+                  onClick={() => setOpen(false)}
+                  className={styles.drawerLogo}
+                >
                   WEALFY
                 </Link>
                 <button onClick={() => setOpen(false)} aria-label="Close menu">
@@ -129,7 +186,10 @@ export default function Header() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className={cx(styles.drawerLink, isSection(item.href) && styles.drawerLinkActive)}
+                      className={cx(
+                        styles.drawerLink,
+                        isSection(item.href) && styles.drawerLinkActive
+                      )}
                       aria-current={isSection(item.href) ? "page" : undefined}
                     >
                       {item.label}

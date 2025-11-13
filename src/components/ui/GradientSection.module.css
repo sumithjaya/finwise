@@ -1,7 +1,7 @@
 /* components/ui/GradientSection.module.css */
 .gradientSection {
   position: relative;background: #137C7ACC;
-background: linear-gradient(180deg, rgba(19, 124, 122, 0.5) 0%, rgba(255, 255, 255, 1) 21%);
+background: linear-gradient(180deg, rgba(131, 224, 223, 0.5) 0%, rgba(255, 255, 255, 1) 21%);
 }
 
 /* Optional soft glow effect (can be toggled on/off in component) */
