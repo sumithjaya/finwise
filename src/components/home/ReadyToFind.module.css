@@ -68,7 +68,8 @@
 }
 
 /* Underline below headline */
-.cta_underline {
+@media (min-width: 700px) {
+  .cta_underline {
   position: absolute;
 
   transform: translateX(-50%);
@@ -80,8 +81,8 @@
   background-size: cover;
   background-position: center;
   pointer-events: none;
+}  
 }
-
 /* Subtext paragraph */
 .cta_subtext {
   width: 50%;
@@ -173,4 +174,19 @@
     width: 80%;
     font-family: "Creato Display";
   }
+}
+
+@media (max-width:680px) {
+ .cta_underline {
+  position: absolute;
+ 
+  margin-left: 50px;
+  width: 100%;
+  height: 10px;
+  background-image: url("/images/svg/understrike.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}  
 }

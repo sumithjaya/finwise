@@ -221,7 +221,9 @@
     font-size: 28px;
     text-align: center;
   }
-
+.wfw_card_content{
+  padding: 20px;
+}
   .leftSectionText {
     font-size: 14px;
     text-align: center;
