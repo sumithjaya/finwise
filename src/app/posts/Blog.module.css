@@ -590,3 +590,19 @@
   justify-content: space-between;
   flex: 1;
 }
+
+@media (max-width: 700px) {
+   .inner{
+    padding: 0px 30px;
+   
+   }
+   .readblogphill{
+    margin-top: 10px;
+   }
+   .feturedPostContainer{
+    padding: 30px;
+   }
+   .postsList{
+    padding: 0px 30px;
+   }
+}
