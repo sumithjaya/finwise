@@ -196,6 +196,9 @@
   .underlineContainerMobile {
     display: block;
   }
+  .hero{
+    height: 100%;
+  }
 
   /* Title size adjustments */
   .hero_content_left_title {
@@ -300,91 +303,124 @@
     background-color: #ffffff;
     margin-bottom: 30px;
   }
-}
-
-@media (max-width: 500px) {
-  .hero_content {
-    padding-top: 100px;
-    z-index: -1 !important;
-  }
-
-  .hero_content_left_title {
-    font-size: 42px;
-    font-weight: 500;
-
-    font-family: "Creato Display";
-  }
-  .hero_content_left_title_grn {
-    font-size: 42px;
-    font-weight: 800;
-    font-family: "Creato Display";
-  }
-  .hero_content_left_subtitle {
-    font-size: 20px;
-    font-weight: 400;
-    font-family: "Creato Display";
-    color: #545454;
-    border-left: #137c7abb 3px solid;
-  }
-
-  .hero_content_left_button {
-    margin-top: 26px;
-  }
   .hero_content_left_button_text {
     font-size: 16px;
-    font-weight: 400;
-    font-family: "Creato Display";
-    color: #1f1f1f;
-    border: none;
-    padding: 10px;
-    margin: 0px;
-    margin-bottom: 16px;
-    background-color: transparent;
-  }
-  .hero_content_left_button_text_main {
-    width: 100%;
-    margin: 0px;
-    border-radius: 10px;
-  }
-  .hero_content_left_button_wrapper {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 30px 20px;
-    width: 100%;
-    font-weight: 700;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 2px 6px 10px rgba(16, 78, 3, 0.116);
-  }
-}
-
-@media (max-width: 400px) {
-  .hero{
-    z-index: -1;
-  }
-  .hero_content_left_title {
-    font-size: 36px;
     font-weight: 500;
     font-family: "Creato Display";
-    font-style: normal;
+    color: #545454;
   }
-  .hero_content_left_title_grn {
-    font-size: 36px;
-    font-weight: 800;
-    font-family: "Creato Display";
-    font-style: italic;
-  }
+}
+@media (min-width: 400px) and (max-width: 480px) {
   .hero_content_left_subtitle {
-    font-size: 17px;
-    font-weight: 400;
+    font-size: 16x;
+    font-weight: 500;
     font-family: "Creato Display";
     color: #545454;
     border-left: #137c7abb 3px solid;
     margin-bottom: 0;
-    margin-top: 30px;
+    margin-top: 20px;
+  }
+  .headerScrolled {
+    background-color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+  }
+  .hero_content_left_title {
+    font-size: 44px;
+    font-weight: 500;
+    font-family: "Creato Display";
+    font-style: normal;
+    margin: 0px;
+    margin-bottom: 20px;
+  }
+
+  .hero_content_left_title_grn {
+    font-size: 44px;
+    font-weight: 800;
+    font-family: "Creato Display";
+    font-style: italic;
+    margin: 0;
   }
   .hero_content_left_button_wrapper {
-    margin-top: 30px;
+    background-color: #fff;
+    border-radius: 16px;
+    margin-top: 20px;
     margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 30px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+  }
+  .hero_content_left_button_text {
+    border: none;
+  }
+  .hero_content_left_button_text_main {
+    width: 100%;
+    margin: 0px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px 0px;
+    background-color: #137c7a;
+    color: #fff;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero_content_left_title {
+    font-size: 37px;
+    font-weight: 500;
+    font-family: "Creato Display";
+    font-style: normal;
+    margin: 0px;
+    margin-bottom: 20px;
+  }
+  .hero_content_left_title_grn {
+    font-size: 37px;
+    font-weight: 800;
+    font-family: "Creato Display";
+    font-style: italic;
+    margin: 0;
+  }
+  .hero_content_left_subtitle {
+    font-size: 17px;
+    font-weight: 500;
+    font-family: "Creato Display";
+    color: #545454;
+    border-left: #137c7abb 3px solid;
+    margin-bottom: 0;
+    margin-top: 20px;
+    font-style: normal;
+  }
+  .hero_content_left_button_wrapper {
+    background-color: #fff;
+    border-radius: 16px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+  }
+  .hero_content_left_button_text {
+    border: none;
+  }
+  .hero_content_left_button{
+    margin-top: 36px;
+  }
+  .hero_content_left_button_text_main {
+    width: 100%;
+    margin: 0px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px 0px;
+    background-color: #137c7a;
+    color: #fff;
+    border-radius: 12px;
+    cursor: pointer;
   }
 }

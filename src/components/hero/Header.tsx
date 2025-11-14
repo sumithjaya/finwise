@@ -148,9 +148,9 @@ export default function Header() {
           onClick={() => setOpen(true)}
         >
           <svg
-            viewBox="0 0 24 24"
-            className="h-6 w-6"
-            fill="#6e9291ff"
+            viewBox="0 0 28 28"
+            className="h-8 w-8"
+            fill="#33383877"
             aria-hidden
           >
             <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />

@@ -3,126 +3,129 @@
    Keep original desktop styles unchanged
    =========================== */
 
-.howitworks_container {
-  box-sizing: border-box;
-  justify-content: space-between;
-  padding: 100px 100px;
-  padding-top: 20px;
-  width: 100vw;
-  border-top: 1px dashed #137c7a46;
-}
-
-.howitworks_section {
-  background-color: #fff;
-  position: relative;
-}
-
 .howitworks_header {
   text-align: center;
   padding: 10px;
 }
+@media (min-width: 1024px) {
+  .howitworks_container {
+    box-sizing: border-box;
+    justify-content: space-between;
+    padding: 100px 100px;
+    padding-top: 20px;
+    width: 100vw;
+    border-top: 1px dashed #137c7a46;
+  }
 
-.howitworks_title_wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .howitworks_section {
+    background-color: #fff;
+    position: relative;
+  }
 
-.howitworks_image_wrapper {
-  position: absolute;
-  top: 20px;
-  left: 220px;
-}
+  .howitworks_image_wrapper {
+    position: absolute;
+    top: 20px;
+    left: 220px;
+  }
+  .howitworks_arrow_wrapper {
+    display: none;
+  }
+  .howitworks_title_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.howitworks_title {
-  font-size: 40px;
-  font-weight: 500;
-  font-family: "Creato Display";
-  font-style: normal;
-}
+  .howitworks_title {
+    font-size: 40px;
+    font-weight: 500;
+    font-family: "Creato Display";
+    font-style: normal;
+  }
 
-.howitworks_underline_wrapper {
-  margin-left: 215px;
-}
+  .howitworks_underline_wrapper {
+    margin-left: 215px;
+  }
 
-.howitworks_title_highlight {
-  color: #137c7a;
-  font-weight: 800;
-  font-style: italic;
-  font-family: "Creato Display";
-  font-size: 40px;
-}
+  .howitworks_title_highlight {
+    color: #137c7a;
+    font-weight: 800;
+    font-style: italic;
+    font-family: "Creato Display";
+    font-size: 40px;
+  }
 
-.howitworks_subtitle {
-  font-size: 16px;
-  font-weight: 400;
-  font-family: "Creato Display";
-  font-style: normal;
-  color: #545454;
-  padding-top: 20px;
-}
+  .howitworks_subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Creato Display";
+    font-style: normal;
+    color: #545454;
+    padding-top: 20px;
+  }
 
-.howitworks_bullets_wrapper {
-  padding: 10px 50px 0 50px;
-}
+  .howitworks_bullets_wrapper {
+    padding: 10px 50px 0 50px;
+  }
 
-.howitworks_bullets {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  position: relative;
-  background-image: url("/images/svg/curvedline.svg");
-  background-repeat: no-repeat;
-  background-size: 87%;
-  background-position: center;
-}
+  .howitworks_bullets {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    background-image: url("/images/svg/curvedline.svg");
+    background-repeat: no-repeat;
+    background-size: 87%;
+    background-position: center;
+  }
 
-.howitworks_bullet {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  max-width: 225px;
-  margin-top: 50px;
-}
+  .howitworks_bullet {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 225px;
+    margin-top: 50px;
+  }
 
-.howitworks_bullet_top1 {
-  margin-top: 125px;
-}
+  .howitworks_bullet_top1 {
+    margin-top: 125px;
+  }
 
-.howitworks_bullet_top2 {
-  margin-top: 155px;
-}
+  .howitworks_bullet_top2 {
+    margin-top: 155px;
+  }
 
-.howitworks_bullet_top3 {
-  margin-top: 105px;
-}
+  .howitworks_bullet_top3 {
+    margin-top: 105px;
+  }
 
-.howitworks_bullet_icon_wrapper {
-  background-color: #fff;
-  border: 2px solid #d0e5e4;
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 7px 54px 0px #699e9d26;
-}
+  .howitworks_bullet_icon_wrapper {
+    background-color: #fff;
+    border: 2px solid #d0e5e4;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 7px 54px 0px #699e9d26;
+  }
 
-.howitworks_bullet_text {
-  font-size: 22px;
-  font-weight: 700;
-  font-family: "Creato Display";
-  font-style: normal;
-  text-align: center;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 20px;
-}
+  .howitworks_bullet_text {
+    font-size: 22px;
+    font-weight: 700;
+    font-family: "Creato Display";
+    font-style: normal;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
 
-.howitworks_bullet_icon_mobile {
-  display: none;
+  .howitworks_bullet_icon_mobile {
+    display: none;
+  }
 }
 
 /* ===========================
@@ -130,7 +133,7 @@
    This block contains your original @media (max-width: 1024px) rules.
    =========================== */
 
-@media (max-width: 1024px) {
+@media (miv-width: 768px) and (max-width: 1024px) {
   .howitworks_container {
     padding: 100px 50px;
   }
@@ -138,21 +141,21 @@
   .howitworks_bullets {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-     
+
     justify-items: center;
     align-items: start;
     background-image: none;
     width: 100%;
   }
 
-  .howitworks_bullet { 
+  .howitworks_bullet {
     border: #d4dfde 1px solid;
     border-radius: 30px;
-    padding: 20px 20px; 
+    padding: 20px 20px;
     margin: 0;
     margin-top: 30px;
     height: 300px;
-  } 
+  }
 
   .howitworks_bullet_icon_wrapper {
     background-color: #fff;
@@ -230,6 +233,112 @@
 
   .howitworks_bullet_icon {
     display: none;
+  }
+  .howitworks_underline_wrapper {
+    margin: 0px;
+    margin-right: -150px;
+    width: 50%;
+  }
+}
+
+@media (max-width: 700px) {
+  .howitworks_container {
+    padding: 20px;
+  }
+  .howitworks_image_wrapper {
+    right: 0px;
+    top: 110px;
+  }
+  .howitworks_bullets_wrapper {
+    display: flex;
+  }
+}
+@media (max-width: 400px) {
+  .howitworks_title {
+    font-size: 40px;
+    font-weight: 500;
+    font-family: "Creato Display";
+  }
+  .howitworks_title_highlight {
+    font-size: 40px;
+    font-weight: 800;
+    font-family: "Creato Display";
+    font-style: italic;
+    color: #137c7a;
+  }
+  .howitworks_underline_wrapper {
+    margin: 0px;
+    margin-right: 10px;
+    margin-top: -10px;
+    justify-content: center;
+    width: 100%;
+    margin-left: 150px;
+  }
+  .howitworks_subtitle{
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Creato Display";
+    color: #545454;
+    margin-top: 20px;
+    padding: 0 20px;
+  }
+  .howitworks_container {
+    padding: 10px;
+  }
+  .howitworks_image_wrapper {
+    left: 10px;
+    top: 130px;
+  }
+  .howitworks_bullets_wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+  }
+  .howitworks_bullet {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0px;
+    margin-top: 0px;
+    text-align: center;
+    height: 100%;
+  }
+  .howitworks_bullet_icon_wrapper {
+    margin-bottom: 20px;
+  }
+  .howitworks_arrow_wrapper {
+    display: flex;
+    margin: 0 auto;
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .howitworks_arrow svg {
+    fill: #137c7a;
+    width: 20px;
+    height: 20px;
+  }
+  .howitworks_bullet_text{
+    font-size: 22px;
+    font-weight: 700;
+    font-family: "Creato Display";
+    font-style: normal;
+    text-align: center; 
+    border-radius: 10px; 
+    color: #1F1F1F;
+  }
+  .howitworks_bullet_icon_wrapper{
+    width: 85px;
+    height: 85px;
+  }
+  .howitworks_bullet{ 
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    color: #545454;
+    height: 100%;
+    box-shadow: 0px 7px 14px 0px #699e9d65;
   }
 }
 

@@ -14,6 +14,10 @@
   overflow: hidden;
 }
 
+.headerScrolled {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 /* Inner container */
 .headerContainer {
   margin: 0 auto;
@@ -92,9 +96,7 @@
   border-radius: 16px;
   text-decoration: none;
   border: 1px solid #137c7a;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .navLinkCTA:hover {
@@ -108,8 +110,9 @@
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 2px;
+  padding: 8px;
   border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   background-color: transparent;
   cursor: pointer;
 }
@@ -161,9 +164,7 @@
   font-weight: 500;
   color: #545454;
   text-decoration: none;
-  transition:
-    color 0.2s ease,
-    background 0.2s ease;
+  transition: color 0.2s ease, background 0.2s ease;
 }
 
 .drawerLink:hover {
@@ -221,91 +222,42 @@
 
 /* Mobile */
 @media (max-width: 640px) {
+ 
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  padding: 30px 30px;
+  overflow: hidden;
+}
+.headerContainer {
+  padding: 14px 30px;
+  
+}
+ .headerHidden {
+    transform: translateY(-100%);
+  }
   .nav {
     display: none;
   }
-
-  .header {
-    padding: 30px 30px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999;
-    transition:
-      transform 450ms ease,
-      box-shadow 400ms ease;
-    transform: translateY(0);
-  }
-
-  .headerHidden {
-    transform: translateY(-110%); /* hide above the viewport */
-  }
-
-  .headerScrolled {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  }
-
-  .headerContainer {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 18px 24px; /* adjust to match header height */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 16px;
-  }
-  .header.hide {
-    transform: translateY(-100%);
-  }
-  .headerContainer {
-    padding: 10px 30px;
-  }
   .mobileToggle {
     display: flex;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    background-color: transparent;
+   
   }
   .drawerLinks {
     border-bottom: #bbb3b3 1px dashed;
   }
-  .drawerOverlay {
-    position: fixed;
-    inset: 0;
-    /* raise above header (header has 9999) */
-    z-index: 10001;
-    background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
-  }
-  .header {
-    z-index: 1000;
-  }
-  .drawer {
-    margin-left: auto;
-    height: 100vh;
-    width: 80%;
-    max-width: 85%;
-    overflow-y: auto;
-    background-color: #fff;
-    padding: 16px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
 
-    z-index: 10000 !important; /* Above overlay */
-  }
+}
 
-  .header {
-    z-index: 1000;
-  }
-
-  /* Drawer overlay (covers page, should be above header) */
-  .drawerOverlay {
-    z-index: 9999 !important; /* Highest possible */
-    inset: 0;
-    position: fixed;
-  }
-
-  /* Drawer panel inside overlay */
-  .drawer {
-    z-index: 10000 !important; /* Above overlay */
-  }
+/* Mobile */
+@media (max-width: 400px) {
+  
 }

@@ -61,7 +61,16 @@ export default function HowItWorks() {
                     are looking for
                   </div>
                 </div>
-
+                <div className={styles.howitworks_arrow_wrapper}>
+                  <Image
+                    src={"./images/svg/arrowdown.svg"}
+                    alt="book icon"
+                    width={58}
+                    height={28}
+                    draggable={false}
+                    className={styles.howitworks_arrow}
+                  />
+                </div>
                 <div className={styles.howitworks_bullet}>
                   <div className={styles.howitworks_bullet_icon_wrapper}>
                     <Image
@@ -85,7 +94,16 @@ export default function HowItWorks() {
                     Receive your Free Wealth Journal/Financial Plan
                   </div>
                 </div>
-
+<div className={styles.howitworks_arrow_wrapper}>
+                  <Image
+                    src={"./images/svg/arrowdown.svg"}
+                    alt="book icon"
+                    width={58}
+                    height={28}
+                    draggable={false}
+                    className={styles.howitworks_arrow}
+                  />
+                </div>
                 <div
                   className={`${styles.howitworks_bullet} ${styles.howitworks_bullet_top2}`}
                 >
@@ -101,8 +119,8 @@ export default function HowItWorks() {
                     <Image
                       src={"./images/svg/user-tick.svg"}
                       alt="book icon"
-                      width={28}
-                      height={28}
+                      width={30}
+                      height={30}
                       draggable={false}
                       className={styles.howitworks_bullet_icon_mobile}
                     />
@@ -111,7 +129,16 @@ export default function HowItWorks() {
                     Get matched with a Qualified Financial Expert
                   </div>
                 </div>
-
+<div className={styles.howitworks_arrow_wrapper}>
+                  <Image
+                    src={"./images/svg/arrowdown.svg"}
+                    alt="book icon"
+                    width={58}
+                    height={28}
+                    draggable={false}
+                    className={styles.howitworks_arrow}
+                  />
+                </div>
                 <div
                   className={`${styles.howitworks_bullet} ${styles.howitworks_bullet_top3}`}
                 >

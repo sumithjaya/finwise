@@ -76,6 +76,13 @@ export default function Testimonials() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+   // Swipe detection states
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
+
   // Fetch testimonials
   useEffect(() => {
     let mounted = true;
@@ -122,6 +129,32 @@ export default function Testimonials() {
     setIndex((i) => (i + 1) % TESTIMONIALS.length);
   }, [TESTIMONIALS.length]);
 
+   // Swipe handlers
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(0);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    if (TESTIMONIALS.length <= 1) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      next();
+    }
+    if (isRightSwipe) {
+      prev();
+    }
+  };
+  
   // Optional: auto-advance every 6s (comment out if you don't want it)
   /*
   useEffect(() => {
