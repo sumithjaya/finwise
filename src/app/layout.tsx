@@ -58,9 +58,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <LoadingWrapper>
-          <AnalyticsProvider>
+          
           <HeaderFooterWrapper>{children}</HeaderFooterWrapper>
-          </AnalyticsProvider>
+          
         </LoadingWrapper>
       </body>
     </html>
