@@ -30,7 +30,12 @@
   width: 100%;
   justify-content: space-around;
 }
-
+.left_blob{
+  position: absolute;
+  top: -120px;
+  left: -310;
+  z-index: -1;
+}
 /* Center column */
 .hero_content_center {
   flex: 1;
@@ -38,8 +43,7 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  flex-direction: column; 
 }
 
 /* Right column */
@@ -50,55 +54,54 @@
   align-items: center;
   justify-content: center;
   display: none;
+} 
+.right_blobwawe{
+  position: absolute;
+  right: -200px;
+  top:  100px;
+  z-index: -1;
 }
-
-/* Button area */
-.hero_content_left_button {
-  display: flex;
-  text-align: left;
-  align-items: center;
-  border: 1px solid #c1cccb;
-  border-radius: 20px;
-  padding: 10px 20px;
-  color: #666464;
-  font-size: 16px;
-  background-color: #ffffff;
-  margin-top: 50px;
-  width: fit-content;
-  align-items: center;
+.center_blob{
+  position: absolute;
+  bottom:   130px;
+  right: 100px;
+  z-index: -1;
 }
-
 /* Title and subtitle */
 .hero_content_left_title {
   font-weight: 800;
-  font-size: 80px;
+  font-size: 6rem;
   line-height: 80px;
   font-family: "Creato Display";
   color: #1f1f1f;
   margin-bottom: 12px;
   text-align: left;
-  font-style: italic;
+  font-style: normal;
   padding: 0px;
   line-height: 80px;
 }
 
 .hero_content_left_subtitle {
-  font-weight: 500;
-  font-size: 20px;
-  color: "#545454";
+  font-weight: 400;
+  font-size: 1.86rem;
+  color:  #545454;
   margin-bottom: 20px;
   font-family: "Creato Display";
   text-align: left;
   padding: 0px;
-  margin: 20px 0px;
+  margin: 50px 0px 0px 0px;
   padding-left: 10px;
-  border-left: #137c7a 5px solid;
+  border-left: #137c7a 3px solid;
+  padding: 10px 120px 10px 20px;
+  max-width: 70%;
+  font-style: normal;
+  /* background-color: #ddeae9; */
 }
 
 .hero_content_left_title_grn {
   color: #137c7a;
   font-weight: 800;
-  font-size: 80px;
+  font-size: 6rem;
   font-style: italic;
   font-family: "Creato Display";
   text-align: left;
@@ -139,7 +142,7 @@
   padding: 0 20px;
   font-family: "Creato Display";
   color: #424444;
-  font-size: 16px;
+  font-size: 2rem;
   font-weight: 500;
   line-height: 15px;
   background-color: #ffffff;
@@ -159,7 +162,7 @@
   color: #ffffff;
   width: fit-content;
   flex-shrink: 0;
-  margin-top: 10px;
+  margin-top: 6px;
   cursor: pointer;
 }
 
@@ -428,4 +431,134 @@
     border-radius: 12px;
     cursor: pointer;
   }
+}
+/* ===========================
+   CTA BUTTON – HOVER UPGRADE
+   =========================== */
+
+.hero_content_left_button_text_main {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+/* Hover – lift + glow */
+.hero_content_left_button_text_main:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 24px rgba(19, 124, 122, 0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.15);
+  background-color: #15908c; /* slightly brighter than base */
+}
+
+/* Active – press feel */
+.hero_content_left_button_text_main:active {
+  transform: translateY(0);
+  box-shadow:
+    0 4px 10px rgba(19, 124, 122, 0.25);
+}
+
+/* Subtle shine sweep */
+.hero_content_left_button_text_main::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 20%,
+    rgba(255,255,255,0.35),
+    transparent 80%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+}
+
+.hero_content_left_button_text_main:hover::after {
+  transform: translateX(120%);
+}
+.hero_content_left_button {
+  margin-top: 32px;
+  width: 60%;
+}
+.hero_content_left_button_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+
+  padding: 18px 20px;
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.95),
+      rgba(255,255,255,0.88)
+    );
+
+  border: 1px solid rgba(0, 128, 120, 0.12);
+
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  backdrop-filter: blur(6px);
+}
+.hero_content_left_button_text {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #4b5563;
+  max-width: 520px;
+}
+.hero_content_left_button_text_main {
+  position: relative;
+
+  padding: 14px 26px;
+  border-radius: 12px;
+
+  background: linear-gradient(
+    180deg,
+    #0f8f85,
+    #0b6f68
+  );
+
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+
+  box-shadow:
+    0 8px 22px rgba(15,143,133,0.35);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+.hero_content_left_button_text_main:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 30px rgba(15,143,133,0.45);
+  filter: brightness(1.05);
+}
+
+.hero_content_left_button_text_main:active {
+  transform: translateY(0);
+  box-shadow:
+    0 6px 16px rgba(15,143,133,0.35);
+}
+.hero_content_left_button_text_main::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: rgba(15,143,133,0.15);
+  filter: blur(14px);
+  z-index: -1;
 }

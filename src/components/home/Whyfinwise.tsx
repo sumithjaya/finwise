@@ -21,8 +21,7 @@ export default function Whyfinwise() {
           </div>
         </div>
         <div className={styles.leftSectionText}>
-          There is now an abundance of readable dummy texts. These are usually
-          used when a text is required
+          Financial advice should feel empowering, not confusing. Here’s what makes FinWise different.
         </div>
       </div>
 
@@ -41,7 +40,7 @@ export default function Whyfinwise() {
             </div>
             <div className={styles.wfw_card_title}>Clear, Transparent Advice</div>
             <div className={styles.wfw_card_content}>
-              There is now an abundance of readable dummy texts.
+          No hidden fees, no confusing incentives. Just honest guidance designed around your goals.
             </div>
           </div>
         </div>
@@ -59,7 +58,7 @@ export default function Whyfinwise() {
             </div>
             <div className={styles.wfw_card_title}>Expert Financial Guidance</div>
             <div className={styles.wfw_card_content}>
-              There is now an abundance of readable dummy texts.
+            Work with experienced professionals who understand real-world finances — not textbook scenarios.
             </div>
           </div>
         </div>
@@ -78,7 +77,7 @@ export default function Whyfinwise() {
             </div>
             <div className={styles.wfw_card_title}>Affordable Solutions</div>
             <div className={styles.wfw_card_content}>
-              There is now an abundance of readable dummy texts.
+             Access quality financial advice without premium price tags or long-term commitments.
             </div>
           </div>
         </div>

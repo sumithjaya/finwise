@@ -82,6 +82,12 @@
   position: relative;
   min-height: 220px; /* adjust to fit your quote + name + role */
   overflow: hidden;
+  background-color: #fff;
+  border-radius: 25px;
+  padding: 60px 10px;
+  box-shadow:  
+    0px 4px 4px rgba(255, 255, 255, 0.85),
+    0px 4px 4px rgba(255, 255, 255, 0.25);
 }
 
 .tst_content {
@@ -139,6 +145,65 @@
   outline-offset: 2px;
 }
 
+.pre_button {
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-sizing: border-box;
+
+  background: transparent;
+  border: 1.5px solid rgba(19, 124, 122, 0.35);
+  cursor: pointer;
+
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 150ms ease;
+}
+
+/* SVG transition */
+.pre_button svg path {
+  transition: stroke 180ms ease;
+}
+
+/* HOVER */
+.pre_button:hover {
+  background-color: rgba(19, 124, 122, 0.08);
+  border-color: #137C7A;
+  box-shadow: 0 6px 16px rgba(19, 124, 122, 0.18);
+  transform: translateY(-1px);
+}
+
+.pre_button:hover svg path {
+  stroke: #137C7A;
+}
+
+/* ACTIVE (click feedback) */
+.pre_button:active {
+  transform: scale(0.95);
+  box-shadow: 0 3px 10px rgba(19, 124, 122, 0.22);
+}
+
+/* KEYBOARD ACCESSIBILITY */
+.pre_button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(19, 124, 122, 0.25),
+    0 6px 16px rgba(19, 124, 122, 0.2);
+}
+
+/* DISABLED */
+.pre_button.disabled,
+.pre_button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+}
 
 @media (max-width: 1024px) {
   .testi_main_container {

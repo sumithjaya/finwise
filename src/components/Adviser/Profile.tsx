@@ -13,8 +13,9 @@ export default function Profile( ) {
         <div className={styles.adviser_profile_content}>
             <div  className={styles.adviser_profile_title}> — About Me</div>
             <div className={styles.adviser_profile_sub_title}>Who Is <span className={styles.adviser_profile_name}>Carla Press?</span></div>
-            <div className={styles.adviser_profile_description}>With over 15 years of experience, John helps clients confidently plan their financial future. He specializes in creating customized retirement strategies based on individual goals, lifestyle, and legacy needs.</div>
-            <div className={styles.adviser_profile_description}>Lorem Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the industry&#39s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen bookLorem Ipsum is simply dummy text of the printing and industry.</div>
+            <div className={styles.adviser_profile_description}>With over 15 years of experience in wealth management, Carla helps individuals and families confidently plan their financial future. Her work focuses on creating practical, customized strategies that align with each client’s goals, lifestyle, and long-term priorities.</div>
+            <div className={styles.adviser_profile_description}>She specializes in retirement planning, investment management, and wealth protection — guiding clients through complex financial decisions with clarity and transparency. Carla believes financial advice should be understandable, pressure-free, and built for real life, not just projections.</div>
+            <div className={styles.adviser_profile_description}>Her clients value her straightforward approach, long-term thinking, and commitment to helping them feel confident at every stage of their financial journey.</div>
         </div>
       </div>
       </section>

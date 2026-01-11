@@ -171,7 +171,8 @@ export default function PostsPageClient() {
           <span className={styles.pageHeaderTitleHighlight}>Resources</span>
         </h2>
         <div className={styles.pageHeaderDescription}>
-          Lorem Ipsum is simply dummy text of the printing and industry.
+          Practical insights, expert advice, and clear guidance to help you make
+          smarter decisions about your career, finances, and future.
         </div>
       </div>
 
@@ -324,7 +325,9 @@ export default function PostsPageClient() {
         {initialLoading ? (
           <div className={styles.noPosts}>Loading posts…</div>
         ) : posts.length === 0 ? (
-          <div className={styles.noPosts}><IoAlertCircle/> No blog posts found</div>
+          <div className={styles.noPosts}>
+            <IoAlertCircle /> No blog posts found
+          </div>
         ) : (
           remainingPosts.map((post) => {
             const imgUrl = buildImageUrl(pickImagePath(post.CoverImage));
@@ -381,8 +384,7 @@ export default function PostsPageClient() {
           })
         )}
       </div>
-       
-        
+
       {/* Load more button */}
       <div style={{ textAlign: "center", margin: "40px 0" }}>
         {pageCount !== null && page >= pageCount ? (
@@ -406,8 +408,8 @@ export default function PostsPageClient() {
           </button>
         )}
       </div>
-      
-          <ReadyToFind/>
+
+      <ReadyToFind />
     </main>
   );
 }

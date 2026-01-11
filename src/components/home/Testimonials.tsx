@@ -155,19 +155,7 @@ export default function Testimonials() {
     }
   };
   
-  // Optional: auto-advance every 6s (comment out if you don't want it)
-  /*
-  useEffect(() => {
-    if (TESTIMONIALS.length <= 1) return;
-    const iv = setInterval(() => {
-      setDirection(1);
-      setIndex((i) => (i + 1) % TESTIMONIALS.length);
-    }, 6000);
-    return () => clearInterval(iv);
-  }, [TESTIMONIALS.length]);
-  */
 
-  // Current testimonial (guarded)
   const t = TESTIMONIALS.length ? TESTIMONIALS[index] : null;
 
   return (

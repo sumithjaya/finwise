@@ -28,7 +28,8 @@ export default function Specialty() {
               Retirement Planning
             </div>
             <div className={styles.specialty_card_description}>
-              There is now an abundance of readable dummy texts.
+              Plan for retirement with a clear strategy based on your income,
+              lifestyle goals, and timeline — not generic assumptions.
             </div>
             <div>
               <Link
@@ -49,10 +50,11 @@ export default function Specialty() {
               />
             </div>
             <div className={styles.specialty_card_title}>
-              Retirement Planning
+              Healthcare Coverage
             </div>
             <div className={styles.specialty_card_description}>
-              There is now an abundance of readable dummy texts.
+              Understand healthcare costs and coverage options before and during
+              retirement, so unexpected expenses don’t derail your plan.
             </div>
             <div>
               <Link
@@ -72,11 +74,10 @@ export default function Specialty() {
                 height={28}
               />
             </div>
-            <div className={styles.specialty_card_title}>
-              Retirement Planning
-            </div>
+            <div className={styles.specialty_card_title}>Estate Planning</div>
             <div className={styles.specialty_card_description}>
-              There is now an abundance of readable dummy texts.
+              Structure your assets to protect your family, preserve wealth, and
+              ensure your legacy is handled exactly as you intend.
             </div>
             <div>
               <Link
@@ -97,10 +98,11 @@ export default function Specialty() {
               />
             </div>
             <div className={styles.specialty_card_title}>
-              Retirement Planning
+              Investment Management
             </div>
             <div className={styles.specialty_card_description}>
-              There is now an abundance of readable dummy texts.
+              Create a balanced investment strategy designed to grow wealth
+              steadily while managing risk responsibly.{" "}
             </div>
             <div>
               <Link

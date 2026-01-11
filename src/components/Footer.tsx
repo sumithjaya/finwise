@@ -22,9 +22,7 @@ export default function Footer() {
           <div className={styles.footer_branding_content}>
             <h1>WEALFY</h1>
             <p>
-              Lorem Ipsum is simply dummy text of the printing and industry.
-              Lorem Ipsum has been the industry's standard dummy text ever since
-              the 1500s
+            FinWise helps individuals connect with trusted financial experts and build smarter, more confident financial futures.
             </p>
             <div className={styles.footer_branding_element}>
               <Image

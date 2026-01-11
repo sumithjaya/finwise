@@ -21,8 +21,7 @@ export default function ReadyToFind() {
 
             {/* Subtext */}
             <div className={styles.cta_subtext}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. varius
-              lacus vel elit accumsan, sollicitudin rhoncus quam scelerisque.
+             Start with clarity, continue with confidence. Your personalized financial guidance is just a few minutes away.
             </div>
 
             {/* CTA button */}

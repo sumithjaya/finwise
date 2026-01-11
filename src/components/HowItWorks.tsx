@@ -28,8 +28,7 @@ export default function HowItWorks() {
                 </div>
               </div>
               <p className={styles.howitworks_subtitle}>
-                There is now an abundance of readable dummy texts. These are
-                usually used when a text is required
+                We make finding financial guidance simple, transparent, and stress-free — no jargon, no endless sales calls.
               </p>
             </div>
 

@@ -7,6 +7,9 @@
   text-align: center;
   padding: 10px;
 }
+.howitworks_container{
+  padding: 10px;
+}
 @media (min-width: 1024px) {
   .howitworks_container {
     box-sizing: border-box;
@@ -15,10 +18,11 @@
     padding-top: 20px;
     width: 100vw;
     border-top: 1px dashed #137c7a46;
+    background-color: #F1F9F8;
   }
 
   .howitworks_section {
-    background-color: #fff;
+    background-color:#F1F9F8;
     position: relative;
   }
 
@@ -37,7 +41,7 @@
   }
 
   .howitworks_title {
-    font-size: 40px;
+    font-size: 3.5rem;
     font-weight: 500;
     font-family: "Creato Display";
     font-style: normal;
@@ -52,11 +56,11 @@
     font-weight: 800;
     font-style: italic;
     font-family: "Creato Display";
-    font-size: 40px;
+    font-size: 3.5rem;
   }
 
   .howitworks_subtitle {
-    font-size: 16px;
+    font-size: 1.7rem;
     font-weight: 400;
     font-family: "Creato Display";
     font-style: normal;
